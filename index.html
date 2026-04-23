@@ -2,790 +2,1091 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#c8d5c0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>Invitación de Boda - Marina & Manuel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Marina & Manuel · 12.09.2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#1a2a1e}
 
-html {
-  height: -webkit-fill-available;
-}
-
-body {
-  background: #c8d5c0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-  font-family: 'Cormorant Garamond', serif;
-  -webkit-font-smoothing: antialiased;
-  overscroll-behavior: none;
-}
-
-.phone-frame {
-  width: 100%;
-  max-width: 480px;
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
+/* ══════════════════════════════
+   ENVELOPE SCREEN — full screen, realistic
+══════════════════════════════ */
+#env-screen{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  background:#4a5e4a;
+  z-index:100;
+  transition:opacity .9s ease;
+  cursor:pointer;
+  perspective:1200px;
 }
 
-/* ===== ENVELOPE SCREEN ===== */
-#envelope-screen {
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  position: fixed;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-  max-width: 480px;
-  z-index: 100;
-  cursor: pointer;
-  overflow: hidden;
-  background: #d6ddd0;
-  touch-action: manipulation;
+/* The envelope IS the full screen */
+.env-wrap{
+  position:relative;
+  width:100%;
+  height:100dvh;
+  overflow:hidden;
 }
 
-/* Envelope body */
-.env-body {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(160deg, #e8ede5 0%, #d4dccf 40%, #c8d4c2 100%);
+/* ── ENVELOPE BODY (back layer) ── */
+.env-back{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,#4f6652 0%,#3d5240 40%,#344838 100%);
 }
 
-/* Envelope diagonal fold line */
-.env-fold-left {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 100vh 0 0 50vw;
-  border-color: transparent transparent transparent rgba(255,255,255,0.18);
-  max-width: 420px;
+/* ── ENVELOPE INTERIOR (cream, revealed when flap opens) ── */
+.env-interior{
+  position:absolute;
+  top:0;left:0;width:100%;height:55%;
+  background:linear-gradient(180deg,#f5ede0 0%,#ede0cc 60%,#e0d0b8 100%);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  z-index:4; /* above side flaps, below top flap */
+  /* Subtle paper texture lines */
+  box-shadow:inset 0 0 40px rgba(180,140,80,.12);
 }
-.env-fold-right {
-  position: absolute;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 0 100vh 50vw;
-  border-color: transparent transparent rgba(0,0,0,0.06) transparent;
-  max-width: 420px;
-}
-
-/* Envelope texture overlay */
-.env-texture {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.07'/%3E%3C/svg%3E");
-  opacity: 0.5;
+.env-interior::after{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom right,transparent 49.5%,rgba(180,140,80,.08) 49.5%,rgba(180,140,80,.08) 50.5%,transparent 50.5%),
+    linear-gradient(to bottom left,transparent 49.5%,rgba(180,140,80,.08) 49.5%,rgba(180,140,80,.08) 50.5%,transparent 50.5%);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  pointer-events:none;
 }
 
-/* Envelope flap (top triangle) */
-.env-flap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 55%;
-  transform-origin: top center;
-  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 10;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  background: linear-gradient(180deg, #bfcfba 0%, #c8d5c2 60%, #b8c8b3 100%);
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+/* ── BOTTOM TRIANGLE FLAP ── */
+.env-bottom{
+  position:absolute;
+  bottom:0;left:0;width:100%;height:55%;
+  background:linear-gradient(180deg,#3a4e3d 0%,#2e3f31 100%);
+  clip-path:polygon(0 100%,100% 100%,50% 0%);
+  z-index:1;
 }
 
-.env-flap::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 50%, rgba(0,0,0,0.08) 100%);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
+/* ── LEFT TRIANGLE FLAP ── */
+.env-left{
+  position:absolute;
+  top:0;left:0;width:55%;height:100%;
+  background:linear-gradient(135deg,#3e5241 0%,#344538 100%);
+  clip-path:polygon(0 0,0 100%,100% 50%);
+  z-index:2;
 }
 
-/* Bottom flap */
-.env-flap-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 45%;
-  clip-path: polygon(0 100%, 100% 100%, 50% 0%);
-  background: linear-gradient(0deg, #b5c5b0 0%, #c2d0bc 100%);
-  z-index: 1;
+/* ── RIGHT TRIANGLE FLAP ── */
+.env-right{
+  position:absolute;
+  top:0;right:0;width:55%;height:100%;
+  background:linear-gradient(225deg,#3e5241 0%,#344538 100%);
+  clip-path:polygon(100% 0,100% 100%,0 50%);
+  z-index:2;
 }
 
-/* Side flaps */
-.env-flap-side-left {
-  position: absolute;
-  left: 0; top: 0;
-  width: 50%;
-  height: 100%;
-  clip-path: polygon(0 0, 0 100%, 100% 50%);
-  background: linear-gradient(90deg, #b8c8b3 0%, #c5d2bf 100%);
-  z-index: 2;
+/* ── TOP FLAP (opens) ── */
+.env-top{
+  position:absolute;
+  top:0;left:0;width:100%;height:55%;
+  background:linear-gradient(180deg,#4a6050 0%,#3d5242 60%,#344838 100%);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top center;
+  transform-style:preserve-3d;
+  transition:transform 1.4s cubic-bezier(.4,0,.2,1);
+  z-index:5;
+  /* subtle inner shadow on flap */
+  filter:drop-shadow(0 8px 20px rgba(0,0,0,.35));
 }
-.env-flap-side-right {
-  position: absolute;
-  right: 0; top: 0;
-  width: 50%;
-  height: 100%;
-  clip-path: polygon(100% 0, 100% 100%, 0 50%);
-  background: linear-gradient(270deg, #b5c5b0 0%, #c2d0bc 100%);
-  z-index: 2;
-}
-
-/* Wax seal */
-.wax-seal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 20;
-  width: 110px;
-  height: 110px;
-  transition: transform 1.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+/* Highlight on top flap */
+.env-top::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(255,255,255,.09) 0%,transparent 55%);
+  clip-path:polygon(0 0,100% 0,50% 100%);
 }
 
-.wax-seal svg {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35)) drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+/* Fold crease line on top flap */
+.env-crease{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  background:
+    linear-gradient(to bottom right,transparent 49.5%,rgba(0,0,0,.12) 49.5%,rgba(0,0,0,.12) 50.5%,transparent 50.5%),
+    linear-gradient(to bottom left,transparent 49.5%,rgba(0,0,0,.12) 49.5%,rgba(0,0,0,.12) 50.5%,transparent 50.5%);
+  pointer-events:none;
 }
 
-/* Tap hint */
-.tap-hint {
-  position: absolute;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(80,100,75,0.8);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(13px, 3.5vw, 16px);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  animation: pulse 2s infinite;
-  z-index: 30;
-  text-align: center;
-  white-space: nowrap;
+/* Diagonal crease lines on body */
+.env-body-crease{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom right,transparent 49.5%,rgba(0,0,0,.08) 49.5%,rgba(0,0,0,.08) 50.5%,transparent 50.5%),
+    linear-gradient(to bottom left,transparent 49.5%,rgba(0,0,0,.08) 49.5%,rgba(0,0,0,.08) 50.5%,transparent 50.5%);
+  z-index:3;
+  pointer-events:none;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+/* ── WAX SEAL ── */
+.wax-seal{
+  position:absolute;
+  /* Centered at the flap fold point — 55% from top */
+  top:55%;left:50%;
+  transform:translate(-50%,-50%);
+  width:min(22vw,100px);
+  height:min(22vw,100px);
+  z-index:10;
+  transition:opacity 1.1s ease, filter 1.1s ease;
+  filter:drop-shadow(0 6px 18px rgba(0,0,0,.4));
+}
+.wax-seal.dissolving{
+  opacity:0;
+  filter:drop-shadow(0 0 0 rgba(0,0,0,0)) blur(20px);
 }
 
-/* Envelope open animation */
-#envelope-screen.opening .env-flap {
-  transform: rotateX(-180deg);
+/* ── TAP HINT ── */
+.tap-hint{
+  position:absolute;
+  bottom:clamp(28px,6vh,52px);
+  left:50%;transform:translateX(-50%);
+  color:rgba(255,255,255,.45);
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(11px,3vw,14px);
+  letter-spacing:5px;
+  text-transform:uppercase;
+  white-space:nowrap;
+  animation:breathe 2.8s ease-in-out infinite;
+  z-index:20;
 }
-#envelope-screen.opening .wax-seal {
-  transform: translate(-50%, -200%) scale(0.5);
-  opacity: 0;
-}
-#envelope-screen.gone {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.6s ease 0.8s;
+@keyframes breathe{0%,100%{opacity:.25;transform:translateX(-50%) scale(1)}50%{opacity:.65;transform:translateX(-50%) scale(1.03)}}
+
+/* ══════════════════════════════
+   INVITATION CONTENT
+══════════════════════════════ */
+#invitation{
+  position:fixed;inset:0;
+  overflow-y:auto;overflow-x:hidden;
+  display:none;
+  -webkit-overflow-scrolling:touch;
+  background:#f8f2e8;
 }
 
-/* Flowers on envelope */
-.env-flowers {
-  position: absolute;
-  bottom: 5%;
-  right: -10px;
-  width: 160px;
-  opacity: 0.6;
-  z-index: 5;
-}
-.env-flowers-left {
-  position: absolute;
-  top: 5%;
-  left: -10px;
-  width: 130px;
-  opacity: 0.5;
-  z-index: 5;
-  transform: scaleX(-1) rotate(20deg);
+/* Floral background */
+#invitation::before{
+  content:"";
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cdefs%3E%3Cstyle%3E.leaf%7Bfill:%233d5a47%7D.petal%7Bfill:%23c8a86a%7D.petal2%7Bfill:%23e8c890%7D%3C/style%3E%3C/defs%3E%3Cg opacity='.5'%3E%3Cg transform='translate(80,80)'%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(-30)'/%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(30)'/%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(90)'/%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(150)'/%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(210)'/%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(270)'/%3E%3Ccircle class='petal' cx='0' cy='0' r='8'/%3E%3C/g%3E%3Cg transform='translate(300,150)'%3E%3Cellipse class='petal' cx='0' cy='-20' rx='8' ry='16' transform='rotate(-40)'/%3E%3Cellipse class='petal2' cx='0' cy='-20' rx='8' ry='16' transform='rotate(20)'/%3E%3Cellipse class='petal' cx='0' cy='-20' rx='8' ry='16' transform='rotate(80)'/%3E%3Cellipse class='petal2' cx='0' cy='-20' rx='8' ry='16' transform='rotate(140)'/%3E%3Cellipse class='petal' cx='0' cy='-20' rx='8' ry='16' transform='rotate(200)'/%3E%3Ccircle fill='%238b6914' cx='0' cy='0' r='6'/%3E%3C/g%3E%3Cg transform='translate(520,80)'%3E%3Cellipse class='leaf' cx='0' cy='-25' rx='9' ry='18' transform='rotate(-20)'/%3E%3Cellipse class='leaf' cx='0' cy='-25' rx='9' ry='18' transform='rotate(40)'/%3E%3Cellipse class='leaf' cx='0' cy='-25' rx='9' ry='18' transform='rotate(100)'/%3E%3Cellipse class='leaf' cx='0' cy='-25' rx='9' ry='18' transform='rotate(160)'/%3E%3Ccircle class='petal' cx='0' cy='0' r='7'/%3E%3C/g%3E%3Cg transform='translate(150,350)'%3E%3Cellipse class='petal2' cx='0' cy='-22' rx='9' ry='17' transform='rotate(-50)'/%3E%3Cellipse class='petal' cx='0' cy='-22' rx='9' ry='17' transform='rotate(10)'/%3E%3Cellipse class='petal2' cx='0' cy='-22' rx='9' ry='17' transform='rotate(70)'/%3E%3Cellipse class='petal' cx='0' cy='-22' rx='9' ry='17' transform='rotate(130)'/%3E%3Cellipse class='petal2' cx='0' cy='-22' rx='9' ry='17' transform='rotate(190)'/%3E%3Ccircle fill='%238b6914' cx='0' cy='0' r='7'/%3E%3C/g%3E%3Cg transform='translate(450,380)'%3E%3Cellipse class='leaf' cx='0' cy='-28' rx='10' ry='20' transform='rotate(-10)'/%3E%3Cellipse class='leaf' cx='0' cy='-28' rx='10' ry='20' transform='rotate(50)'/%3E%3Cellipse class='leaf' cx='0' cy='-28' rx='10' ry='20' transform='rotate(110)'/%3E%3Cellipse class='leaf' cx='0' cy='-28' rx='10' ry='20' transform='rotate(170)'/%3E%3Ccircle class='petal' cx='0' cy='0' r='8'/%3E%3C/g%3E%3Cg transform='translate(80,520)'%3E%3Cellipse class='petal' cx='0' cy='-18' rx='7' ry='14' transform='rotate(-30)'/%3E%3Cellipse class='petal2' cx='0' cy='-18' rx='7' ry='14' transform='rotate(30)'/%3E%3Cellipse class='petal' cx='0' cy='-18' rx='7' ry='14' transform='rotate(90)'/%3E%3Cellipse class='petal2' cx='0' cy='-18' rx='7' ry='14' transform='rotate(150)'/%3E%3Ccircle fill='%238b6914' cx='0' cy='0' r='5'/%3E%3C/g%3E%3Cg transform='translate(520,500)'%3E%3Cellipse class='leaf' cx='0' cy='-22' rx='8' ry='17' transform='rotate(-60)'/%3E%3Cellipse class='leaf' cx='0' cy='-22' rx='8' ry='17' transform='rotate(0)'/%3E%3Cellipse class='leaf' cx='0' cy='-22' rx='8' ry='17' transform='rotate(60)'/%3E%3Cellipse class='leaf' cx='0' cy='-22' rx='8' ry='17' transform='rotate(120)'/%3E%3Ccircle class='petal' cx='0' cy='0' r='6'/%3E%3C/g%3E%3Cg transform='translate(300,520)'%3E%3Cellipse class='petal2' cx='0' cy='-16' rx='7' ry='12' transform='rotate(-40)'/%3E%3Cellipse class='petal' cx='0' cy='-16' rx='7' ry='12' transform='rotate(20)'/%3E%3Cellipse class='petal2' cx='0' cy='-16' rx='7' ry='12' transform='rotate(80)'/%3E%3Ccircle fill='%238b6914' cx='0' cy='0' r='5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size:600px 600px;
+  opacity:.35;
+  pointer-events:none;
+  z-index:0;
 }
 
-/* ===== INVITATION CONTENT ===== */
-#invitation-content {
-  width: 100%;
-  min-height: 100vh;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-  background: #fdf8f0;
-  background-image: 
-    radial-gradient(ellipse at 20% 10%, rgba(180,200,160,0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 90%, rgba(180,200,160,0.12) 0%, transparent 50%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.3'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23paper)' opacity='0.04'/%3E%3C/svg%3E");
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
+.inv-inner{
+  position:relative;z-index:1;
+  max-width:480px;margin:0 auto;
+  padding:0 0 80px;
 }
 
-#invitation-content.visible {
-  opacity: 1;
+/* ── HERO ── */
+.hero{
+  text-align:center;
+  padding:60px 30px 40px;
+  position:relative;
 }
 
-/* Floral background corners */
-.floral-bg {
-  position: fixed;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.18;
+/* Large corner botanical */
+.botanical-corner{
+  position:absolute;
+  width:120px;
+  opacity:.35;
+  pointer-events:none;
 }
-.floral-bg.top-right {
-  top: 0; right: 0;
-  width: 200px;
-}
-.floral-bg.bottom-left {
-  bottom: 0; left: 0;
-  width: 180px;
-  transform: rotate(180deg);
+.botanical-corner.tl{top:0;left:0}
+.botanical-corner.tr{top:0;right:0;transform:scaleX(-1)}
+.botanical-corner.bl{bottom:0;left:0;transform:scaleY(-1)}
+.botanical-corner.br{bottom:0;right:0;transform:scale(-1,-1)}
+
+/* Text wrapper so it sits above the botanical corners */
+.hero-text{
+  position:relative;
+  z-index:2;
+  padding:0 20px;
 }
 
-/* Scroll animation */
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+.hero-eyebrow{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(14px,4vw,17px);
+  color:#8b7355;
+  letter-spacing:2px;
+  margin-bottom:6px;
 }
-.scroll-reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
+.hero-welcome{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(13px,3.8vw,16px);
+  color:#6a5535;
+  line-height:1.9;
+  max-width:320px;
+  margin:0 auto 28px;
+  font-style:italic;
 }
-
-/* Header section */
-.inv-header {
-  text-align: center;
-  padding: 60px 30px 30px;
-  position: relative;
-  z-index: 1;
+.hero-label{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(11px,3vw,13px);
+  letter-spacing:6px;
+  text-transform:uppercase;
+  color:#3d5a47;
+  margin-bottom:18px;
 }
-
-.inv-header .moment {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(32px, 9vw, 44px);
-  color: #7a9470;
-  line-height: 1.2;
-  margin-bottom: 20px;
+.hero-names{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(46px,12vw,64px);
+  color:#2c3e30;
+  font-weight:400;
+  line-height:1.1;
+  margin-bottom:10px;
 }
-
-.inv-header .welcome-text {
-  font-size: clamp(14px, 3.8vw, 17px);
-  color: #5a5a4a;
-  line-height: 1.9;
-  font-style: italic;
-  font-weight: 300;
-  padding: 0 10px;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 20px 40px;
-  position: relative;
-  z-index: 1;
-}
-.divider::before, .divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #9aaa88, transparent);
-}
-.divider-icon {
-  color: #9aaa88;
-  font-size: 18px;
+.hero-date{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(14px,4vw,18px);
+  color:#8b7355;
+  letter-spacing:5px;
 }
 
-/* Names section */
-.names-section {
-  text-align: center;
-  padding: 10px 30px 20px;
-  position: relative;
-  z-index: 1;
+/* ── ORNAMENTAL DIVIDER ── */
+.orn-divider{
+  display:flex;align-items:center;
+  gap:0;margin:0 30px 0;
+  height:40px;
+}
+.orn-divider svg{width:100%;height:40px}
+
+/* ── PHOTO ── */
+.photo-wrap{
+  display:flex;justify-content:center;
+  padding:20px 24px 30px;
+  position:relative;
+}
+.photo-rect{
+  position:relative;
+  width:100%;
+  max-width:420px;
+  border-radius:20px;
+  overflow:hidden;
+  border:3px solid #3d5a47;
+  box-shadow:0 0 0 6px rgba(61,90,71,.08),0 20px 50px rgba(0,0,0,.18);
+}
+.photo-rect img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
+}
+/* Subtle vignette overlay */
+.photo-rect::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 60%,rgba(44,62,48,.15) 100%);
+  pointer-events:none;
+}
+/* Decorative corner lines */
+.photo-rect::before{
+  content:"";
+  position:absolute;inset:8px;
+  border:1px solid rgba(200,168,106,.25);
+  border-radius:14px;
+  pointer-events:none;
+  z-index:1;
 }
 
-.names-section .nos-casamos {
-  font-size: clamp(11px, 3vw, 14px);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: #9aaa88;
-  margin-bottom: 10px;
+/* ── SECOND PHOTO ── */
+.second-photo-wrap{
+  display:flex;
+  justify-content:center;
+  margin-top:32px;
+  padding:0 24px;
+}
+.second-photo-frame{
+  width:min(78vw,320px);
+  border-radius:20px;
+  overflow:hidden;
+  border:2px solid #3d5a47;
+  box-shadow:0 0 0 5px rgba(61,90,71,.07), 0 12px 36px rgba(0,0,0,.14);
+}
+.second-photo-img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
 }
 
-.names-section .names {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(46px, 13vw, 64px);
-  color: #4a6645;
-  line-height: 1.1;
+/* ── INFO SECTIONS ── */
+.info-section{
+  padding:0 24px;
 }
 
-.names-section .names span {
-  display: block;
-  font-size: clamp(30px, 8.5vw, 42px);
-  color: #7a9470;
+/* Each info block */
+.info-block{
+  margin-bottom:32px;
+  position:relative;
 }
 
-/* Couple photo */
-.couple-photo {
-  width: 85%;
-  max-width: 300px;
-  margin: 20px auto;
-  display: block;
-  border-radius: 50%;
-  border: 4px solid #9aaa88;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15), 0 0 0 8px rgba(154,170,136,0.15);
-  position: relative;
-  z-index: 1;
-  aspect-ratio: 1;
-  object-fit: cover;
+/* Elegant horizontal rule with icon */
+.block-header{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:16px;
+}
+.block-header::before,.block-header::after{
+  content:"";flex:1;height:1px;
+  background:linear-gradient(to right,transparent,rgba(61,90,71,.3),transparent);
+}
+.block-header-icon{
+  font-size:20px;flex-shrink:0;
 }
 
-/* Info cards */
-.info-section {
-  padding: 15px 25px;
-  position: relative;
-  z-index: 1;
+/* Block content */
+.block-content{
+  text-align:center;
+  padding:24px 20px;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+  border:1px solid rgba(200,168,106,.2);
+  box-shadow:0 4px 20px rgba(0,0,0,.06);
+  position:relative;
+  overflow:hidden;
+}
+.block-content::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.2) 60%,transparent 100%);
+  pointer-events:none;
+  z-index:1;
 }
 
-.info-card {
-  background: rgba(255,255,255,0.7);
-  border: 1px solid rgba(154,170,136,0.3);
-  border-radius: 16px;
-  padding: 22px 24px;
-  margin-bottom: 16px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+/* Background image inside block */
+.block-bg{
+  position:absolute;inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:.22;
+  border-radius:16px;
+  z-index:0;
 }
 
-.info-card .card-icon {
-  font-size: 22px;
-  margin-bottom: 8px;
-  display: block;
+/* All text content inside block sits above bg */
+.block-content > *:not(.block-bg):not(.block-floral){
+  position:relative;
+  z-index:2;
 }
 
-.info-card .card-title {
-  font-size: clamp(10px, 2.5vw, 12px);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: #9aaa88;
-  margin-bottom: 8px;
+/* Text shadow for readability over images */
+.block-label{text-shadow:0 1px 4px rgba(255,255,255,.9),0 0 12px rgba(255,255,255,.7)}
+.block-main{text-shadow:0 1px 6px rgba(255,255,255,.95),0 2px 12px rgba(255,255,255,.6)}
+.block-sub{text-shadow:0 1px 4px rgba(255,255,255,.9),0 0 10px rgba(255,255,255,.6)}
+.block-link{text-shadow:0 1px 4px rgba(255,255,255,.9)}
+.bus-col-title{text-shadow:0 1px 4px rgba(255,255,255,.9)}
+.bus-row{text-shadow:0 1px 3px rgba(255,255,255,.85)}
+
+/* Floral accent inside block */
+.block-floral{
+  position:absolute;
+  opacity:.1;
+  pointer-events:none;
+}
+.block-floral.br{bottom:-5px;right:-5px;width:80px;transform:rotate(180deg)}
+.block-floral.tl{top:-5px;left:-5px;width:60px}
+
+.block-label{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(10px,2.8vw,12px);
+  letter-spacing:5px;
+  text-transform:uppercase;
+  color:#8b7355;
+  margin-bottom:8px;
+}
+.block-main{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(20px,5.5vw,26px);
+  font-weight:600;
+  color:#2c3e30;
+  line-height:1.3;
+  margin-bottom:6px;
+}
+.block-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(13px,3.8vw,16px);
+  color:#6a5535;
+  line-height:1.7;
+}
+.block-link{
+  display:inline-block;
+  margin-top:12px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(12px,3.5vw,14px);
+  letter-spacing:2px;
+  color:#3d5a47;
+  text-decoration:none;
+  border-bottom:1px solid rgba(61,90,71,.4);
+  padding-bottom:2px;
+  transition:color .2s,border-color .2s;
 }
 
-.info-card .card-main {
-  font-size: clamp(17px, 4.8vw, 22px);
-  color: #3a4a35;
-  font-weight: 600;
-  margin-bottom: 4px;
+/* Bus table */
+.bus-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:16px;margin-top:4px;
 }
-
-.info-card .card-sub {
-  font-size: clamp(13px, 3.5vw, 16px);
-  color: #6a7a60;
-  font-style: italic;
-  line-height: 1.6;
+.bus-col-inner{
+  background:rgba(61,90,71,.06);
+  border-radius:10px;padding:14px 10px;
 }
-
-.info-card a {
-  color: #7a9470;
-  text-decoration: none;
-  font-size: clamp(12px, 3.2vw, 15px);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 6px;
-  border-bottom: 1px solid rgba(122,148,112,0.3);
-  padding: 4px 0;
-  min-height: 44px;
+.bus-col-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(10px,2.8vw,12px);
+  letter-spacing:4px;text-transform:uppercase;
+  color:#3d5a47;margin-bottom:10px;font-weight:600;
 }
-
-/* Bus schedule */
-.bus-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+.bus-row{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(12px,3.5vw,14px);
+  color:#4a3a28;line-height:1.8;
 }
-.bus-table th {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #9aaa88;
-  padding: 6px 0;
-  text-align: left;
-  border-bottom: 1px solid rgba(154,170,136,0.3);
-}
-.bus-table td {
-  font-size: 13px;
-  color: #5a6a50;
-  padding: 7px 0;
-  border-bottom: 1px solid rgba(154,170,136,0.1);
-  line-height: 1.4;
-}
-.bus-table td:last-child {
-  text-align: right;
-  font-weight: 600;
-  color: #4a6645;
-}
-.bus-direction {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #9aaa88;
-  margin: 12px 0 4px;
-}
+.bus-row strong{color:#2c3e30;font-weight:600}
 
 /* Contact */
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(154,170,136,0.15);
+.contact-row{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(14px,4vw,17px);
+  color:#4a3a28;
+  margin-bottom:8px;
+  line-height:1.6;
 }
-.contact-item:last-child { border-bottom: none; }
-.contact-name {
-  font-size: 14px;
-  color: #4a6645;
-  font-weight: 600;
-  flex: 1;
-}
-.contact-phone {
-  font-size: 14px;
-  color: #6a7a60;
-}
-.contact-phone a {
-  color: #7a9470;
-  text-decoration: none;
+.contact-row a{
+  color:#3d5a47;text-decoration:none;
+  border-bottom:1px solid rgba(61,90,71,.3);
 }
 
-/* Footer */
-.inv-footer {
-  text-align: center;
-  padding: 30px 30px 60px;
-  position: relative;
-  z-index: 1;
+/* Enhanced contact block */
+.block-content.contact-block{
+  background:linear-gradient(135deg,rgba(61,90,71,.08) 0%,rgba(255,255,255,.65) 50%,rgba(200,168,106,.08) 100%);
+  border:1px solid rgba(61,90,71,.25);
+  box-shadow:0 6px 28px rgba(61,90,71,.12);
 }
-.inv-footer .closing {
-  font-family: 'Great Vibes', cursive;
-  font-size: 42px;
-  color: #7a9470;
-  line-height: 1.3;
+.contact-wa-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:4px;
+  padding:10px 22px;
+  background:linear-gradient(135deg,#25d366,#128c7e);
+  color:#fff;
+  border-radius:50px;
+  text-decoration:none;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(14px,4vw,17px);
+  letter-spacing:1px;
+  box-shadow:0 6px 20px rgba(37,211,102,.25);
+  transition:transform .2s,box-shadow .2s;
 }
-.inv-footer .closing-sub {
-  font-size: 13px;
-  color: #9aaa88;
-  letter-spacing: 2px;
-  margin-top: 8px;
+.contact-wa-btn:active{transform:scale(.97)}
+.contact-wa-icon{font-size:18px;line-height:1}
+
+/* ── CLOSING ── */
+.closing-section{
+  text-align:center;
+  padding:20px 30px 10px;
+}
+.closing-text{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(32px,9vw,44px);
+  color:#3d5a47;
+  line-height:1.3;
 }
 
-/* Floral decorations SVG */
-.floral-corner {
-  position: absolute;
-  pointer-events: none;
+/* ── RSVP ── */
+.rsvp-wrap{
+  padding:20px 30px 60px;
+  text-align:center;
+}
+.rsvp-note{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(13px,3.8vw,15px);
+  color:#8b7355;
+  margin-bottom:20px;
+  letter-spacing:1px;
+}
+.rsvp-btn{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  padding:18px 40px;
+  background:linear-gradient(135deg,#2c3e30,#3d5a47);
+  color:#f5ede0;
+  border-radius:50px;
+  text-decoration:none;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(16px,4.5vw,20px);
+  letter-spacing:3px;
+  box-shadow:0 12px 35px rgba(44,62,48,.35);
+  transition:transform .2s,box-shadow .2s;
+  border:1px solid rgba(200,168,106,.3);
+}
+.rsvp-btn:active{transform:scale(.97)}
+.rsvp-btn small{
+  font-size:clamp(10px,2.8vw,12px);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  opacity:.7;
+}
+
+/* ── COVER PHOTO (full screen, first thing after envelope) ── */
+#cover-photo{
+  position:relative;
+  width:100%;
+  height:100dvh;
+  overflow:hidden;
+  flex-shrink:0;
+}
+#cover-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 20%;
+  display:block;
+}
+/* Dark gradient overlay at bottom for scroll hint */
+#cover-photo::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(20,35,22,.55) 85%,
+    rgba(20,35,22,.85) 100%
+  );
+  pointer-events:none;
+}
+/* Names overlay on cover photo */
+.cover-overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  text-align:center;
+  padding:0 24px 48px;
+  z-index:2;
+}
+.cover-names{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(48px,13vw,72px);
+  color:#f5ede0;
+  font-weight:400;
+  line-height:1.1;
+  text-shadow:0 2px 20px rgba(0,0,0,.5);
+  margin-bottom:6px;
+}
+.cover-date{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(13px,3.5vw,16px);
+  color:rgba(245,237,224,.8);
+  letter-spacing:6px;
+  text-shadow:0 1px 8px rgba(0,0,0,.4);
+  margin-bottom:22px;
+}
+/* Animated scroll hint arrow */
+.scroll-hint{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  animation:bounce 2s ease-in-out infinite;
+}
+.scroll-hint span{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(10px,2.8vw,12px);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:rgba(245,237,224,.55);
+}
+.scroll-arrow{
+  width:24px;height:24px;
+  border-right:1.5px solid rgba(245,237,224,.5);
+  border-bottom:1.5px solid rgba(245,237,224,.5);
+  transform:rotate(45deg);
+  margin-top:-4px;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0);opacity:.5}
+  50%{transform:translateY(6px);opacity:1}
+}
+
+/* ── SCROLL FADE ── */
+.fade-up{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.fade-up.in{opacity:1;transform:translateY(0)}
+
+/* ── PARTICLES ── */
+#particles{
+  position:fixed;inset:0;
+  pointer-events:none;z-index:0;
 }
 </style>
 </head>
 <body>
 
-<!-- ENVELOPE SCREEN -->
-<div id="envelope-screen" onclick="openEnvelope()">
-  <div class="env-body">
-    <div class="env-texture"></div>
-    <div class="env-flap-side-left"></div>
-    <div class="env-flap-side-right"></div>
-    <div class="env-flap-bottom"></div>
+<canvas id="particles"></canvas>
 
-    <!-- Botanical flowers on envelope -->
-    <svg class="env-flowers" viewBox="0 0 160 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g opacity="0.7">
-        <ellipse cx="80" cy="180" rx="6" ry="18" fill="#8fa882" transform="rotate(-15 80 180)"/>
-        <ellipse cx="70" cy="160" rx="5" ry="15" fill="#7a9470" transform="rotate(-30 70 160)"/>
-        <ellipse cx="90" cy="155" rx="5" ry="16" fill="#8fa882" transform="rotate(10 90 155)"/>
-        <ellipse cx="60" cy="140" rx="4" ry="13" fill="#6b8560" transform="rotate(-45 60 140)"/>
-        <ellipse cx="100" cy="135" rx="4" ry="14" fill="#7a9470" transform="rotate(25 100 135)"/>
-        <circle cx="75" cy="120" r="12" fill="#c8d5a0" opacity="0.8"/>
-        <circle cx="95" cy="115" r="10" fill="#b8c890" opacity="0.7"/>
-        <circle cx="60" cy="118" r="8" fill="#d0dca8" opacity="0.6"/>
-        <circle cx="110" cy="125" r="9" fill="#c0cc98" opacity="0.65"/>
-        <circle cx="85" cy="105" r="7" fill="#e8f0c0" opacity="0.5"/>
-        <!-- Small petals -->
-        <ellipse cx="75" cy="120" rx="5" ry="8" fill="white" opacity="0.4" transform="rotate(0 75 120)"/>
-        <ellipse cx="75" cy="120" rx="5" ry="8" fill="white" opacity="0.4" transform="rotate(45 75 120)"/>
-        <ellipse cx="75" cy="120" rx="5" ry="8" fill="white" opacity="0.4" transform="rotate(90 75 120)"/>
-        <ellipse cx="75" cy="120" rx="5" ry="8" fill="white" opacity="0.4" transform="rotate(135 75 120)"/>
-      </g>
-    </svg>
+<!-- ══════════ ENVELOPE ══════════ -->
+<div id="env-screen" onclick="openEnvelope()">
+  <div class="env-wrap">
 
-    <svg class="env-flowers-left" viewBox="0 0 130 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g opacity="0.6">
-        <ellipse cx="50" cy="160" rx="5" ry="16" fill="#8fa882" transform="rotate(15 50 160)"/>
-        <ellipse cx="65" cy="145" rx="5" ry="14" fill="#7a9470" transform="rotate(30 65 145)"/>
-        <ellipse cx="35" cy="140" rx="4" ry="13" fill="#8fa882" transform="rotate(-10 35 140)"/>
-        <circle cx="55" cy="110" r="11" fill="#c8d5a0" opacity="0.8"/>
-        <circle cx="72" cy="105" r="9" fill="#b8c890" opacity="0.7"/>
-        <circle cx="40" cy="108" r="8" fill="#d0dca8" opacity="0.6"/>
-      </g>
-    </svg>
+    <!-- Back body -->
+    <div class="env-back"></div>
 
-    <div class="env-flap"></div>
+    <!-- Diagonal crease lines on body -->
+    <div class="env-body-crease"></div>
+
+    <!-- Bottom triangle -->
+    <div class="env-bottom"></div>
+
+    <!-- Side triangles -->
+    <div class="env-left"></div>
+    <div class="env-right"></div>
+
+    <!-- Interior cream (revealed when flap opens) -->
+    <div class="env-interior"></div>
+
+    <!-- Top flap (opens) -->
+    <div class="env-top" id="envFlap">
+      <div class="env-crease"></div>
+    </div>
+
+    <!-- WAX SEAL — centered at flap fold line -->
+    <div class="wax-seal" id="waxSeal">
+      <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="sg" cx="38%" cy="32%" r="68%">
+            <stop offset="0%"  stop-color="#f0d8a8"/>
+            <stop offset="25%" stop-color="#d4b87a"/>
+            <stop offset="60%" stop-color="#b89050"/>
+            <stop offset="100%" stop-color="#8a6828"/>
+          </radialGradient>
+          <radialGradient id="sg2" cx="38%" cy="32%" r="68%">
+            <stop offset="0%"  stop-color="#dcc080"/>
+            <stop offset="55%" stop-color="#a07838"/>
+            <stop offset="100%" stop-color="#705018"/>
+          </radialGradient>
+          <filter id="grain" x="-8%" y="-8%" width="116%" height="116%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="12" result="noise"/>
+            <feColorMatrix type="saturate" values="0" in="noise" result="gn"/>
+            <feBlend in="SourceGraphic" in2="gn" mode="multiply" result="bl"/>
+            <feComposite in="bl" in2="SourceGraphic" operator="in"/>
+          </filter>
+          <filter id="shdw" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="rgba(0,0,0,.45)"/>
+          </filter>
+          <filter id="inner-glow" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+
+        <!-- Outer jagged wax edge -->
+        <circle cx="55" cy="55" r="52" fill="url(#sg2)" filter="url(#grain)"/>
+        <!-- Slightly irregular outer ring via turbulence -->
+        <circle cx="55" cy="55" r="50" fill="url(#sg2)" opacity=".7" filter="url(#grain)"/>
+
+        <!-- Main wax disc -->
+        <circle cx="55" cy="55" r="45" fill="url(#sg)" filter="url(#shdw)"/>
+        <!-- Grain texture on disc -->
+        <circle cx="55" cy="55" r="45" fill="url(#sg)" filter="url(#grain)" opacity=".55"/>
+
+        <!-- Outer engraved ring (shadow side) -->
+        <circle cx="55" cy="55" r="41" fill="none" stroke="rgba(70,42,8,.4)" stroke-width="2"/>
+        <!-- Outer engraved ring (light side) -->
+        <circle cx="55" cy="55" r="41" fill="none" stroke="rgba(255,228,160,.3)" stroke-width=".9" stroke-dasharray="2 1"/>
+
+        <!-- Inner engraved ring -->
+        <circle cx="55" cy="55" r="33" fill="none" stroke="rgba(70,42,8,.3)" stroke-width="1.4"/>
+        <circle cx="55" cy="55" r="33" fill="none" stroke="rgba(255,228,160,.2)" stroke-width=".6"/>
+
+        <!-- Engraved M | M — shadow layer (depth) -->
+        <text x="56.5" y="58" text-anchor="middle" dominant-baseline="middle"
+          font-family="Georgia,'Times New Roman',serif"
+          font-size="14" font-weight="bold" letter-spacing="5"
+          fill="none" stroke="rgba(50,28,4,.7)" stroke-width="3">M | M</text>
+        <!-- Engraved M | M — highlight layer -->
+        <text x="55" y="56.5" text-anchor="middle" dominant-baseline="middle"
+          font-family="Georgia,'Times New Roman',serif"
+          font-size="14" font-weight="bold" letter-spacing="5"
+          fill="rgba(255,240,190,.75)">M | M</text>
+
+        <!-- Specular highlight (top-left shine) -->
+        <ellipse cx="38" cy="36" rx="14" ry="8" fill="rgba(255,248,220,.28)" transform="rotate(-35,38,36)"/>
+        <ellipse cx="35" cy="33" rx="6" ry="3.5" fill="rgba(255,248,220,.38)" transform="rotate(-35,35,33)"/>
+      </svg>
+    </div>
+
   </div>
-
-  <!-- WAX SEAL -->
-  <div class="wax-seal">
-    <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="waxGrad" cx="38%" cy="35%" r="65%">
-          <stop offset="0%" stop-color="#8fa882"/>
-          <stop offset="40%" stop-color="#7a9470"/>
-          <stop offset="75%" stop-color="#6b8560"/>
-          <stop offset="100%" stop-color="#4a6645"/>
-        </radialGradient>
-        <radialGradient id="waxShine" cx="30%" cy="25%" r="50%">
-          <stop offset="0%" stop-color="rgba(255,255,255,0.45)"/>
-          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-        </radialGradient>
-        <filter id="waxBlur">
-          <feGaussianBlur stdDeviation="1.5"/>
-        </filter>
-        <filter id="emboss">
-          <feConvolveMatrix order="3" kernelUnitLength="1"
-            kernel="-2 -1 0 -1 1 1 0 1 2"/>
-        </filter>
-      </defs>
-      <!-- Drip effects -->
-      <ellipse cx="55" cy="100" rx="28" ry="8" fill="#4a6645" opacity="0.3" filter="url(#waxBlur)"/>
-      <!-- Irregular wax blob -->
-      <path d="M55,8 C72,6 88,14 96,28 C104,42 106,58 100,72 C94,86 82,96 68,102 C54,108 38,106 26,98 C14,90 6,76 6,62 C6,48 10,32 20,22 C30,12 42,10 55,8 Z" fill="url(#waxGrad)"/>
-      <!-- Shine overlay -->
-      <path d="M55,8 C72,6 88,14 96,28 C104,42 106,58 100,72 C94,86 82,96 68,102 C54,108 38,106 26,98 C14,90 6,76 6,62 C6,48 10,32 20,22 C30,12 42,10 55,8 Z" fill="url(#waxShine)"/>
-      <!-- Inner circle border -->
-      <circle cx="55" cy="55" r="34" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
-      <circle cx="55" cy="55" r="30" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
-      <!-- M&M text -->
-      <text x="55" y="52" text-anchor="middle" font-family="'Great Vibes', cursive" font-size="18" fill="rgba(255,255,255,0.9)" letter-spacing="1">M&M</text>
-      <text x="55" y="68" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="3">BODA 2026</text>
-    </svg>
-  </div>
-
-  <div class="tap-hint">✦ Toca para abrir ✦</div>
+  <p class="tap-hint">✦ Toca para abrir ✦</p>
 </div>
 
-<!-- INVITATION CONTENT -->
-<div id="invitation-content">
+<!-- ══════════ INVITATION ══════════ -->
+<div id="invitation">
 
-  <!-- Fixed floral corners -->
-  <svg class="floral-bg top-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    <g opacity="0.8">
-      <ellipse cx="160" cy="40" rx="6" ry="20" fill="#8fa882" transform="rotate(30 160 40)"/>
-      <ellipse cx="175" cy="60" rx="5" ry="18" fill="#7a9470" transform="rotate(50 175 60)"/>
-      <ellipse cx="145" cy="55" rx="5" ry="16" fill="#8fa882" transform="rotate(10 145 55)"/>
-      <ellipse cx="185" cy="80" rx="4" ry="14" fill="#6b8560" transform="rotate(65 185 80)"/>
-      <circle cx="155" cy="80" r="14" fill="#c8d5a0" opacity="0.7"/>
-      <circle cx="175" cy="90" r="11" fill="#b8c890" opacity="0.6"/>
-      <circle cx="140" cy="85" r="9" fill="#d0dca8" opacity="0.55"/>
-      <ellipse cx="155" cy="80" rx="6" ry="10" fill="white" opacity="0.35" transform="rotate(0 155 80)"/>
-      <ellipse cx="155" cy="80" rx="6" ry="10" fill="white" opacity="0.35" transform="rotate(60 155 80)"/>
-      <ellipse cx="155" cy="80" rx="6" ry="10" fill="white" opacity="0.35" transform="rotate(120 155 80)"/>
-    </g>
-  </svg>
-
-  <svg class="floral-bg bottom-left" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
-    <g opacity="0.8">
-      <ellipse cx="40" cy="140" rx="6" ry="20" fill="#8fa882" transform="rotate(-20 40 140)"/>
-      <ellipse cx="25" cy="120" rx="5" ry="18" fill="#7a9470" transform="rotate(-40 25 120)"/>
-      <ellipse cx="55" cy="125" rx="5" ry="16" fill="#8fa882" transform="rotate(5 55 125)"/>
-      <circle cx="45" cy="100" r="13" fill="#c8d5a0" opacity="0.7"/>
-      <circle cx="25" cy="95" r="10" fill="#b8c890" opacity="0.6"/>
-      <circle cx="62" cy="98" r="9" fill="#d0dca8" opacity="0.55"/>
-    </g>
-  </svg>
-
-  <!-- HEADER -->
-  <div class="inv-header scroll-reveal">
-    <div class="moment">El momento ha llegado...</div>
-    <p class="welcome-text">
-      Hay momentos en la vida que cobran un sentido especial cuando se comparten con las personas que más queremos. Por eso, nos hace muchísima ilusión que nos acompañes en el día de nuestra boda.<br><br>
-      Tu presencia es el mejor regalo que podríamos tener para empezar esta nueva etapa con la mejor energía y, por supuesto, con una gran celebración.<br><br>
-      <strong>¡No faltes, la fiesta no será lo mismo sin ti!</strong>
-    </p>
-  </div>
-
-  <div class="divider scroll-reveal"><span class="divider-icon">✦</span></div>
-
-  <!-- NAMES -->
-  <div class="names-section scroll-reveal">
-    <div class="nos-casamos">¡Nos casamos!</div>
-    <div class="names">
-      Marina
-      <span>&</span>
-      Manuel
+  <!-- COVER PHOTO — full screen, first thing seen -->
+  <div id="cover-photo">
+    <img id="coupleImg" src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/Gemini_Generated_Image_vwpllmvwpllmvwpl.png" alt="Marina y Manuel"/>
+    <div class="cover-overlay">
+      <p class="cover-names">Marina & Manuel</p>
+      <p class="cover-date">12 · 09 · 2026</p>
+      <div class="scroll-hint">
+        <span>Desliza</span>
+        <div class="scroll-arrow"></div>
+      </div>
     </div>
   </div>
 
-  <!-- COUPLE PHOTO -->
-  <div class="scroll-reveal" style="text-align:center; position:relative; z-index:1; padding: 10px 0;">
-    <img src="Gemini_Generated_Image_tlitjitlitjitlit.png" alt="Marina y Manuel" class="couple-photo">
-  </div>
+  <div class="inv-inner">
 
-  <div class="divider scroll-reveal"><span class="divider-icon">🌿</span></div>
+    <!-- HERO -->
+    <div class="hero fade-up">
+      <!-- Botanical corners -->
+      <svg class="botanical-corner tl" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(5,155)">
+          <line x1="0" y1="0" x2="80" y2="-100" stroke="#3d5a47" stroke-width="1.5"/>
+          <line x1="0" y1="0" x2="40" y2="-120" stroke="#3d5a47" stroke-width="1"/>
+          <line x1="0" y1="0" x2="110" y2="-60" stroke="#3d5a47" stroke-width="1"/>
+          <line x1="0" y1="0" x2="20" y2="-80" stroke="#5a7a60" stroke-width=".8"/>
+          <ellipse cx="85" cy="-105" rx="16" ry="10" fill="#3d5a47" transform="rotate(-40,85,-105)"/>
+          <ellipse cx="38" cy="-126" rx="14" ry="9" fill="#5a7a60" transform="rotate(-65,38,-126)"/>
+          <ellipse cx="116" cy="-63" rx="14" ry="9" fill="#3d5a47" transform="rotate(-10,116,-63)"/>
+          <ellipse cx="18" cy="-84" rx="10" ry="7" fill="#6a8a70" transform="rotate(-50,18,-84)"/>
+          <g transform="translate(65,-75)">
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(-30)"/>
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(30)"/>
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(90)"/>
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(150)"/>
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(210)"/>
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(270)"/>
+            <circle cx="0" cy="0" r="5" fill="#8b6914"/>
+          </g>
+          <g transform="translate(28,-100)">
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#d4b896" transform="rotate(-20)"/>
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#c8a880" transform="rotate(60)"/>
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#d4b896" transform="rotate(140)"/>
+            <circle cx="0" cy="0" r="4" fill="#8b6914"/>
+          </g>
+          <g transform="translate(95,-45)">
+            <ellipse cx="0" cy="-9" rx="5" ry="8" fill="#c8a86a" transform="rotate(10)"/>
+            <ellipse cx="0" cy="-9" rx="5" ry="8" fill="#d4b878" transform="rotate(80)"/>
+            <circle cx="0" cy="0" r="3" fill="#8b6914"/>
+          </g>
+        </g>
+      </svg>
+      <svg class="botanical-corner tr" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(5,155)">
+          <line x1="0" y1="0" x2="80" y2="-100" stroke="#3d5a47" stroke-width="1.5"/>
+          <line x1="0" y1="0" x2="40" y2="-120" stroke="#3d5a47" stroke-width="1"/>
+          <line x1="0" y1="0" x2="110" y2="-60" stroke="#3d5a47" stroke-width="1"/>
+          <ellipse cx="85" cy="-105" rx="16" ry="10" fill="#3d5a47" transform="rotate(-40,85,-105)"/>
+          <ellipse cx="38" cy="-126" rx="14" ry="9" fill="#5a7a60" transform="rotate(-65,38,-126)"/>
+          <ellipse cx="116" cy="-63" rx="14" ry="9" fill="#3d5a47" transform="rotate(-10,116,-63)"/>
+          <g transform="translate(65,-75)">
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(-30)"/>
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(30)"/>
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(90)"/>
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(150)"/>
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(210)"/>
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(270)"/>
+            <circle cx="0" cy="0" r="5" fill="#8b6914"/>
+          </g>
+          <g transform="translate(28,-100)">
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#d4b896" transform="rotate(-20)"/>
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#c8a880" transform="rotate(60)"/>
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#d4b896" transform="rotate(140)"/>
+            <circle cx="0" cy="0" r="4" fill="#8b6914"/>
+          </g>
+        </g>
+      </svg>
 
-  <!-- INFO CARDS -->
-  <div class="info-section">
+      <div class="hero-text">
+        <p class="hero-eyebrow">El momento ha llegado...</p>
+        <p class="hero-welcome">Después de tanto tiempo juntos, de risas compartidas, de sueños construidos y de una vida que ya no imaginamos el uno sin el otro, ha llegado el momento de celebrarlo con las personas que más queremos.</p>
 
-    <!-- Date -->
-    <div class="info-card scroll-reveal">
-      <span class="card-icon">📅</span>
-      <div class="card-title">Fecha</div>
-      <div class="card-main">Sábado, 12 de Septiembre</div>
-      <div class="card-sub">2026</div>
+        <!-- Ornamental SVG divider -->
+        <div class="orn-divider">
+          <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <line x1="0" y1="20" x2="155" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+            <g transform="translate(200,20)">
+              <ellipse cx="-30" cy="0" rx="4" ry="4" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".5"/>
+              <ellipse cx="30" cy="0" rx="4" ry="4" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".5"/>
+              <path d="M-18,0 Q-10,-8 0,-8 Q10,-8 18,0 Q10,8 0,8 Q-10,8 -18,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".7"/>
+              <circle cx="0" cy="0" r="2.5" fill="#c8a86a" opacity=".8"/>
+            </g>
+            <line x1="245" y1="20" x2="400" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+          </svg>
+        </div>
+
+        <p class="hero-label">¡Nos casamos!</p>
+        <h1 class="hero-names">Marina & Manuel</h1>
+        <p class="hero-date">12 · 09 · 2026</p>
+
+        <!-- SECOND COUPLE PHOTO -->
+        <div class="second-photo-wrap fade-up">
+          <div class="second-photo-frame">
+            <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/Gemini_Generated_Image_7dacmb7dacmb7dac.png" alt="Marina y Manuel" class="second-photo-img"/>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <!-- Location -->
-    <div class="info-card scroll-reveal">
-      <span class="card-icon">📍</span>
-      <div class="card-title">Lugar</div>
-      <div class="card-main">Molino Sotomelero</div>
-      <div class="card-sub">CP-246, s/n, 41409 Écija, Sevilla</div>
-      <a href="https://maps.google.com/?q=CP-246,+s/n,+41409+Écija,+Sevilla" target="_blank">
-        🗺️ Ver en Google Maps
+    <!-- ORNAMENTAL DIVIDER -->
+    <div class="orn-divider fade-up" style="margin:0 30px 32px">
+      <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="20" x2="155" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+        <g transform="translate(200,20)">
+          <path d="M-18,0 Q-10,-8 0,-8 Q10,-8 18,0 Q10,8 0,8 Q-10,8 -18,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".7"/>
+          <circle cx="0" cy="0" r="2.5" fill="#c8a86a" opacity=".8"/>
+        </g>
+        <line x1="245" y1="20" x2="400" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+      </svg>
+    </div>
+
+    <!-- INFO SECTIONS -->
+    <div class="info-section">
+
+      <!-- FECHA -->
+      <div class="info-block fade-up">
+        <div class="block-header">
+          <span class="block-header-icon">✦</span>
+        </div>
+        <div class="block-content">
+          <div class="block-bg" style="background-image:url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80')"></div>
+          <svg class="block-floral br" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(10,70)"><line x1="0" y1="0" x2="50" y2="-60" stroke="#3d5a47" stroke-width="1.2"/><ellipse cx="53" cy="-64" rx="10" ry="7" fill="#3d5a47" transform="rotate(-40,53,-64)"/><g transform="translate(35,-42)"><ellipse cx="0" cy="-10" rx="6" ry="9" fill="#c8a86a" transform="rotate(-30)"/><ellipse cx="0" cy="-10" rx="6" ry="9" fill="#e8c890" transform="rotate(60)"/><circle cx="0" cy="0" r="3" fill="#8b6914"/></g></g>
+          </svg>
+          <div class="block-label">Fecha</div>
+          <div class="block-main">Sábado, 12 de Septiembre de 2026</div>
+          <div class="block-sub">¡El gran día!</div>
+        </div>
+      </div>
+
+      <!-- LUGAR -->
+      <div class="info-block fade-up">
+        <div class="block-header">
+          <span class="block-header-icon">✦</span>
+        </div>
+        <div class="block-content">
+          <div class="block-bg" style="background-image:url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&q=80')"></div>
+          <svg class="block-floral tl" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(55,5)"><line x1="0" y1="0" x2="-40" y2="50" stroke="#3d5a47" stroke-width="1"/><ellipse cx="-43" cy="54" rx="8" ry="6" fill="#3d5a47" transform="rotate(-40,-43,54)"/><g transform="translate(-28,35)"><ellipse cx="0" cy="-8" rx="5" ry="8" fill="#c8a86a" transform="rotate(-30)"/><ellipse cx="0" cy="-8" rx="5" ry="8" fill="#e8c890" transform="rotate(60)"/><circle cx="0" cy="0" r="3" fill="#8b6914"/></g></g>
+          </svg>
+          <div class="block-label">Lugar</div>
+          <div class="block-main">Molino Sotomelero</div>
+          <div class="block-sub">CP-246, s/n, 41409 Écija, Sevilla</div>
+          <a class="block-link" href="https://maps.google.com/?q=Molino+Sotomelero+Ecija+Sevilla" target="_blank">Ver en Google Maps →</a>
+        </div>
+      </div>
+
+      <!-- HORA -->
+      <div class="info-block fade-up">
+        <div class="block-header">
+          <span class="block-header-icon">✦</span>
+        </div>
+        <div class="block-content">
+          <div class="block-bg" style="background-image:url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80')"></div>
+          <svg class="block-floral br" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(10,70)"><line x1="0" y1="0" x2="50" y2="-60" stroke="#3d5a47" stroke-width="1.2"/><ellipse cx="53" cy="-64" rx="10" ry="7" fill="#3d5a47" transform="rotate(-40,53,-64)"/><g transform="translate(35,-42)"><ellipse cx="0" cy="-10" rx="6" ry="9" fill="#c8a86a" transform="rotate(-30)"/><ellipse cx="0" cy="-10" rx="6" ry="9" fill="#e8c890" transform="rotate(60)"/><circle cx="0" cy="0" r="3" fill="#8b6914"/></g></g>
+          </svg>
+          <div class="block-label">Hora</div>
+          <div class="block-main">19:30 h</div>
+          <div class="block-sub">Ceremonia Civil · Bienvenida · Banquete</div>
+        </div>
+      </div>
+
+      <!-- DRESS CODE -->
+      <div class="info-block fade-up">
+        <div class="block-header">
+          <span class="block-header-icon">✦</span>
+        </div>
+        <div class="block-content">
+          <div class="block-bg" style="background-image:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80')"></div>
+          <svg class="block-floral tl" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(55,5)"><line x1="0" y1="0" x2="-40" y2="50" stroke="#3d5a47" stroke-width="1"/><ellipse cx="-43" cy="54" rx="8" ry="6" fill="#3d5a47" transform="rotate(-40,-43,54)"/><g transform="translate(-28,35)"><ellipse cx="0" cy="-8" rx="5" ry="8" fill="#c8a86a" transform="rotate(-30)"/><ellipse cx="0" cy="-8" rx="5" ry="8" fill="#e8c890" transform="rotate(60)"/><circle cx="0" cy="0" r="3" fill="#8b6914"/></g></g>
+          </svg>
+          <div class="block-label">Dress Code</div>
+          <div class="block-main">Formal</div>
+          <div class="block-sub">¡Saca tus mejores galas!</div>
+        </div>
+      </div>
+
+      <!-- BUS -->
+      <div class="info-block fade-up">
+        <div class="block-header">
+          <span class="block-header-icon">✦</span>
+        </div>
+        <div class="block-content">
+          <div class="block-label">🚌 &nbsp;Servicio de Autobús</div>
+          <div class="bus-grid">
+            <div class="bus-col-inner">
+              <div class="bus-col-title">Ida ➜</div>
+              <div class="bus-row">La Luisiana<br><strong>18:30 h</strong></div>
+              <div class="bus-row" style="margin-top:8px">Écija<br><strong>19:00 h</strong></div>
+            </div>
+            <div class="bus-col-inner">
+              <div class="bus-col-title">⬅ Vuelta</div>
+              <div class="bus-row">Sotomelero → Écija → La Luisiana<br><strong>03:00 h</strong></div>
+              <div class="bus-row" style="margin-top:8px">Sotomelero → Écija → La Luisiana<br><strong>05:00 h</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACTO -->
+      <div class="info-block fade-up">
+        <div class="block-header">
+          <span class="block-header-icon">✦</span>
+        </div>
+        <div class="block-content contact-block">
+          <div class="block-label">Contacto</div>
+          <div class="block-sub" style="margin-bottom:18px;font-size:clamp(12px,3.4vw,14px)">Para no asistencia, dudas o cualquier consulta</div>
+          <div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+            <a class="contact-wa-btn" href="https://wa.me/34667661578?text=Hola%20Manuel!" target="_blank">
+              <span class="contact-wa-icon">💬</span>
+              Manuel · +34 667 661 578
+            </a>
+            <a class="contact-wa-btn" href="https://wa.me/34667661578?text=Hola%20Marina!" target="_blank">
+              <span class="contact-wa-icon">💬</span>
+              Marina · +34 667 661 578
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /info-section -->
+
+    <!-- ORNAMENTAL DIVIDER -->
+    <div class="orn-divider fade-up" style="margin:10px 30px 20px">
+      <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="20" x2="155" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+        <g transform="translate(200,20)">
+          <path d="M-18,0 Q-10,-8 0,-8 Q10,-8 18,0 Q10,8 0,8 Q-10,8 -18,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".7"/>
+          <circle cx="0" cy="0" r="2.5" fill="#c8a86a" opacity=".8"/>
+        </g>
+        <line x1="245" y1="20" x2="400" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+      </svg>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="closing-section fade-up">
+      <p class="closing-text">Con cariño,<br>Marina y Manuel</p>
+    </div>
+
+    <!-- RSVP -->
+    <div class="rsvp-wrap fade-up">
+      <p class="rsvp-note">Nos encantaría contar con tu asistencia</p>
+      <a class="rsvp-btn"
+        href="https://forms.google.com"
+        target="_blank">
+        Confirmar Asistencia
+        <small>Menú · Alergias · Más</small>
       </a>
     </div>
 
-    <!-- Time -->
-    <div class="info-card scroll-reveal">
-      <span class="card-icon">🕖</span>
-      <div class="card-title">Hora</div>
-      <div class="card-main">19:30h</div>
-      <div class="card-sub">Ceremonia Civil · Bienvenida · Banquete</div>
-    </div>
-
-    <!-- Dress Code -->
-    <div class="info-card scroll-reveal">
-      <span class="card-icon">👗</span>
-      <div class="card-title">Dress Code</div>
-      <div class="card-main">Formal</div>
-      <div class="card-sub">¡Saca tus mejores galas!</div>
-    </div>
-
-    <!-- Bus Service -->
-    <div class="info-card scroll-reveal">
-      <span class="card-icon">🚌</span>
-      <div class="card-title">Servicio de Autobús</div>
-      <div class="bus-direction">IDA</div>
-      <table class="bus-table">
-        <tr>
-          <td>La Luisiana (Estación de autobuses)</td>
-          <td>18:30h</td>
-        </tr>
-        <tr>
-          <td>Écija (Centro Comercial N4)</td>
-          <td>19:00h</td>
-        </tr>
-      </table>
-      <div class="bus-direction" style="margin-top:14px;">VUELTA</div>
-      <table class="bus-table">
-        <tr>
-          <td>Écija → La Luisiana</td>
-          <td>03:00h</td>
-        </tr>
-        <tr>
-          <td>Écija → La Luisiana</td>
-          <td>05:00h</td>
-        </tr>
-      </table>
-    </div>
-
-    <!-- Contact -->
-    <div class="info-card scroll-reveal">
-      <span class="card-icon">📞</span>
-      <div class="card-title">Contacto</div>
-      <div class="card-sub" style="margin-bottom:10px;">Para cualquier duda, no asistencia o comentario:</div>
-      <div class="contact-item">
-        <span class="contact-name">Manuel</span>
-        <span class="contact-phone"><a href="tel:+34667661578">+34 667 661 578</a></span>
-      </div>
-      <div class="contact-item">
-        <span class="contact-name">Marina</span>
-        <span class="contact-phone"><a href="tel:+34667661578">+34 667 661 578</a></span>
-      </div>
-    </div>
-
   </div>
-
-  <!-- FOOTER -->
-  <div class="inv-footer scroll-reveal">
-    <div class="divider"><span class="divider-icon">✦</span></div>
-    <br>
-    <div class="closing">Con cariño,<br>Marina & Manuel</div>
-    <div class="closing-sub">12 · 09 · 2026</div>
-    <br>
-    <!-- Footer botanical -->
-    <svg viewBox="0 0 200 60" style="width:180px; opacity:0.4; margin-top:10px;" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="100" cy="50" rx="5" ry="18" fill="#8fa882" transform="rotate(0 100 50)"/>
-      <ellipse cx="85" cy="48" rx="4" ry="15" fill="#7a9470" transform="rotate(-20 85 48)"/>
-      <ellipse cx="115" cy="48" rx="4" ry="15" fill="#7a9470" transform="rotate(20 115 48)"/>
-      <ellipse cx="70" cy="44" rx="4" ry="13" fill="#8fa882" transform="rotate(-35 70 44)"/>
-      <ellipse cx="130" cy="44" rx="4" ry="13" fill="#8fa882" transform="rotate(35 130 44)"/>
-      <circle cx="100" cy="28" r="8" fill="#c8d5a0" opacity="0.8"/>
-      <circle cx="84" cy="30" r="6" fill="#b8c890" opacity="0.7"/>
-      <circle cx="116" cy="30" r="6" fill="#b8c890" opacity="0.7"/>
-    </svg>
-  </div>
-
 </div>
 
 <script>
-function openEnvelope() {
-  const screen = document.getElementById('envelope-screen');
-  const content = document.getElementById('invitation-content');
+/* ── PARTICLES ── */
+const cvs = document.getElementById('particles');
+const ctx = cvs.getContext('2d');
+function resize(){ cvs.width=innerWidth; cvs.height=innerHeight; }
+resize(); addEventListener('resize',resize);
 
-  if (screen.classList.contains('opening')) return;
+const pts = Array.from({length:55},()=>mkPt(true));
+function mkPt(init){
+  return{
+    x:Math.random()*innerWidth,
+    y:init?Math.random()*innerHeight:innerHeight+10,
+    r:Math.random()*3+.5,
+    vy:-(Math.random()*.8+.2),
+    vx:(Math.random()-.5)*.4,
+    op:Math.random()*.5+.15,
+    col:Math.random()>.5?'#c8a86a':'#e8d4a0',
+    shape:Math.floor(Math.random()*3)
+  };
+}
+function drawPt(p){
+  ctx.save();
+  ctx.globalAlpha=p.op;
+  ctx.fillStyle=p.col;
+  ctx.translate(p.x,p.y);
+  if(p.shape===0){
+    ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fill();
+  } else if(p.shape===1){
+    ctx.rotate(Math.PI/4);
+    ctx.fillRect(-p.r,-p.r,p.r*2,p.r*2);
+  } else {
+    ctx.fillRect(-p.r*.3,-p.r*1.5,p.r*.6,p.r*3);
+    ctx.fillRect(-p.r*1.5,-p.r*.3,p.r*3,p.r*.6);
+  }
+  ctx.restore();
+}
+function animPts(){
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+  pts.forEach((p,i)=>{
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.y<-10) pts[i]=mkPt(false);
+    drawPt(p);
+  });
+  requestAnimationFrame(animPts);
+}
+animPts();
 
-  screen.classList.add('opening');
+/* ── ENVELOPE OPEN ── */
+let opened=false;
+function openEnvelope(){
+  if(opened) return;
+  opened=true;
+  const seal=document.getElementById('waxSeal');
+  const flap=document.getElementById('envFlap');
+  const screen=document.getElementById('env-screen');
+  const inv=document.getElementById('invitation');
 
-  setTimeout(() => {
-    screen.classList.add('gone');
-    content.classList.add('visible');
-    initScrollReveal();
-  }, 1400);
+  // Step 1: seal dissolves in place — blur + fade, NO movement
+  seal.classList.add('dissolving');
+
+  // Step 2: flap opens after seal has started dissolving
+  setTimeout(()=>{
+    flap.style.transition='transform 1.3s cubic-bezier(.25,0.1,.25,1)';
+    flap.style.transform='rotateX(-178deg)';
+  }, 600);
+
+  // Step 3: whole envelope screen fades out
+  setTimeout(()=>{
+    screen.style.transition='opacity .8s ease';
+    screen.style.opacity='0';
+  }, 1700);
+
+  // Step 4: show invitation with fade-in
+  setTimeout(()=>{
+    screen.style.display='none';
+    inv.style.display='block';
+    inv.style.opacity='0';
+    inv.style.transition='opacity .7s ease';
+    setTimeout(()=>{ inv.style.opacity='1'; checkFade(); },50);
+  }, 2500);
 }
 
-function initScrollReveal() {
-  const elements = document.querySelectorAll('.scroll-reveal');
-
-  // Reveal first elements immediately
-  elements.forEach((el, i) => {
-    if (i < 3) {
-      setTimeout(() => el.classList.add('revealed'), i * 200);
-    }
-  });
-
-  // Observer for rest
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  elements.forEach((el, i) => {
-    if (i >= 3) observer.observe(el);
+/* ── SCROLL FADE ── */
+function checkFade(){
+  document.querySelectorAll('.fade-up').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top < window.innerHeight - 50) el.classList.add('in');
   });
 }
+document.getElementById('invitation').addEventListener('scroll', checkFade);
+window.addEventListener('scroll', checkFade);
 </script>
-
 </body>
 </html>
