@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#c8d5c0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Invitación de Boda - Marina & Manuel</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  background: #c8d5c0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  font-family: 'Cormorant Garamond', serif;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+.phone-frame {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== ENVELOPE SCREEN ===== */
+#envelope-screen {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  position: fixed;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  max-width: 480px;
+  z-index: 100;
+  cursor: pointer;
+  overflow: hidden;
+  background: #d6ddd0;
+  touch-action: manipulation;
+}
+
+/* Envelope body */
+.env-body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, #e8ede5 0%, #d4dccf 40%, #c8d4c2 100%);
+}
+
+/* Envelope diagonal fold line */
+.env-fold-left {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 100vh 0 0 50vw;
+  border-color: transparent transparent transparent rgba(255,255,255,0.18);
+  max-width: 420px;
+}
+.env-fold-right {
+  position: absolute;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 100vh 50vw;
+  border-color: transparent transparent rgba(0,0,0,0.06) transparent;
+  max-width: 420px;
+}
+
+/* Envelope texture overlay */
+.env-texture {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.07'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+/* Envelope flap (top triangle) */
+.env-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 55%;
+  transform-origin: top center;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: linear-gradient(180deg, #bfcfba 0%, #c8d5c2 60%, #b8c8b3 100%);
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+}
+
+.env-flap::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 50%, rgba(0,0,0,0.08) 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+/* Bottom flap */
+.env-flap-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  clip-path: polygon(0 100%, 100% 100%, 50% 0%);
+  background: linear-gradient(0deg, #b5c5b0 0%, #c2d0bc 100%);
+  z-index: 1;
+}
+
+/* Side flaps */
+.env-flap-side-left {
+  position: absolute;
+  left: 0; top: 0;
+  width: 50%;
+  height: 100%;
+  clip-path: polygon(0 0, 0 100%, 100% 50%);
+  background: linear-gradient(90deg, #b8c8b3 0%, #c5d2bf 100%);
+  z-index: 2;
+}
+.env-flap-side-right {
+  position: absolute;
+  right: 0; top: 0;
+  width: 50%;
+  height: 100%;
+  clip-path: polygon(100% 0, 100% 100%, 0 50%);
+  background: linear-gradient(270deg, #b5c5b0 0%, #c2d0bc 100%);
+  z-index: 2;
+}
+
+/* Wax seal */
+.wax-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  width: 110px;
+  height: 110px;
+  transition: transform 1.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+}
+
+.wax-seal svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35)) drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* Tap hint */
+.tap-hint {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(80,100,75,0.8);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(13px, 3.5vw, 16px);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: pulse 2s infinite;
+  z-index: 30;
+  text-align: center;
+  white-space: nowrap;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+}
+
+/* Envelope open animation */
+#envelope-screen.opening .env-flap {
+  transform: rotateX(-180deg);
+}
+#envelope-screen.opening .wax-seal {
+  transform: translate(-50%, -200%) scale(0.5);
+  opacity: 0;
+}
+#envelope-screen.gone {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease 0.8s;
+}
+
+/* Flowers on envelope */
+.env-flowers {
+  position: absolute;
+  bottom: 5%;
+  right: -10px;
+  width: 160px;
+  opacity: 0.6;
+  z-index: 5;
+}
+.env-flowers-left {
+  position: absolute;
+  top: 5%;
+  left: -10px;
+  width: 130px;
+  opacity: 0.5;
+  z-index: 5;
+  transform: scaleX(-1) rotate(20deg);
+}
+
+/* ===== INVITATION CONTENT ===== */
+#invitation-content {
+  width: 100%;
+  min-height: 100vh;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  background: #fdf8f0;
+  background-image: 
+    radial-gradient(ellipse at 20% 10%, rgba(180,200,160,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(180,200,160,0.12) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.3'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23paper)' opacity='0.04'/%3E%3C/svg%3E");
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+#invitation-content.visible {
+  opacity: 1;
+}
+
+/* Floral background corners */
+.floral-bg {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.18;
+}
+.floral-bg.top-right {
+  top: 0; right: 0;
+  width: 200px;
+}
+.floral-bg.bottom-left {
+  bottom: 0; left: 0;
+  width: 180px;
+  transform: rotate(180deg);
+}
+
+/* Scroll animation */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Header section */
+.inv-header {
+  text-align: center;
+  padding: 60px 30px 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.inv-header .moment {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(32px, 9vw, 44px);
+  color: #7a9470;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.inv-header .welcome-text {
+  font-size: clamp(14px, 3.8vw, 17px);
+  color: #5a5a4a;
+  line-height: 1.9;
+  font-style: italic;
+  font-weight: 300;
+  padding: 0 10px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 40px;
+  position: relative;
+  z-index: 1;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #9aaa88, transparent);
+}
+.divider-icon {
+  color: #9aaa88;
+  font-size: 18px;
+}
+
+/* Names section */
+.names-section {
+  text-align: center;
+  padding: 10px 30px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.names-section .nos-casamos {
+  font-size: clamp(11px, 3vw, 14px);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #9aaa88;
+  margin-bottom: 10px;
+}
+
+.names-section .names {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(46px, 13vw, 64px);
+  color: #4a6645;
+  line-height: 1.1;
+}
+
+.names-section .names span {
+  display: block;
+  font-size: clamp(30px, 8.5vw, 42px);
+  color: #7a9470;
+}
+
+/* Couple photo */
+.couple-photo {
+  width: 85%;
+  max-width: 300px;
+  margin: 20px auto;
+  display: block;
+  border-radius: 50%;
+  border: 4px solid #9aaa88;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15), 0 0 0 8px rgba(154,170,136,0.15);
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+/* Info cards */
+.info-section {
+  padding: 15px 25px;
+  position: relative;
+  z-index: 1;
+}
+
+.info-card {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(154,170,136,0.3);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.info-card .card-icon {
+  font-size: 22px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.info-card .card-title {
+  font-size: clamp(10px, 2.5vw, 12px);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #9aaa88;
+  margin-bottom: 8px;
+}
+
+.info-card .card-main {
+  font-size: clamp(17px, 4.8vw, 22px);
+  color: #3a4a35;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.info-card .card-sub {
+  font-size: clamp(13px, 3.5vw, 16px);
+  color: #6a7a60;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.info-card a {
+  color: #7a9470;
+  text-decoration: none;
+  font-size: clamp(12px, 3.2vw, 15px);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  border-bottom: 1px solid rgba(122,148,112,0.3);
+  padding: 4px 0;
+  min-height: 44px;
+}
+
+/* Bus schedule */
+.bus-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.bus-table th {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #9aaa88;
+  padding: 6px 0;
+  text-align: left;
+  border-bottom: 1px solid rgba(154,170,136,0.3);
+}
+.bus-table td {
+  font-size: 13px;
+  color: #5a6a50;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(154,170,136,0.1);
+  line-height: 1.4;
+}
+.bus-table td:last-child {
+  text-align: right;
+  font-weight: 600;
+  color: #4a6645;
+}
+.bus-direction {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #9aaa88;
+  margin: 12px 0 4px;
+}
+
+/* Contact */
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(154,170,136,0.15);
+}
+.contact-item:last-child { border-bottom: none; }
+.contact-name {
+  font-size: 14px;
+  color: #4a6645;
+  font-weight: 600;
+  flex: 1;
+}
+.contact-phone {
+  font-size: 14px;
+  color: #6a7a60;
+}
+.contact-phone a {
+  color: #7a9470;
+  text-decoration: none;
+}
+
+/* Footer */
+.inv-footer {
+  text-align: center;
+  padding: 30px 30px 60px;
+  position: relative;
+  z-index: 1;
+}
+.inv-footer .closing {
+  font-family: 'Great Vibes', cursive;
+  font-size: 42px;
+  color: #7a9470;
+  line-height: 1.3;
+}
+.inv-footer .closing-sub {
+  font-size: 13px;
+  color: #9aaa88;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+/* Floral decorations SVG */
+.floral-corner {
+  position: absolute;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<!-- ENVELOPE SCREEN -->
+<div id="envelope-screen" onclick="openEnvelope()">
+  <div class="env-body">
+    <div class="env-texture"></div>
+    <div class="env-flap-side-left"></div>
+    <div class="env-flap-side-right"></div>
+    <div class="env-flap-bottom"></div>
+
+    <!-- Botanical flowers on envelope -->
+    <svg class="env-flowers" viewBox="0 0 160 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.7">
+        <ellipse cx="80" cy="180" rx="6" ry="18" fill="#8fa882" transform="rotate(-15 80 180)"/>
+        <ellipse cx="70" cy="160" rx="5" ry="15" fill="#7a9470" transform="rotate(-30 70 160)"/>
+        <ellipse cx="90" cy="155" rx="5" ry="16" fill="#8fa882" transform="rotate(10 90 155)"/>
+        <ellipse cx="60" cy="140" rx="4" ry="13" fill="#6b8560" transform="rotate(-45 60 140)"/>
+        <ellipse cx="100" cy="135" rx="4" ry="14" fill="#7a9470" transform="rotate(25 100 135)"/>
+        <circle cx="75" cy="120" r="12" fill="#c8d5a0" opacity="0.8"/>
+        <circle cx="95" cy="115" r="10" fill="#b8c890" opacity="0.7"/>
+        <circle cx="60" cy="118" r="8" fill="#d0dca8" opacity="0.6"/>
+        <circle cx="110" cy="125" r="9" fill="#c0cc98" opacity="0.65"/>
+        <circle cx="85" cy="105" r="7" fill="#e8f0c0" opacity="0.5"/>
+        <!-- Small petals -->
+        <ellipse cx="75" cy="120" rx="5" ry="8" fill="white" opacity="0.4" transform="rotate(0 75 120)"/>
+        <ellipse cx="75" cy="120" rx="5" ry="8" fill="white" opacity="0.4" transform="rotate(45 75 120)"/>
+        <ellipse cx="75" cy="120" rx="5" ry="8" fill="white" opacity="0.4" transform="rotate(90 75 120)"/>
+        <ellipse cx="75" cy="120" rx="5" ry="8" fill="white" opacity="0.4" transform="rotate(135 75 120)"/>
+      </g>
+    </svg>
+
+    <svg class="env-flowers-left" viewBox="0 0 130 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.6">
+        <ellipse cx="50" cy="160" rx="5" ry="16" fill="#8fa882" transform="rotate(15 50 160)"/>
+        <ellipse cx="65" cy="145" rx="5" ry="14" fill="#7a9470" transform="rotate(30 65 145)"/>
+        <ellipse cx="35" cy="140" rx="4" ry="13" fill="#8fa882" transform="rotate(-10 35 140)"/>
+        <circle cx="55" cy="110" r="11" fill="#c8d5a0" opacity="0.8"/>
+        <circle cx="72" cy="105" r="9" fill="#b8c890" opacity="0.7"/>
+        <circle cx="40" cy="108" r="8" fill="#d0dca8" opacity="0.6"/>
+      </g>
+    </svg>
+
+    <div class="env-flap"></div>
+  </div>
+
+  <!-- WAX SEAL -->
+  <div class="wax-seal">
+    <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="waxGrad" cx="38%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#8fa882"/>
+          <stop offset="40%" stop-color="#7a9470"/>
+          <stop offset="75%" stop-color="#6b8560"/>
+          <stop offset="100%" stop-color="#4a6645"/>
+        </radialGradient>
+        <radialGradient id="waxShine" cx="30%" cy="25%" r="50%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.45)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </radialGradient>
+        <filter id="waxBlur">
+          <feGaussianBlur stdDeviation="1.5"/>
+        </filter>
+        <filter id="emboss">
+          <feConvolveMatrix order="3" kernelUnitLength="1"
+            kernel="-2 -1 0 -1 1 1 0 1 2"/>
+        </filter>
+      </defs>
+      <!-- Drip effects -->
+      <ellipse cx="55" cy="100" rx="28" ry="8" fill="#4a6645" opacity="0.3" filter="url(#waxBlur)"/>
+      <!-- Irregular wax blob -->
+      <path d="M55,8 C72,6 88,14 96,28 C104,42 106,58 100,72 C94,86 82,96 68,102 C54,108 38,106 26,98 C14,90 6,76 6,62 C6,48 10,32 20,22 C30,12 42,10 55,8 Z" fill="url(#waxGrad)"/>
+      <!-- Shine overlay -->
+      <path d="M55,8 C72,6 88,14 96,28 C104,42 106,58 100,72 C94,86 82,96 68,102 C54,108 38,106 26,98 C14,90 6,76 6,62 C6,48 10,32 20,22 C30,12 42,10 55,8 Z" fill="url(#waxShine)"/>
+      <!-- Inner circle border -->
+      <circle cx="55" cy="55" r="34" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+      <circle cx="55" cy="55" r="30" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
+      <!-- M&M text -->
+      <text x="55" y="52" text-anchor="middle" font-family="'Great Vibes', cursive" font-size="18" fill="rgba(255,255,255,0.9)" letter-spacing="1">M&M</text>
+      <text x="55" y="68" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="3">BODA 2026</text>
+    </svg>
+  </div>
+
+  <div class="tap-hint">✦ Toca para abrir ✦</div>
+</div>
+
+<!-- INVITATION CONTENT -->
+<div id="invitation-content">
+
+  <!-- Fixed floral corners -->
+  <svg class="floral-bg top-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0.8">
+      <ellipse cx="160" cy="40" rx="6" ry="20" fill="#8fa882" transform="rotate(30 160 40)"/>
+      <ellipse cx="175" cy="60" rx="5" ry="18" fill="#7a9470" transform="rotate(50 175 60)"/>
+      <ellipse cx="145" cy="55" rx="5" ry="16" fill="#8fa882" transform="rotate(10 145 55)"/>
+      <ellipse cx="185" cy="80" rx="4" ry="14" fill="#6b8560" transform="rotate(65 185 80)"/>
+      <circle cx="155" cy="80" r="14" fill="#c8d5a0" opacity="0.7"/>
+      <circle cx="175" cy="90" r="11" fill="#b8c890" opacity="0.6"/>
+      <circle cx="140" cy="85" r="9" fill="#d0dca8" opacity="0.55"/>
+      <ellipse cx="155" cy="80" rx="6" ry="10" fill="white" opacity="0.35" transform="rotate(0 155 80)"/>
+      <ellipse cx="155" cy="80" rx="6" ry="10" fill="white" opacity="0.35" transform="rotate(60 155 80)"/>
+      <ellipse cx="155" cy="80" rx="6" ry="10" fill="white" opacity="0.35" transform="rotate(120 155 80)"/>
+    </g>
+  </svg>
+
+  <svg class="floral-bg bottom-left" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0.8">
+      <ellipse cx="40" cy="140" rx="6" ry="20" fill="#8fa882" transform="rotate(-20 40 140)"/>
+      <ellipse cx="25" cy="120" rx="5" ry="18" fill="#7a9470" transform="rotate(-40 25 120)"/>
+      <ellipse cx="55" cy="125" rx="5" ry="16" fill="#8fa882" transform="rotate(5 55 125)"/>
+      <circle cx="45" cy="100" r="13" fill="#c8d5a0" opacity="0.7"/>
+      <circle cx="25" cy="95" r="10" fill="#b8c890" opacity="0.6"/>
+      <circle cx="62" cy="98" r="9" fill="#d0dca8" opacity="0.55"/>
+    </g>
+  </svg>
+
+  <!-- HEADER -->
+  <div class="inv-header scroll-reveal">
+    <div class="moment">El momento ha llegado...</div>
+    <p class="welcome-text">
+      Hay momentos en la vida que cobran un sentido especial cuando se comparten con las personas que más queremos. Por eso, nos hace muchísima ilusión que nos acompañes en el día de nuestra boda.<br><br>
+      Tu presencia es el mejor regalo que podríamos tener para empezar esta nueva etapa con la mejor energía y, por supuesto, con una gran celebración.<br><br>
+      <strong>¡No faltes, la fiesta no será lo mismo sin ti!</strong>
+    </p>
+  </div>
+
+  <div class="divider scroll-reveal"><span class="divider-icon">✦</span></div>
+
+  <!-- NAMES -->
+  <div class="names-section scroll-reveal">
+    <div class="nos-casamos">¡Nos casamos!</div>
+    <div class="names">
+      Marina
+      <span>&</span>
+      Manuel
+    </div>
+  </div>
+
+  <!-- COUPLE PHOTO -->
+  <div class="scroll-reveal" style="text-align:center; position:relative; z-index:1; padding: 10px 0;">
+    <img src="Gemini_Generated_Image_tlitjitlitjitlit.png" alt="Marina y Manuel" class="couple-photo">
+  </div>
+
+  <div class="divider scroll-reveal"><span class="divider-icon">🌿</span></div>
+
+  <!-- INFO CARDS -->
+  <div class="info-section">
+
+    <!-- Date -->
+    <div class="info-card scroll-reveal">
+      <span class="card-icon">📅</span>
+      <div class="card-title">Fecha</div>
+      <div class="card-main">Sábado, 12 de Septiembre</div>
+      <div class="card-sub">2026</div>
+    </div>
+
+    <!-- Location -->
+    <div class="info-card scroll-reveal">
+      <span class="card-icon">📍</span>
+      <div class="card-title">Lugar</div>
+      <div class="card-main">Molino Sotomelero</div>
+      <div class="card-sub">CP-246, s/n, 41409 Écija, Sevilla</div>
+      <a href="https://maps.google.com/?q=CP-246,+s/n,+41409+Écija,+Sevilla" target="_blank">
+        🗺️ Ver en Google Maps
+      </a>
+    </div>
+
+    <!-- Time -->
+    <div class="info-card scroll-reveal">
+      <span class="card-icon">🕖</span>
+      <div class="card-title">Hora</div>
+      <div class="card-main">19:30h</div>
+      <div class="card-sub">Ceremonia Civil · Bienvenida · Banquete</div>
+    </div>
+
+    <!-- Dress Code -->
+    <div class="info-card scroll-reveal">
+      <span class="card-icon">👗</span>
+      <div class="card-title">Dress Code</div>
+      <div class="card-main">Formal</div>
+      <div class="card-sub">¡Saca tus mejores galas!</div>
+    </div>
+
+    <!-- Bus Service -->
+    <div class="info-card scroll-reveal">
+      <span class="card-icon">🚌</span>
+      <div class="card-title">Servicio de Autobús</div>
+      <div class="bus-direction">IDA</div>
+      <table class="bus-table">
+        <tr>
+          <td>La Luisiana (Estación de autobuses)</td>
+          <td>18:30h</td>
+        </tr>
+        <tr>
+          <td>Écija (Centro Comercial N4)</td>
+          <td>19:00h</td>
+        </tr>
+      </table>
+      <div class="bus-direction" style="margin-top:14px;">VUELTA</div>
+      <table class="bus-table">
+        <tr>
+          <td>Écija → La Luisiana</td>
+          <td>03:00h</td>
+        </tr>
+        <tr>
+          <td>Écija → La Luisiana</td>
+          <td>05:00h</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Contact -->
+    <div class="info-card scroll-reveal">
+      <span class="card-icon">📞</span>
+      <div class="card-title">Contacto</div>
+      <div class="card-sub" style="margin-bottom:10px;">Para cualquier duda, no asistencia o comentario:</div>
+      <div class="contact-item">
+        <span class="contact-name">Manuel</span>
+        <span class="contact-phone"><a href="tel:+34667661578">+34 667 661 578</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-name">Marina</span>
+        <span class="contact-phone"><a href="tel:+34667661578">+34 667 661 578</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="inv-footer scroll-reveal">
+    <div class="divider"><span class="divider-icon">✦</span></div>
+    <br>
+    <div class="closing">Con cariño,<br>Marina & Manuel</div>
+    <div class="closing-sub">12 · 09 · 2026</div>
+    <br>
+    <!-- Footer botanical -->
+    <svg viewBox="0 0 200 60" style="width:180px; opacity:0.4; margin-top:10px;" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="100" cy="50" rx="5" ry="18" fill="#8fa882" transform="rotate(0 100 50)"/>
+      <ellipse cx="85" cy="48" rx="4" ry="15" fill="#7a9470" transform="rotate(-20 85 48)"/>
+      <ellipse cx="115" cy="48" rx="4" ry="15" fill="#7a9470" transform="rotate(20 115 48)"/>
+      <ellipse cx="70" cy="44" rx="4" ry="13" fill="#8fa882" transform="rotate(-35 70 44)"/>
+      <ellipse cx="130" cy="44" rx="4" ry="13" fill="#8fa882" transform="rotate(35 130 44)"/>
+      <circle cx="100" cy="28" r="8" fill="#c8d5a0" opacity="0.8"/>
+      <circle cx="84" cy="30" r="6" fill="#b8c890" opacity="0.7"/>
+      <circle cx="116" cy="30" r="6" fill="#b8c890" opacity="0.7"/>
+    </svg>
+  </div>
+
+</div>
+
+<script>
+function openEnvelope() {
+  const screen = document.getElementById('envelope-screen');
+  const content = document.getElementById('invitation-content');
+
+  if (screen.classList.contains('opening')) return;
+
+  screen.classList.add('opening');
+
+  setTimeout(() => {
+    screen.classList.add('gone');
+    content.classList.add('visible');
+    initScrollReveal();
+  }, 1400);
+}
+
+function initScrollReveal() {
+  const elements = document.querySelectorAll('.scroll-reveal');
+
+  // Reveal first elements immediately
+  elements.forEach((el, i) => {
+    if (i < 3) {
+      setTimeout(() => el.classList.add('revealed'), i * 200);
+    }
+  });
+
+  // Observer for rest
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  elements.forEach((el, i) => {
+    if (i >= 3) observer.observe(el);
+  });
+}
+</script>
+
+</body>
+</html>
