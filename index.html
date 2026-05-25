@@ -1,576 +1,2199 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+   <!-- Open Graph / WhatsApp Preview -->
+
 <meta property="og:type" content="website">
+
 <meta property="og:url" content="https://mglora94.github.io/Invitacionboda/">
+
 <meta property="og:title" content="Marina & Manuel · 12.09.2026 💍">
+
 <meta property="og:description" content="El momento ha llegado... Nos casamos y queremos celebrarlo contigo. Sábado 12 de septiembre de 2026 · Molino Sotomelero, Écija">
+
 <meta property="og:image" content="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/Gemini_Generated_Image_7dacmb7dacmb7dac.jpg">
+
 <meta property="og:image:width" content="1200">
+
 <meta property="og:image:height" content="630">
+
 <title>Marina & Manuel · 12.09.2026</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
 <style>
+
 *{box-sizing:border-box;margin:0;padding:0}
+
 html,body{width:100%;height:100%;overflow:hidden;background:#1a2a1e}
 
+
+
 /* ══════════════════════════════
+
    ENVELOPE SCREEN — full screen, realistic
+
 ══════════════════════════════ */
+
 #env-screen{
+
   position:fixed;inset:0;
+
   display:flex;flex-direction:column;
+
   justify-content:center;align-items:center;
+
   background:#4a5e4a;
+
   z-index:100;
+
   transition:opacity .9s ease;
+
   cursor:pointer;
+
   perspective:1200px;
+
 }
+
+
+
+/* The envelope IS the full screen */
 
 .env-wrap{
+
   position:relative;
+
   width:100%;
+
   height:100dvh;
+
   overflow:hidden;
+
 }
 
-/* Textura de Papel para dar realismo */
-.paper-texture {
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
-  pointer-events: none;
-  mix-blend-mode: multiply;
-  z-index: 6;
-}
+
 
 /* ── ENVELOPE BODY (back layer) ── */
+
 .env-back{
+
   position:absolute;inset:0;
+
   background:linear-gradient(160deg,#4f6652 0%,#3d5240 40%,#344838 100%);
+
 }
+
+
 
 /* ── ENVELOPE INTERIOR (cream, revealed when flap opens) ── */
+
 .env-interior{
+
   position:absolute;
+
   top:0;left:0;width:100%;height:55%;
+
   background:linear-gradient(180deg,#f5ede0 0%,#ede0cc 60%,#e0d0b8 100%);
+
   clip-path:polygon(0 0,100% 0,50% 100%);
-  z-index:1;
-  box-shadow:inset 0 0 40px rgba(180,140,80,.2);
+
+  z-index:4; /* above side flaps, below top flap */
+
+  /* Subtle paper texture lines */
+
+  box-shadow:inset 0 0 40px rgba(180,140,80,.12);
+
 }
+
+.env-interior::after{
+
+  content:"";
+
+  position:absolute;inset:0;
+
+  background:
+
+    linear-gradient(to bottom right,transparent 49.5%,rgba(180,140,80,.08) 49.5%,rgba(180,140,80,.08) 50.5%,transparent 50.5%),
+
+    linear-gradient(to bottom left,transparent 49.5%,rgba(180,140,80,.08) 49.5%,rgba(180,140,80,.08) 50.5%,transparent 50.5%);
+
+  clip-path:polygon(0 0,100% 0,50% 100%);
+
+  pointer-events:none;
+
+}
+
+
 
 /* ── BOTTOM TRIANGLE FLAP ── */
+
 .env-bottom{
+
   position:absolute;
+
   bottom:0;left:0;width:100%;height:55%;
-  background:linear-gradient(180deg,#3e5241 0%,#2e3f31 100%);
+
+  background:linear-gradient(180deg,#3a4e3d 0%,#2e3f31 100%);
+
   clip-path:polygon(0 100%,100% 100%,50% 0%);
-  z-index:4;
-  filter: drop-shadow(0 -5px 10px rgba(0,0,0,0.3));
+
+  z-index:1;
+
 }
+
+
 
 /* ── LEFT TRIANGLE FLAP ── */
+
 .env-left{
+
   position:absolute;
+
   top:0;left:0;width:55%;height:100%;
-  background:linear-gradient(135deg,#465c49 0%,#344538 100%);
+
+  background:linear-gradient(135deg,#3e5241 0%,#344538 100%);
+
   clip-path:polygon(0 0,0 100%,100% 50%);
+
   z-index:2;
-  filter: drop-shadow(5px 0 10px rgba(0,0,0,0.3));
+
 }
+
+
 
 /* ── RIGHT TRIANGLE FLAP ── */
+
 .env-right{
+
   position:absolute;
+
   top:0;right:0;width:55%;height:100%;
-  background:linear-gradient(225deg,#465c49 0%,#344538 100%);
+
+  background:linear-gradient(225deg,#3e5241 0%,#344538 100%);
+
   clip-path:polygon(100% 0,100% 100%,0 50%);
-  z-index:3;
-  filter: drop-shadow(-5px 0 10px rgba(0,0,0,0.3));
+
+  z-index:2;
+
 }
+
+
 
 /* ── TOP FLAP (opens) ── */
+
 .env-top{
+
   position:absolute;
+
   top:0;left:0;width:100%;height:55%;
-  background:linear-gradient(180deg,#506956 0%,#3d5242 60%,#344838 100%);
+
+  background:linear-gradient(180deg,#4a6050 0%,#3d5242 60%,#344838 100%);
+
   clip-path:polygon(0 0,100% 0,50% 100%);
+
   transform-origin:top center;
+
   transform-style:preserve-3d;
+
   transition:transform 1.4s cubic-bezier(.4,0,.2,1);
+
   z-index:5;
-  filter:drop-shadow(0 8px 15px rgba(0,0,0,.5));
+
+  /* subtle inner shadow on flap */
+
+  filter:drop-shadow(0 8px 20px rgba(0,0,0,.35));
+
 }
+
+/* Highlight on top flap */
+
 .env-top::after{
+
   content:"";
+
   position:absolute;inset:0;
-  background:linear-gradient(160deg,rgba(255,255,255,.12) 0%,transparent 55%);
+
+  background:linear-gradient(160deg,rgba(255,255,255,.09) 0%,transparent 55%);
+
   clip-path:polygon(0 0,100% 0,50% 100%);
+
 }
+
+
+
+/* Fold crease line on top flap */
+
+.env-crease{
+
+  position:absolute;
+
+  top:0;left:0;width:100%;height:100%;
+
+  clip-path:polygon(0 0,100% 0,50% 100%);
+
+  background:
+
+    linear-gradient(to bottom right,transparent 49.5%,rgba(0,0,0,.12) 49.5%,rgba(0,0,0,.12) 50.5%,transparent 50.5%),
+
+    linear-gradient(to bottom left,transparent 49.5%,rgba(0,0,0,.12) 49.5%,rgba(0,0,0,.12) 50.5%,transparent 50.5%);
+
+  pointer-events:none;
+
+}
+
+
+
+/* Diagonal crease lines on body */
+
+.env-body-crease{
+
+  position:absolute;inset:0;
+
+  background:
+
+    linear-gradient(to bottom right,transparent 49.5%,rgba(0,0,0,.08) 49.5%,rgba(0,0,0,.08) 50.5%,transparent 50.5%),
+
+    linear-gradient(to bottom left,transparent 49.5%,rgba(0,0,0,.08) 49.5%,rgba(0,0,0,.08) 50.5%,transparent 50.5%);
+
+  z-index:3;
+
+  pointer-events:none;
+
+}
+
+
 
 /* ── WAX SEAL ── */
+
 .wax-seal{
+
   position:absolute;
+
+  /* Centered at the flap fold point — 55% from top */
+
   top:55%;left:50%;
+
   transform:translate(-50%,-50%);
+
   width:min(22vw,100px);
+
   height:min(22vw,100px);
+
   z-index:10;
+
   transition:opacity 1.1s ease, filter 1.1s ease;
-  filter:drop-shadow(0 8px 12px rgba(0,0,0,.5));
+
+  filter:drop-shadow(0 6px 18px rgba(0,0,0,.4));
+
 }
+
 .wax-seal.dissolving{
+
   opacity:0;
+
   filter:drop-shadow(0 0 0 rgba(0,0,0,0)) blur(20px);
+
 }
+
+
 
 /* ── TAP HINT ── */
+
 .tap-hint{
+
   position:absolute;
+
   bottom:clamp(28px,6vh,52px);
+
   left:50%;transform:translateX(-50%);
-  color:rgba(255,255,255,.6);
+
+  color:rgba(255,255,255,.45);
+
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(12px,3vw,15px);
+
+  font-size:clamp(11px,3vw,14px);
+
   letter-spacing:5px;
+
   text-transform:uppercase;
+
   white-space:nowrap;
+
   animation:breathe 2.8s ease-in-out infinite;
+
   z-index:20;
+
 }
-@keyframes breathe{0%,100%{opacity:.4;transform:translateX(-50%) scale(1)}50%{opacity:.9;transform:translateX(-50%) scale(1.03)}}
+
+@keyframes breathe{0%,100%{opacity:.25;transform:translateX(-50%) scale(1)}50%{opacity:.65;transform:translateX(-50%) scale(1.03)}}
+
+
 
 /* ══════════════════════════════
+
    INVITATION CONTENT
+
 ══════════════════════════════ */
+
 #invitation{
+
   position:fixed;inset:0;
+
   overflow-y:auto;overflow-x:hidden;
+
   display:none;
+
   -webkit-overflow-scrolling:touch;
-  background:#fdfcf9; /* Fondo más limpio, estilo acuarela clara */
+
+  background:#f8f2e8;
+
 }
 
-/* Acuarela fondo suave */
+
+
+/* Floral background */
+
 #invitation::before{
+
   content:"";
+
   position:fixed;inset:0;
-  background: radial-gradient(circle at 10% 20%, rgba(228, 196, 196, 0.15) 0%, transparent 40%),
-              radial-gradient(circle at 90% 80%, rgba(200, 168, 106, 0.15) 0%, transparent 40%);
+
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cdefs%3E%3Cstyle%3E.leaf%7Bfill:%233d5a47%7D.petal%7Bfill:%23c8a86a%7D.petal2%7Bfill:%23e8c890%7D%3C/style%3E%3C/defs%3E%3Cg opacity='.5'%3E%3Cg transform='translate(80,80)'%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(-30)'/%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(30)'/%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(90)'/%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(150)'/%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(210)'/%3E%3Cellipse class='leaf' cx='0' cy='-30' rx='10' ry='22' transform='rotate(270)'/%3E%3Ccircle class='petal' cx='0' cy='0' r='8'/%3E%3C/g%3E%3Cg transform='translate(300,150)'%3E%3Cellipse class='petal' cx='0' cy='-20' rx='8' ry='16' transform='rotate(-40)'/%3E%3Cellipse class='petal2' cx='0' cy='-20' rx='8' ry='16' transform='rotate(20)'/%3E%3Cellipse class='petal' cx='0' cy='-20' rx='8' ry='16' transform='rotate(80)'/%3E%3Cellipse class='petal2' cx='0' cy='-20' rx='8' ry='16' transform='rotate(140)'/%3E%3Cellipse class='petal' cx='0' cy='-20' rx='8' ry='16' transform='rotate(200)'/%3E%3Ccircle fill='%238b6914' cx='0' cy='0' r='6'/%3E%3C/g%3E%3Cg transform='translate(520,80)'%3E%3Cellipse class='leaf' cx='0' cy='-25' rx='9' ry='18' transform='rotate(-20)'/%3E%3Cellipse class='leaf' cx='0' cy='-25' rx='9' ry='18' transform='rotate(40)'/%3E%3Cellipse class='leaf' cx='0' cy='-25' rx='9' ry='18' transform='rotate(100)'/%3E%3Cellipse class='leaf' cx='0' cy='-25' rx='9' ry='18' transform='rotate(160)'/%3E%3Ccircle class='petal' cx='0' cy='0' r='7'/%3E%3C/g%3E%3Cg transform='translate(150,350)'%3E%3Cellipse class='petal2' cx='0' cy='-22' rx='9' ry='17' transform='rotate(-50)'/%3E%3Cellipse class='petal' cx='0' cy='-22' rx='9' ry='17' transform='rotate(10)'/%3E%3Cellipse class='petal2' cx='0' cy='-22' rx='9' ry='17' transform='rotate(70)'/%3E%3Cellipse class='petal' cx='0' cy='-22' rx='9' ry='17' transform='rotate(130)'/%3E%3Cellipse class='petal2' cx='0' cy='-22' rx='9' ry='17' transform='rotate(190)'/%3E%3Ccircle fill='%238b6914' cx='0' cy='0' r='7'/%3E%3C/g%3E%3Cg transform='translate(450,380)'%3E%3Cellipse class='leaf' cx='0' cy='-28' rx='10' ry='20' transform='rotate(-10)'/%3E%3Cellipse class='leaf' cx='0' cy='-28' rx='10' ry='20' transform='rotate(50)'/%3E%3Cellipse class='leaf' cx='0' cy='-28' rx='10' ry='20' transform='rotate(110)'/%3E%3Cellipse class='leaf' cx='0' cy='-28' rx='10' ry='20' transform='rotate(170)'/%3E%3Ccircle class='petal' cx='0' cy='0' r='8'/%3E%3C/g%3E%3Cg transform='translate(80,520)'%3E%3Cellipse class='petal' cx='0' cy='-18' rx='7' ry='14' transform='rotate(-30)'/%3E%3Cellipse class='petal2' cx='0' cy='-18' rx='7' ry='14' transform='rotate(30)'/%3E%3Cellipse class='petal' cx='0' cy='-18' rx='7' ry='14' transform='rotate(90)'/%3E%3Cellipse class='petal2' cx='0' cy='-18' rx='7' ry='14' transform='rotate(150)'/%3E%3Ccircle fill='%238b6914' cx='0' cy='0' r='5'/%3E%3C/g%3E%3Cg transform='translate(520,500)'%3E%3Cellipse class='leaf' cx='0' cy='-22' rx='8' ry='17' transform='rotate(-60)'/%3E%3Cellipse class='leaf' cx='0' cy='-22' rx='8' ry='17' transform='rotate(0)'/%3E%3Cellipse class='leaf' cx='0' cy='-22' rx='8' ry='17' transform='rotate(60)'/%3E%3Cellipse class='leaf' cx='0' cy='-22' rx='8' ry='17' transform='rotate(120)'/%3E%3Ccircle class='petal' cx='0' cy='0' r='6'/%3E%3C/g%3E%3Cg transform='translate(300,520)'%3E%3Cellipse class='petal2' cx='0' cy='-16' rx='7' ry='12' transform='rotate(-40)'/%3E%3Cellipse class='petal' cx='0' cy='-16' rx='7' ry='12' transform='rotate(20)'/%3E%3Cellipse class='petal2' cx='0' cy='-16' rx='7' ry='12' transform='rotate(80)'/%3E%3Ccircle fill='%238b6914' cx='0' cy='0' r='5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+  background-size:600px 600px;
+
+  opacity:.35;
+
   pointer-events:none;
+
   z-index:0;
+
 }
+
+
 
 .inv-inner{
+
   position:relative;z-index:1;
+
   max-width:480px;margin:0 auto;
+
   padding:0 0 80px;
+
 }
+
+
 
 /* ── HERO ── */
-.hero{ text-align:center; padding:60px 30px 40px; position:relative; }
-.hero-text{ position:relative; z-index:2; padding:0 20px; }
-.hero-eyebrow{ font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(15px,4vw,18px); color:#8b7355; letter-spacing:2px; margin-bottom:10px; }
-.hero-welcome{ font-family:'Cormorant Garamond',serif; font-size:clamp(14px,3.8vw,16px); color:#5a5043; line-height:1.9; max-width:320px; margin:0 auto 28px; }
-.hero-label{ font-family:'Cormorant Garamond',serif; font-size:clamp(11px,3vw,13px); letter-spacing:6px; text-transform:uppercase; color:#b58a8a; margin-bottom:15px; }
-.hero-names{ font-family:'Great Vibes',cursive; font-size:clamp(46px,12vw,64px); color:#2c3e30; font-weight:400; line-height:1.1; margin-bottom:10px; }
-.hero-date{ font-family:'Cormorant Garamond',serif; font-size:clamp(14px,4vw,18px); color:#8b7355; letter-spacing:5px; }
+
+.hero{
+
+  text-align:center;
+
+  padding:60px 30px 40px;
+
+  position:relative;
+
+}
+
+
+
+/* Large corner botanical */
+
+.botanical-corner{
+
+  position:absolute;
+
+  width:120px;
+
+  opacity:.35;
+
+  pointer-events:none;
+
+}
+
+.botanical-corner.tl{top:0;left:0}
+
+.botanical-corner.tr{top:0;right:0;transform:scaleX(-1)}
+
+.botanical-corner.bl{bottom:0;left:0;transform:scaleY(-1)}
+
+.botanical-corner.br{bottom:0;right:0;transform:scale(-1,-1)}
+
+
+
+/* Text wrapper so it sits above the botanical corners */
+
+.hero-text{
+
+  position:relative;
+
+  z-index:2;
+
+  padding:0 20px;
+
+}
+
+
+
+.hero-eyebrow{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-style:italic;
+
+  font-size:clamp(14px,4vw,17px);
+
+  color:#8b7355;
+
+  letter-spacing:2px;
+
+  margin-bottom:6px;
+
+}
+
+.hero-welcome{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(13px,3.8vw,16px);
+
+  color:#6a5535;
+
+  line-height:1.9;
+
+  max-width:320px;
+
+  margin:0 auto 28px;
+
+  font-style:italic;
+
+}
+
+.hero-label{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(11px,3vw,13px);
+
+  letter-spacing:6px;
+
+  text-transform:uppercase;
+
+  color:#3d5a47;
+
+  margin-bottom:18px;
+
+}
+
+.hero-names{
+
+  font-family:'Great Vibes',cursive;
+
+  font-size:clamp(46px,12vw,64px);
+
+  color:#2c3e30;
+
+  font-weight:400;
+
+  line-height:1.1;
+
+  margin-bottom:10px;
+
+}
+
+.hero-date{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(14px,4vw,18px);
+
+  color:#8b7355;
+
+  letter-spacing:5px;
+
+}
+
+
 
 /* ── ORNAMENTAL DIVIDER ── */
-.orn-divider{ display:flex;align-items:center; justify-content:center; gap:0; margin:0 30px; height:40px; }
-.orn-divider svg{ width:100%; max-width: 250px; height:40px }
 
-/* ── CUENTA REGRESIVA (NUEVO) ── */
-.countdown-wrap {
-  text-align: center;
-  margin: 30px 20px;
-  padding: 40px 10px;
-  position: relative;
-}
-/* Efecto acuarela rosa de fondo */
-.countdown-wrap::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 50%; transform: translateX(-50%);
-  width: 140%; height: 100%;
-  background: radial-gradient(ellipse at center, rgba(230,190,190,0.3) 0%, rgba(245,237,224,0) 70%);
-  z-index: -1;
-  border-radius: 50%;
-  filter: blur(10px);
-}
-.cd-title {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(32px, 8vw, 40px);
-  color: #2c3e30;
-  margin-bottom: 20px;
-}
-.cd-grid {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-.cd-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-.cd-item:not(:last-child)::after {
-  content: ":";
-  position: absolute;
-  right: -10px;
-  top: 10px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
-  color: #a88a8a;
-}
-.cd-number {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 7vw, 36px);
-  color: #3d5a47;
-  line-height: 1;
-}
-.cd-label {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14px;
-  color: #8b7355;
-  margin-top: 5px;
-  font-style: italic;
+.orn-divider{
+
+  display:flex;align-items:center;
+
+  gap:0;margin:0 30px 0;
+
+  height:40px;
+
 }
 
-/* ── ITINERARIO (NUEVO) ── */
-.itinerary-wrap {
-  padding: 20px 30px 40px;
-}
-.it-title {
-  text-align: center;
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(38px, 10vw, 48px);
-  color: #2c3e30;
-  margin-bottom: 40px;
-  position: relative;
-}
-/* Línea decorativa del itinerario */
-.it-title::after {
-  content: "";
-  display: block;
-  width: 100px; height: 1px;
-  background: #c8a86a;
-  margin: 10px auto 0;
-}
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
-}
-.tl-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-/* Alternancia: Izquierda - Derecha */
-.tl-item:nth-child(even) {
-  flex-direction: row-reverse;
-}
-.tl-text {
-  flex: 1;
-  text-align: right;
-}
-.tl-item:nth-child(even) .tl-text {
-  text-align: left;
-}
-.tl-time {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
-  color: #c48f8f; /* Tono rosa empolvado */
-  letter-spacing: 1px;
-  margin-bottom: 2px;
-}
-.tl-event {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
-  font-style: italic;
-  color: #2c3e30;
-}
-.tl-icon {
-  width: 60px;
-  height: 60px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.tl-icon svg {
-  width: 100%;
-  height: 100%;
-  stroke: #2c3e30;
-  stroke-width: 1;
-  fill: none;
+.orn-divider svg{width:100%;height:40px}
+
+
+
+/* ── PHOTO ── */
+
+.photo-wrap{
+
+  display:flex;justify-content:center;
+
+  padding:20px 24px 30px;
+
+  position:relative;
+
 }
 
-/* ── PHOTOS ── */
-.photo-wrap{ display:flex;justify-content:center; padding:20px 24px 30px; position:relative; }
-.second-photo-wrap{ display:flex; justify-content:center; margin-top:32px; padding:0 24px; }
-.second-photo-frame{ width:min(78vw,320px); border-radius:200px 200px 10px 10px; overflow:hidden; border:2px solid rgba(200,168,106,.4); box-shadow:0 12px 36px rgba(0,0,0,.08); }
-.second-photo-img{ width:100%; height:auto; display:block; object-fit:cover; }
+.photo-rect{
 
-/* ── INFO SECTIONS (Simplified & elegant) ── */
-.info-section{ padding:0 24px; }
-.info-block{ margin-bottom:32px; position:relative; text-align:center; padding:30px 20px; background:rgba(255,255,255,.6); border-radius:16px; border:1px solid rgba(200,168,106,.2); box-shadow:0 4px 20px rgba(0,0,0,.03); }
-.block-label{ font-family:'Cormorant Garamond',serif; font-size:clamp(11px,2.8vw,13px); letter-spacing:5px; text-transform:uppercase; color:#b58a8a; margin-bottom:12px; }
-.block-main{ font-family:'Cormorant Garamond',serif; font-size:clamp(22px,6vw,28px); color:#2c3e30; line-height:1.2; margin-bottom:8px; }
-.block-sub{ font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(14px,4vw,17px); color:#6a5535; line-height:1.5; }
-.block-link{ display:inline-block; margin-top:15px; font-family:'Cormorant Garamond',serif; font-size:14px; letter-spacing:2px; color:#3d5a47; text-decoration:none; border-bottom:1px solid rgba(61,90,71,.4); padding-bottom:2px; }
+  position:relative;
+
+  width:100%;
+
+  max-width:420px;
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  border:3px solid #3d5a47;
+
+  box-shadow:0 0 0 6px rgba(61,90,71,.08),0 20px 50px rgba(0,0,0,.18);
+
+}
+
+.photo-rect img{
+
+  width:100%;
+
+  height:auto;
+
+  display:block;
+
+  object-fit:cover;
+
+}
+
+/* Subtle vignette overlay */
+
+.photo-rect::after{
+
+  content:"";
+
+  position:absolute;inset:0;
+
+  background:linear-gradient(to bottom,transparent 60%,rgba(44,62,48,.15) 100%);
+
+  pointer-events:none;
+
+}
+
+/* Decorative corner lines */
+
+.photo-rect::before{
+
+  content:"";
+
+  position:absolute;inset:8px;
+
+  border:1px solid rgba(200,168,106,.25);
+
+  border-radius:14px;
+
+  pointer-events:none;
+
+  z-index:1;
+
+}
+
+
+
+/* ── SECOND PHOTO ── */
+
+.second-photo-wrap{
+
+  display:flex;
+
+  justify-content:center;
+
+  margin-top:32px;
+
+  padding:0 24px;
+
+}
+
+.second-photo-frame{
+
+  width:min(78vw,320px);
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  border:2px solid #3d5a47;
+
+  box-shadow:0 0 0 5px rgba(61,90,71,.07), 0 12px 36px rgba(0,0,0,.14);
+
+}
+
+.second-photo-img{
+
+  width:100%;
+
+  height:auto;
+
+  display:block;
+
+  object-fit:cover;
+
+}
+
+
+
+/* ── INFO SECTIONS ── */
+
+.info-section{
+
+  padding:0 24px;
+
+}
+
+
+
+/* Each info block */
+
+.info-block{
+
+  margin-bottom:32px;
+
+  position:relative;
+
+}
+
+
+
+/* Elegant horizontal rule with icon */
+
+.block-header{
+
+  display:flex;align-items:center;gap:14px;
+
+  margin-bottom:16px;
+
+}
+
+.block-header::before,.block-header::after{
+
+  content:"";flex:1;height:1px;
+
+  background:linear-gradient(to right,transparent,rgba(61,90,71,.3),transparent);
+
+}
+
+.block-header-icon{
+
+  font-size:20px;flex-shrink:0;
+
+}
+
+
+
+/* Block content */
+
+.block-content{
+
+  text-align:center;
+
+  padding:24px 20px;
+
+  background:rgba(255,255,255,.72);
+
+  backdrop-filter:blur(10px);
+
+  border-radius:16px;
+
+  border:1px solid rgba(200,168,106,.2);
+
+  box-shadow:0 4px 20px rgba(0,0,0,.06);
+
+  position:relative;
+
+  overflow:hidden;
+
+}
+
+.block-content::before{
+
+  content:"";position:absolute;inset:0;
+
+  background:linear-gradient(135deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.2) 60%,transparent 100%);
+
+  pointer-events:none;
+
+  z-index:1;
+
+}
+
+
+
+/* Background image inside block */
+
+.block-bg{
+
+  position:absolute;inset:0;
+
+  background-size:cover;
+
+  background-position:center;
+
+  opacity:.22;
+
+  border-radius:16px;
+
+  z-index:0;
+
+}
+
+
+
+/* All text content inside block sits above bg */
+
+.block-content > *:not(.block-bg):not(.block-floral){
+
+  position:relative;
+
+  z-index:2;
+
+}
+
+
+
+/* Text shadow for readability over images */
+
+.block-label{text-shadow:0 1px 4px rgba(255,255,255,.9),0 0 12px rgba(255,255,255,.7)}
+
+.block-main{text-shadow:0 1px 6px rgba(255,255,255,.95),0 2px 12px rgba(255,255,255,.6)}
+
+.block-sub{text-shadow:0 1px 4px rgba(255,255,255,.9),0 0 10px rgba(255,255,255,.6)}
+
+.block-link{text-shadow:0 1px 4px rgba(255,255,255,.9)}
+
+.bus-col-title{text-shadow:0 1px 4px rgba(255,255,255,.9)}
+
+.bus-row{text-shadow:0 1px 3px rgba(255,255,255,.85)}
+
+
+
+/* Floral accent inside block */
+
+.block-floral{
+
+  position:absolute;
+
+  opacity:.1;
+
+  pointer-events:none;
+
+}
+
+.block-floral.br{bottom:-5px;right:-5px;width:80px;transform:rotate(180deg)}
+
+.block-floral.tl{top:-5px;left:-5px;width:60px}
+
+
+
+.block-label{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(10px,2.8vw,12px);
+
+  letter-spacing:5px;
+
+  text-transform:uppercase;
+
+  color:#8b7355;
+
+  margin-bottom:8px;
+
+}
+
+.block-main{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(20px,5.5vw,26px);
+
+  font-weight:600;
+
+  color:#2c3e30;
+
+  line-height:1.3;
+
+  margin-bottom:6px;
+
+}
+
+.block-sub{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-style:italic;
+
+  font-size:clamp(13px,3.8vw,16px);
+
+  color:#6a5535;
+
+  line-height:1.7;
+
+}
+
+.block-link{
+
+  display:inline-block;
+
+  margin-top:12px;
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(12px,3.5vw,14px);
+
+  letter-spacing:2px;
+
+  color:#3d5a47;
+
+  text-decoration:none;
+
+  border-bottom:1px solid rgba(61,90,71,.4);
+
+  padding-bottom:2px;
+
+  transition:color .2s,border-color .2s;
+
+}
+
+
+
+/* Bus table */
+
+.bus-grid{
+
+  display:grid;grid-template-columns:1fr 1fr;
+
+  gap:16px;margin-top:4px;
+
+}
+
+.bus-col-inner{
+
+  background:rgba(61,90,71,.06);
+
+  border-radius:10px;padding:14px 10px;
+
+}
+
+.bus-col-title{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(10px,2.8vw,12px);
+
+  letter-spacing:4px;text-transform:uppercase;
+
+  color:#3d5a47;margin-bottom:10px;font-weight:600;
+
+}
+
+.bus-row{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(12px,3.5vw,14px);
+
+  color:#4a3a28;line-height:1.8;
+
+}
+
+.bus-row strong{color:#2c3e30;font-weight:600}
+
+
+
+/* Contact */
+
+.contact-row{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(14px,4vw,17px);
+
+  color:#4a3a28;
+
+  margin-bottom:8px;
+
+  line-height:1.6;
+
+}
+
+.contact-row a{
+
+  color:#3d5a47;text-decoration:none;
+
+  border-bottom:1px solid rgba(61,90,71,.3);
+
+}
+
+
+
+/* Enhanced contact block */
+
+.block-content.contact-block{
+
+  background:linear-gradient(135deg,rgba(61,90,71,.08) 0%,rgba(255,255,255,.65) 50%,rgba(200,168,106,.08) 100%);
+
+  border:1px solid rgba(61,90,71,.25);
+
+  box-shadow:0 6px 28px rgba(61,90,71,.12);
+
+}
+
+.contact-wa-btn{
+
+  display:inline-flex;align-items:center;gap:8px;
+
+  margin-top:4px;
+
+  padding:10px 22px;
+
+  background:linear-gradient(135deg,#25d366,#128c7e);
+
+  color:#fff;
+
+  border-radius:50px;
+
+  text-decoration:none;
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(14px,4vw,17px);
+
+  letter-spacing:1px;
+
+  box-shadow:0 6px 20px rgba(37,211,102,.25);
+
+  transition:transform .2s,box-shadow .2s;
+
+}
+
+.contact-wa-btn:active{transform:scale(.97)}
+
+.contact-wa-icon{font-size:18px;line-height:1}
+
+
+
+/* ── CLOSING ── */
+
+.closing-section{
+
+  text-align:center;
+
+  padding:20px 30px 10px;
+
+}
+
+.closing-text{
+
+  font-family:'Great Vibes',cursive;
+
+  font-size:clamp(32px,9vw,44px);
+
+  color:#3d5a47;
+
+  line-height:1.3;
+
+}
+
+
 
 /* ── RSVP ── */
-.rsvp-wrap{ padding:20px 30px 60px; text-align:center; }
-.rsvp-note{ font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:#8b7355; margin-bottom:20px; }
-.rsvp-btn{ display:inline-flex; flex-direction:column; align-items:center; gap:4px; padding:18px 40px; background:linear-gradient(135deg,#2c3e30,#3d5a47); color:#f5ede0; border-radius:50px; text-decoration:none; font-family:'Cormorant Garamond',serif; font-size:20px; letter-spacing:3px; box-shadow:0 12px 30px rgba(44,62,48,.2); border:1px solid rgba(200,168,106,.3); }
-.rsvp-btn small{ font-size:11px; letter-spacing:4px; text-transform:uppercase; opacity:.7; }
 
-/* ── COVER PHOTO ── */
-#cover-photo{ position:relative; width:100%; height:100dvh; overflow:hidden; flex-shrink:0; }
-#cover-photo img{ width:100%; height:100%; object-fit:cover; object-position:center 20%; display:block; }
-#cover-photo::after{ content:""; position:absolute;inset:0; background:linear-gradient(to bottom, transparent 50%, rgba(20,35,22,.6) 100%); pointer-events:none; }
-.cover-overlay{ position:absolute; bottom:0;left:0;right:0; text-align:center; padding:0 24px 48px; z-index:2; }
-.cover-names{ font-family:'Great Vibes',cursive; font-size:clamp(48px,13vw,72px); color:#f5ede0; line-height:1.1; margin-bottom:6px; }
-.cover-date{ font-family:'Cormorant Garamond',serif; font-size:clamp(13px,3.5vw,16px); color:rgba(245,237,224,.9); letter-spacing:6px; margin-bottom:22px; }
+.rsvp-wrap{
+
+  padding:20px 30px 60px;
+
+  text-align:center;
+
+}
+
+.rsvp-note{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-style:italic;
+
+  font-size:clamp(13px,3.8vw,15px);
+
+  color:#8b7355;
+
+  margin-bottom:20px;
+
+  letter-spacing:1px;
+
+}
+
+.rsvp-btn{
+
+  display:inline-flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  gap:4px;
+
+  padding:18px 40px;
+
+  background:linear-gradient(135deg,#2c3e30,#3d5a47);
+
+  color:#f5ede0;
+
+  border-radius:50px;
+
+  text-decoration:none;
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(16px,4.5vw,20px);
+
+  letter-spacing:3px;
+
+  box-shadow:0 12px 35px rgba(44,62,48,.35);
+
+  transition:transform .2s,box-shadow .2s;
+
+  border:1px solid rgba(200,168,106,.3);
+
+}
+
+.rsvp-btn:active{transform:scale(.97)}
+
+.rsvp-btn small{
+
+  font-size:clamp(10px,2.8vw,12px);
+
+  letter-spacing:4px;
+
+  text-transform:uppercase;
+
+  opacity:.7;
+
+}
+
+
+
+/* ── COVER PHOTO (full screen, first thing after envelope) ── */
+
+#cover-photo{
+
+  position:relative;
+
+  width:100%;
+
+  height:100dvh;
+
+  overflow:hidden;
+
+  flex-shrink:0;
+
+}
+
+#cover-photo img{
+
+  width:100%;
+
+  height:100%;
+
+  object-fit:cover;
+
+  object-position:center 20%;
+
+  display:block;
+
+}
+
+/* Dark gradient overlay at bottom for scroll hint */
+
+#cover-photo::after{
+
+  content:"";
+
+  position:absolute;inset:0;
+
+  background:linear-gradient(
+
+    to bottom,
+
+    transparent 50%,
+
+    rgba(20,35,22,.55) 85%,
+
+    rgba(20,35,22,.85) 100%
+
+  );
+
+  pointer-events:none;
+
+}
+
+/* Names overlay on cover photo */
+
+.cover-overlay{
+
+  position:absolute;
+
+  bottom:0;left:0;right:0;
+
+  text-align:center;
+
+  padding:0 24px 48px;
+
+  z-index:2;
+
+}
+
+.cover-names{
+
+  font-family:'Great Vibes',cursive;
+
+  font-size:clamp(48px,13vw,72px);
+
+  color:#f5ede0;
+
+  font-weight:400;
+
+  line-height:1.1;
+
+  text-shadow:0 2px 20px rgba(0,0,0,.5);
+
+  margin-bottom:6px;
+
+}
+
+.cover-date{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(13px,3.5vw,16px);
+
+  color:rgba(245,237,224,.8);
+
+  letter-spacing:6px;
+
+  text-shadow:0 1px 8px rgba(0,0,0,.4);
+
+  margin-bottom:22px;
+
+}
+
+/* Animated scroll hint arrow */
+
+.scroll-hint{
+
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+
+  animation:bounce 2s ease-in-out infinite;
+
+}
+
+.scroll-hint span{
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:clamp(10px,2.8vw,12px);
+
+  letter-spacing:4px;
+
+  text-transform:uppercase;
+
+  color:rgba(245,237,224,.55);
+
+}
+
+.scroll-arrow{
+
+  width:24px;height:24px;
+
+  border-right:1.5px solid rgba(245,237,224,.5);
+
+  border-bottom:1.5px solid rgba(245,237,224,.5);
+
+  transform:rotate(45deg);
+
+  margin-top:-4px;
+
+}
+
+@keyframes bounce{
+
+  0%,100%{transform:translateY(0);opacity:.5}
+
+  50%{transform:translateY(6px);opacity:1}
+
+}
+
+
 
 /* ── SCROLL FADE ── */
-.fade-up{ opacity:0; transform:translateY(28px); transition:opacity .8s ease,transform .8s ease; }
-.fade-up.in{ opacity:1; transform:translateY(0) }
+
+.fade-up{
+
+  opacity:0;transform:translateY(28px);
+
+  transition:opacity .8s ease,transform .8s ease;
+
+}
+
+.fade-up.in{opacity:1;transform:translateY(0)}
+
+
+
+/* ── PARTICLES ── */
+
+#particles{
+
+  position:fixed;inset:0;
+
+  pointer-events:none;z-index:0;
+
+}
+
 </style>
+
 </head>
+
 <body>
 
+
+
+<canvas id="particles"></canvas>
+
+
+
+<!-- ══════════ ENVELOPE ══════════ -->
+
 <div id="env-screen" onclick="openEnvelope()">
+
   <div class="env-wrap">
-    <div class="paper-texture"></div>
+
+
+
+    <!-- Back body -->
+
     <div class="env-back"></div>
-    <div class="env-interior"></div>
-    <div class="env-left"></div>
-    <div class="env-right"></div>
+
+
+
+    <!-- Diagonal crease lines on body -->
+
+    <div class="env-body-crease"></div>
+
+
+
+    <!-- Bottom triangle -->
+
     <div class="env-bottom"></div>
-    <div class="env-top" id="envFlap"></div>
+
+
+
+    <!-- Side triangles -->
+
+    <div class="env-left"></div>
+
+    <div class="env-right"></div>
+
+
+
+    <!-- Interior cream (revealed when flap opens) -->
+
+    <div class="env-interior"></div>
+
+
+
+    <!-- Top flap (opens) -->
+
+    <div class="env-top" id="envFlap">
+
+      <div class="env-crease"></div>
+
+    </div>
+
+
+
+    <!-- WAX SEAL — centered at flap fold line -->
 
     <div class="wax-seal" id="waxSeal">
+
       <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+
         <defs>
+
           <radialGradient id="sg" cx="38%" cy="32%" r="68%">
+
             <stop offset="0%"  stop-color="#f0d8a8"/>
+
             <stop offset="25%" stop-color="#d4b87a"/>
+
             <stop offset="60%" stop-color="#b89050"/>
+
             <stop offset="100%" stop-color="#8a6828"/>
+
           </radialGradient>
+
+          <radialGradient id="sg2" cx="38%" cy="32%" r="68%">
+
+            <stop offset="0%"  stop-color="#dcc080"/>
+
+            <stop offset="55%" stop-color="#a07838"/>
+
+            <stop offset="100%" stop-color="#705018"/>
+
+          </radialGradient>
+
+          <filter id="grain" x="-8%" y="-8%" width="116%" height="116%">
+
+            <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="12" result="noise"/>
+
+            <feColorMatrix type="saturate" values="0" in="noise" result="gn"/>
+
+            <feBlend in="SourceGraphic" in2="gn" mode="multiply" result="bl"/>
+
+            <feComposite in="bl" in2="SourceGraphic" operator="in"/>
+
+          </filter>
+
+          <filter id="shdw" x="-20%" y="-20%" width="140%" height="140%">
+
+            <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="rgba(0,0,0,.45)"/>
+
+          </filter>
+
+          <filter id="inner-glow" x="-10%" y="-10%" width="120%" height="120%">
+
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+
+          </filter>
+
         </defs>
-        <circle cx="55" cy="55" r="50" fill="url(#sg)" opacity=".9"/>
-        <circle cx="55" cy="55" r="45" fill="url(#sg)"/>
+
+
+
+        <!-- Outer jagged wax edge -->
+
+        <circle cx="55" cy="55" r="52" fill="url(#sg2)" filter="url(#grain)"/>
+
+        <!-- Slightly irregular outer ring via turbulence -->
+
+        <circle cx="55" cy="55" r="50" fill="url(#sg2)" opacity=".7" filter="url(#grain)"/>
+
+
+
+        <!-- Main wax disc -->
+
+        <circle cx="55" cy="55" r="45" fill="url(#sg)" filter="url(#shdw)"/>
+
+        <!-- Grain texture on disc -->
+
+        <circle cx="55" cy="55" r="45" fill="url(#sg)" filter="url(#grain)" opacity=".55"/>
+
+
+
+        <!-- Outer engraved ring (shadow side) -->
+
         <circle cx="55" cy="55" r="41" fill="none" stroke="rgba(70,42,8,.4)" stroke-width="2"/>
-        <text x="56.5" y="58" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="14" font-weight="bold" letter-spacing="5" fill="none" stroke="rgba(50,28,4,.7)" stroke-width="3">M | M</text>
-        <text x="55" y="56.5" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,'Times New Roman',serif" font-size="14" font-weight="bold" letter-spacing="5" fill="rgba(255,240,190,.8)">M | M</text>
+
+        <!-- Outer engraved ring (light side) -->
+
+        <circle cx="55" cy="55" r="41" fill="none" stroke="rgba(255,228,160,.3)" stroke-width=".9" stroke-dasharray="2 1"/>
+
+
+
+        <!-- Inner engraved ring -->
+
+        <circle cx="55" cy="55" r="33" fill="none" stroke="rgba(70,42,8,.3)" stroke-width="1.4"/>
+
+        <circle cx="55" cy="55" r="33" fill="none" stroke="rgba(255,228,160,.2)" stroke-width=".6"/>
+
+
+
+        <!-- Engraved M | M — shadow layer (depth) -->
+
+        <text x="56.5" y="58" text-anchor="middle" dominant-baseline="middle"
+
+          font-family="Georgia,'Times New Roman',serif"
+
+          font-size="14" font-weight="bold" letter-spacing="5"
+
+          fill="none" stroke="rgba(50,28,4,.7)" stroke-width="3">M | M</text>
+
+        <!-- Engraved M | M — highlight layer -->
+
+        <text x="55" y="56.5" text-anchor="middle" dominant-baseline="middle"
+
+          font-family="Georgia,'Times New Roman',serif"
+
+          font-size="14" font-weight="bold" letter-spacing="5"
+
+          fill="rgba(255,240,190,.75)">M | M</text>
+
+
+
+        <!-- Specular highlight (top-left shine) -->
+
+        <ellipse cx="38" cy="36" rx="14" ry="8" fill="rgba(255,248,220,.28)" transform="rotate(-35,38,36)"/>
+
+        <ellipse cx="35" cy="33" rx="6" ry="3.5" fill="rgba(255,248,220,.38)" transform="rotate(-35,35,33)"/>
+
       </svg>
+
     </div>
+
+
+
   </div>
+
   <p class="tap-hint">✦ Toca para abrir ✦</p>
+
 </div>
+
+
+
+<!-- ══════════ INVITATION ══════════ -->
 
 <div id="invitation">
 
+
+
+  <!-- COVER PHOTO — full screen, first thing seen -->
+
   <div id="cover-photo">
+
     <img id="coupleImg" src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/Gemini_Generated_Image_vwpllmvwpllmvwpl.png" alt="Marina y Manuel"/>
+
     <div class="cover-overlay">
+
       <p class="cover-names">Marina & Manuel</p>
+
       <p class="cover-date">12 · 09 · 2026</p>
+
+      <div class="scroll-hint">
+
+        <span>Desliza</span>
+
+        <div class="scroll-arrow"></div>
+
+      </div>
+
     </div>
+
   </div>
+
+
 
   <div class="inv-inner">
 
+
+
+    <!-- HERO -->
+
     <div class="hero fade-up">
+
+      <!-- Botanical corners -->
+
+      <svg class="botanical-corner tl" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+
+        <g transform="translate(5,155)">
+
+          <line x1="0" y1="0" x2="80" y2="-100" stroke="#3d5a47" stroke-width="1.5"/>
+
+          <line x1="0" y1="0" x2="40" y2="-120" stroke="#3d5a47" stroke-width="1"/>
+
+          <line x1="0" y1="0" x2="110" y2="-60" stroke="#3d5a47" stroke-width="1"/>
+
+          <line x1="0" y1="0" x2="20" y2="-80" stroke="#5a7a60" stroke-width=".8"/>
+
+          <ellipse cx="85" cy="-105" rx="16" ry="10" fill="#3d5a47" transform="rotate(-40,85,-105)"/>
+
+          <ellipse cx="38" cy="-126" rx="14" ry="9" fill="#5a7a60" transform="rotate(-65,38,-126)"/>
+
+          <ellipse cx="116" cy="-63" rx="14" ry="9" fill="#3d5a47" transform="rotate(-10,116,-63)"/>
+
+          <ellipse cx="18" cy="-84" rx="10" ry="7" fill="#6a8a70" transform="rotate(-50,18,-84)"/>
+
+          <g transform="translate(65,-75)">
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(-30)"/>
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(30)"/>
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(90)"/>
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(150)"/>
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(210)"/>
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(270)"/>
+
+            <circle cx="0" cy="0" r="5" fill="#8b6914"/>
+
+          </g>
+
+          <g transform="translate(28,-100)">
+
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#d4b896" transform="rotate(-20)"/>
+
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#c8a880" transform="rotate(60)"/>
+
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#d4b896" transform="rotate(140)"/>
+
+            <circle cx="0" cy="0" r="4" fill="#8b6914"/>
+
+          </g>
+
+          <g transform="translate(95,-45)">
+
+            <ellipse cx="0" cy="-9" rx="5" ry="8" fill="#c8a86a" transform="rotate(10)"/>
+
+            <ellipse cx="0" cy="-9" rx="5" ry="8" fill="#d4b878" transform="rotate(80)"/>
+
+            <circle cx="0" cy="0" r="3" fill="#8b6914"/>
+
+          </g>
+
+        </g>
+
+      </svg>
+
+      <svg class="botanical-corner tr" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+
+        <g transform="translate(5,155)">
+
+          <line x1="0" y1="0" x2="80" y2="-100" stroke="#3d5a47" stroke-width="1.5"/>
+
+          <line x1="0" y1="0" x2="40" y2="-120" stroke="#3d5a47" stroke-width="1"/>
+
+          <line x1="0" y1="0" x2="110" y2="-60" stroke="#3d5a47" stroke-width="1"/>
+
+          <ellipse cx="85" cy="-105" rx="16" ry="10" fill="#3d5a47" transform="rotate(-40,85,-105)"/>
+
+          <ellipse cx="38" cy="-126" rx="14" ry="9" fill="#5a7a60" transform="rotate(-65,38,-126)"/>
+
+          <ellipse cx="116" cy="-63" rx="14" ry="9" fill="#3d5a47" transform="rotate(-10,116,-63)"/>
+
+          <g transform="translate(65,-75)">
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(-30)"/>
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(30)"/>
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(90)"/>
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(150)"/>
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#c8a86a" transform="rotate(210)"/>
+
+            <ellipse cx="0" cy="-16" rx="9" ry="14" fill="#e8c890" transform="rotate(270)"/>
+
+            <circle cx="0" cy="0" r="5" fill="#8b6914"/>
+
+          </g>
+
+          <g transform="translate(28,-100)">
+
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#d4b896" transform="rotate(-20)"/>
+
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#c8a880" transform="rotate(60)"/>
+
+            <ellipse cx="0" cy="-11" rx="6" ry="10" fill="#d4b896" transform="rotate(140)"/>
+
+            <circle cx="0" cy="0" r="4" fill="#8b6914"/>
+
+          </g>
+
+        </g>
+
+      </svg>
+
+
+
       <div class="hero-text">
+
         <p class="hero-eyebrow">El momento ha llegado...</p>
-        <p class="hero-welcome">Después de tanto tiempo juntos, de risas compartidas y sueños construidos, ha llegado el momento de celebrarlo con las personas que más queremos.</p>
+
+        <p class="hero-welcome">Después de tanto tiempo juntos, de risas compartidas, de sueños construidos y de una vida que ya no imaginamos el uno sin el otro, ha llegado el momento de celebrarlo con las personas que más queremos.</p>
+
+
+
+        <!-- Ornamental SVG divider -->
+
+        <div class="orn-divider">
+
+          <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+
+            <line x1="0" y1="20" x2="155" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+
+            <g transform="translate(200,20)">
+
+              <ellipse cx="-30" cy="0" rx="4" ry="4" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".5"/>
+
+              <ellipse cx="30" cy="0" rx="4" ry="4" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".5"/>
+
+              <path d="M-18,0 Q-10,-8 0,-8 Q10,-8 18,0 Q10,8 0,8 Q-10,8 -18,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".7"/>
+
+              <circle cx="0" cy="0" r="2.5" fill="#c8a86a" opacity=".8"/>
+
+            </g>
+
+            <line x1="245" y1="20" x2="400" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+
+          </svg>
+
+        </div>
+
+
+
         <p class="hero-label">¡Nos casamos!</p>
+
         <h1 class="hero-names">Marina & Manuel</h1>
+
         <p class="hero-date">12 · 09 · 2026</p>
 
+
+
+        <!-- SECOND COUPLE PHOTO -->
+
         <div class="second-photo-wrap fade-up">
+
           <div class="second-photo-frame">
+
             <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/Gemini_Generated_Image_7dacmb7dacmb7dac.png" alt="Marina y Manuel" class="second-photo-img"/>
+
           </div>
+
         </div>
+
+
+
       </div>
+
     </div>
 
-    <div class="countdown-wrap fade-up">
-      <div class="cd-title">Nos vemos en...</div>
-      <div class="cd-grid">
-        <div class="cd-item">
-          <span class="cd-number" id="cd-days">00</span>
-          <span class="cd-label">Días</span>
-        </div>
-        <div class="cd-item">
-          <span class="cd-number" id="cd-hours">00</span>
-          <span class="cd-label">Horas</span>
-        </div>
-        <div class="cd-item">
-          <span class="cd-number" id="cd-mins">00</span>
-          <span class="cd-label">Mins</span>
-        </div>
-        <div class="cd-item">
-          <span class="cd-number" id="cd-secs">00</span>
-          <span class="cd-label">Segs</span>
-        </div>
-      </div>
+
+
+    <!-- ORNAMENTAL DIVIDER -->
+
+    <div class="orn-divider fade-up" style="margin:0 30px 32px">
+
+      <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
+
+        <line x1="0" y1="20" x2="155" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+
+        <g transform="translate(200,20)">
+
+          <path d="M-18,0 Q-10,-8 0,-8 Q10,-8 18,0 Q10,8 0,8 Q-10,8 -18,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".7"/>
+
+          <circle cx="0" cy="0" r="2.5" fill="#c8a86a" opacity=".8"/>
+
+        </g>
+
+        <line x1="245" y1="20" x2="400" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+
+      </svg>
+
     </div>
 
-    <div class="itinerary-wrap fade-up">
-      <h2 class="it-title">Itinerario</h2>
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-text">
-            <div class="tl-time">19:30 h</div>
-            <div class="tl-event">Ceremonia</div>
-          </div>
-          <div class="tl-icon">
-            <svg viewBox="0 0 64 64">
-              <circle cx="24" cy="36" r="14" />
-              <circle cx="40" cy="36" r="14" />
-              <path d="M24 22 A 6 6 0 0 1 36 22 A 6 6 0 0 1 30 28 Z" fill="none" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-text">
-            <div class="tl-time">20:30 h</div>
-            <div class="tl-event">Cocktail</div>
-          </div>
-          <div class="tl-icon">
-            <svg viewBox="0 0 64 64">
-              <path d="M18 16 L28 42 L24 58 M46 16 L36 42 L40 58 M16 58 L32 58 M32 58 L48 58" />
-              <path d="M16 16 C 16 30, 28 30, 28 42 C 28 16, 16 16, 16 16 Z" />
-              <path d="M48 16 C 48 30, 36 30, 36 42 C 36 16, 48 16, 48 16 Z" />
-            </svg>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-text">
-            <div class="tl-time">21:30 h</div>
-            <div class="tl-event">Banquete</div>
-          </div>
-          <div class="tl-icon">
-            <svg viewBox="0 0 64 64">
-              <path d="M12 40 C 12 20, 52 20, 52 40 Z" />
-              <line x1="8" y1="40" x2="56" y2="40" />
-              <path d="M30 22 C 30 18, 34 18, 34 22" />
-            </svg>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-text">
-            <div class="tl-time">00:00 h</div>
-            <div class="tl-event">Fiesta</div>
-          </div>
-          <div class="tl-icon">
-            <svg viewBox="0 0 64 64">
-              <path d="M20 44 L20 16 L44 12 L44 40" />
-              <line x1="20" y1="26" x2="44" y2="22" />
-              <circle cx="16" cy="46" r="6" />
-              <circle cx="40" cy="42" r="6" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
+
+
+    <!-- INFO SECTIONS -->
 
     <div class="info-section">
-      <div class="info-block fade-up">
-        <div class="block-label">Lugar</div>
-        <div class="block-main">Molino Sotomelero</div>
-        <div class="block-sub">CP-246, s/n, 41409 Écija, Sevilla</div>
-        <a class="block-link" href="https://maps.google.com" target="_blank">Ver en Google Maps →</a>
-      </div>
+
+
+
+      <!-- FECHA -->
 
       <div class="info-block fade-up">
-        <div class="block-label">Contacto</div>
-        <div class="block-main">¿Dudas?</div>
-        <div class="block-sub">Escríbenos directamente</div>
-        <a class="block-link" href="https://wa.me/34667661578" target="_blank" style="margin-right: 15px;">Manuel WhatsApp</a>
-        <a class="block-link" href="https://wa.me/34667661578" target="_blank">Marina WhatsApp</a>
+
+        <div class="block-header">
+
+          <span class="block-header-icon">✦</span>
+
+        </div>
+
+        <div class="block-content">
+
+          <div class="block-bg" style="background-image:url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80')"></div>
+
+          <svg class="block-floral br" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+
+            <g transform="translate(10,70)"><line x1="0" y1="0" x2="50" y2="-60" stroke="#3d5a47" stroke-width="1.2"/><ellipse cx="53" cy="-64" rx="10" ry="7" fill="#3d5a47" transform="rotate(-40,53,-64)"/><g transform="translate(35,-42)"><ellipse cx="0" cy="-10" rx="6" ry="9" fill="#c8a86a" transform="rotate(-30)"/><ellipse cx="0" cy="-10" rx="6" ry="9" fill="#e8c890" transform="rotate(60)"/><circle cx="0" cy="0" r="3" fill="#8b6914"/></g></g>
+
+          </svg>
+
+          <div class="block-label">Fecha</div>
+
+          <div class="block-main">Sábado, 12 de Septiembre de 2026</div>
+
+          <div class="block-sub">¡El gran día!</div>
+
+        </div>
+
       </div>
+
+
+
+      <!-- LUGAR -->
+
+      <div class="info-block fade-up">
+
+        <div class="block-header">
+
+          <span class="block-header-icon">✦</span>
+
+        </div>
+
+        <div class="block-content">
+
+          <div class="block-bg" style="background-image:url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&q=80')"></div>
+
+          <svg class="block-floral tl" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+
+            <g transform="translate(55,5)"><line x1="0" y1="0" x2="-40" y2="50" stroke="#3d5a47" stroke-width="1"/><ellipse cx="-43" cy="54" rx="8" ry="6" fill="#3d5a47" transform="rotate(-40,-43,54)"/><g transform="translate(-28,35)"><ellipse cx="0" cy="-8" rx="5" ry="8" fill="#c8a86a" transform="rotate(-30)"/><ellipse cx="0" cy="-8" rx="5" ry="8" fill="#e8c890" transform="rotate(60)"/><circle cx="0" cy="0" r="3" fill="#8b6914"/></g></g>
+
+          </svg>
+
+          <div class="block-label">Lugar</div>
+
+          <div class="block-main">Molino Sotomelero</div>
+
+          <div class="block-sub">CP-246, s/n, 41409 Écija, Sevilla</div>
+
+          <a class="block-link" href="https://maps.google.com/?q=Molino+Sotomelero+Ecija+Sevilla" target="_blank">Ver en Google Maps →</a>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- HORA -->
+
+      <div class="info-block fade-up">
+
+        <div class="block-header">
+
+          <span class="block-header-icon">✦</span>
+
+        </div>
+
+        <div class="block-content">
+
+          <div class="block-bg" style="background-image:url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80')"></div>
+
+          <svg class="block-floral br" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+
+            <g transform="translate(10,70)"><line x1="0" y1="0" x2="50" y2="-60" stroke="#3d5a47" stroke-width="1.2"/><ellipse cx="53" cy="-64" rx="10" ry="7" fill="#3d5a47" transform="rotate(-40,53,-64)"/><g transform="translate(35,-42)"><ellipse cx="0" cy="-10" rx="6" ry="9" fill="#c8a86a" transform="rotate(-30)"/><ellipse cx="0" cy="-10" rx="6" ry="9" fill="#e8c890" transform="rotate(60)"/><circle cx="0" cy="0" r="3" fill="#8b6914"/></g></g>
+
+          </svg>
+
+          <div class="block-label">Hora</div>
+
+          <div class="block-main">19:30 h</div>
+
+          <div class="block-sub">Ceremonia Civil · Bienvenida · Banquete</div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- DRESS CODE -->
+
+      <div class="info-block fade-up">
+
+        <div class="block-header">
+
+          <span class="block-header-icon">✦</span>
+
+        </div>
+
+        <div class="block-content">
+
+          <div class="block-bg" style="background-image:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80')"></div>
+
+          <svg class="block-floral tl" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+
+            <g transform="translate(55,5)"><line x1="0" y1="0" x2="-40" y2="50" stroke="#3d5a47" stroke-width="1"/><ellipse cx="-43" cy="54" rx="8" ry="6" fill="#3d5a47" transform="rotate(-40,-43,54)"/><g transform="translate(-28,35)"><ellipse cx="0" cy="-8" rx="5" ry="8" fill="#c8a86a" transform="rotate(-30)"/><ellipse cx="0" cy="-8" rx="5" ry="8" fill="#e8c890" transform="rotate(60)"/><circle cx="0" cy="0" r="3" fill="#8b6914"/></g></g>
+
+          </svg>
+
+          <div class="block-label">Dress Code</div>
+
+          <div class="block-main">Formal</div>
+
+          <div class="block-sub">¡Saca tus mejores galas!</div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- BUS -->
+
+      <div class="info-block fade-up">
+
+        <div class="block-header">
+
+          <span class="block-header-icon">✦</span>
+
+        </div>
+
+        <div class="block-content">
+
+          <div class="block-label">🚌 &nbsp;Servicio de Autobús</div>
+
+          <div class="bus-grid">
+
+            <div class="bus-col-inner">
+
+              <div class="bus-col-title">Ida ➜</div>
+
+              <div class="bus-row">La Luisiana<br><strong>18:30 h</strong></div>
+
+              <div class="bus-row" style="margin-top:8px">Écija<br><strong>19:00 h</strong></div>
+
+            </div>
+
+            <div class="bus-col-inner">
+
+              <div class="bus-col-title">⬅ Vuelta</div>
+
+              <div class="bus-row">Sotomelero → Écija → La Luisiana<br><strong>03:00 h</strong></div>
+
+              <div class="bus-row" style="margin-top:8px">Sotomelero → Écija → La Luisiana<br><strong>05:00 h</strong></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- CONTACTO -->
+
+      <div class="info-block fade-up">
+
+        <div class="block-header">
+
+          <span class="block-header-icon">✦</span>
+
+        </div>
+
+        <div class="block-content contact-block">
+
+          <div class="block-label">Contacto</div>
+
+          <div class="block-sub" style="margin-bottom:18px;font-size:clamp(12px,3.4vw,14px)">Para no asistencia, dudas o cualquier consulta</div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+
+            <a class="contact-wa-btn" href="https://wa.me/34667661578?text=Hola%20Manuel!" target="_blank">
+
+              <span class="contact-wa-icon">💬</span>
+
+              Manuel · +34 667 661 578
+
+            </a>
+
+            <a class="contact-wa-btn" href="https://wa.me/34667661578?text=Hola%20Marina!" target="_blank">
+
+              <span class="contact-wa-icon">💬</span>
+
+              Marina · +34 667 661 578
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+    </div><!-- /info-section -->
+
+
+
+    <!-- ORNAMENTAL DIVIDER -->
+
+    <div class="orn-divider fade-up" style="margin:10px 30px 20px">
+
+      <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
+
+        <line x1="0" y1="20" x2="155" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+
+        <g transform="translate(200,20)">
+
+          <path d="M-18,0 Q-10,-8 0,-8 Q10,-8 18,0 Q10,8 0,8 Q-10,8 -18,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".7"/>
+
+          <circle cx="0" cy="0" r="2.5" fill="#c8a86a" opacity=".8"/>
+
+        </g>
+
+        <line x1="245" y1="20" x2="400" y2="20" stroke="#c8a86a" stroke-width=".8" opacity=".6"/>
+
+      </svg>
+
     </div>
+
+
+
+    <!-- CLOSING -->
+
+    <div class="closing-section fade-up">
+
+      <p class="closing-text">Con cariño,<br>Marina y Manuel</p>
+
+    </div>
+
+
+
+    <!-- RSVP -->
 
     <div class="rsvp-wrap fade-up">
+
       <p class="rsvp-note">Nos encantaría contar con tu asistencia</p>
-      <a class="rsvp-btn" href="https://forms.google.com" target="_blank">
+
+      <a class="rsvp-btn"
+
+        href="https://forms.google.com"
+
+        target="_blank">
+
         Confirmar Asistencia
+
         <small>Menú · Alergias · Más</small>
+
       </a>
+
     </div>
 
+
+
   </div>
+
 </div>
 
+
+
 <script>
-/* ── ENVELOPE OPEN ── */
-let opened=false;
-function openEnvelope(){
-  if(opened) return;
-  opened=true;
-  const seal=document.getElementById('waxSeal');
-  const flap=document.getElementById('envFlap');
-  const screen=document.getElementById('env-screen');
-  const inv=document.getElementById('invitation');
 
-  seal.classList.add('dissolving');
-  setTimeout(()=>{
-    flap.style.transition='transform 1.3s cubic-bezier(.25,0.1,.25,1)';
-    flap.style.transform='rotateX(-178deg)';
-  }, 400);
+/* ── PARTICLES ── */
 
-  setTimeout(()=>{
-    screen.style.transition='opacity 1s ease';
-    screen.style.opacity='0';
-  }, 1400);
+const cvs = document.getElementById('particles');
 
-  setTimeout(()=>{
-    screen.style.display='none';
-    inv.style.display='block';
-    inv.style.opacity='0';
-    inv.style.transition='opacity .8s ease';
-    setTimeout(()=>{ inv.style.opacity='1'; checkFade(); },50);
-  }, 2400);
+const ctx = cvs.getContext('2d');
+
+function resize(){ cvs.width=innerWidth; cvs.height=innerHeight; }
+
+resize(); addEventListener('resize',resize);
+
+
+
+const pts = Array.from({length:55},()=>mkPt(true));
+
+function mkPt(init){
+
+  return{
+
+    x:Math.random()*innerWidth,
+
+    y:init?Math.random()*innerHeight:innerHeight+10,
+
+    r:Math.random()*3+.5,
+
+    vy:-(Math.random()*.8+.2),
+
+    vx:(Math.random()-.5)*.4,
+
+    op:Math.random()*.5+.15,
+
+    col:Math.random()>.5?'#c8a86a':'#e8d4a0',
+
+    shape:Math.floor(Math.random()*3)
+
+  };
+
 }
 
-/* ── SCROLL FADE ── */
-function checkFade(){
-  document.querySelectorAll('.fade-up').forEach(el=>{
-    const r=el.getBoundingClientRect();
-    if(r.top < window.innerHeight - 80) el.classList.add('in');
-  });
-}
-document.getElementById('invitation').addEventListener('scroll', checkFade);
+function drawPt(p){
 
-/* ── CUENTA REGRESIVA ── */
-const eventDate = new Date("Sep 12, 2026 19:30:00").getTime();
-const timer = setInterval(() => {
-  const now = new Date().getTime();
-  const distance = eventDate - now;
+  ctx.save();
 
-  if (distance < 0) {
-    clearInterval(timer);
-    return;
+  ctx.globalAlpha=p.op;
+
+  ctx.fillStyle=p.col;
+
+  ctx.translate(p.x,p.y);
+
+  if(p.shape===0){
+
+    ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fill();
+
+  } else if(p.shape===1){
+
+    ctx.rotate(Math.PI/4);
+
+    ctx.fillRect(-p.r,-p.r,p.r*2,p.r*2);
+
+  } else {
+
+    ctx.fillRect(-p.r*.3,-p.r*1.5,p.r*.6,p.r*3);
+
+    ctx.fillRect(-p.r*1.5,-p.r*.3,p.r*3,p.r*.6);
+
   }
 
-  document.getElementById("cd-days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
-  document.getElementById("cd-hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-  document.getElementById("cd-mins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-  document.getElementById("cd-secs").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-}, 1000);
+  ctx.restore();
+
+}
+
+function animPts(){
+
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+
+  pts.forEach((p,i)=>{
+
+    p.x+=p.vx; p.y+=p.vy;
+
+    if(p.y<-10) pts[i]=mkPt(false);
+
+    drawPt(p);
+
+  });
+
+  requestAnimationFrame(animPts);
+
+}
+
+animPts();
+
+
+
+/* ── ENVELOPE OPEN ── */
+
+let opened=false;
+
+function openEnvelope(){
+
+  if(opened) return;
+
+  opened=true;
+
+  const seal=document.getElementById('waxSeal');
+
+  const flap=document.getElementById('envFlap');
+
+  const screen=document.getElementById('env-screen');
+
+  const inv=document.getElementById('invitation');
+
+
+
+  // Step 1: seal dissolves in place — blur + fade, NO movement
+
+  seal.classList.add('dissolving');
+
+
+
+  // Step 2: flap opens after seal has started dissolving
+
+  setTimeout(()=>{
+
+    flap.style.transition='transform 1.3s cubic-bezier(.25,0.1,.25,1)';
+
+    flap.style.transform='rotateX(-178deg)';
+
+  }, 600);
+
+
+
+  // Step 3: whole envelope screen fades out
+
+  setTimeout(()=>{
+
+    screen.style.transition='opacity .8s ease';
+
+    screen.style.opacity='0';
+
+  }, 1700);
+
+
+
+  // Step 4: show invitation with fade-in
+
+  setTimeout(()=>{
+
+    screen.style.display='none';
+
+    inv.style.display='block';
+
+    inv.style.opacity='0';
+
+    inv.style.transition='opacity .7s ease';
+
+    setTimeout(()=>{ inv.style.opacity='1'; checkFade(); },50);
+
+  }, 2500);
+
+}
+
+
+
+/* ── SCROLL FADE ── */
+
+function checkFade(){
+
+  document.querySelectorAll('.fade-up').forEach(el=>{
+
+    const r=el.getBoundingClientRect();
+
+    if(r.top < window.innerHeight - 50) el.classList.add('in');
+
+  });
+
+}
+
+document.getElementById('invitation').addEventListener('scroll', checkFade);
+
+window.addEventListener('scroll', checkFade);
+
 </script>
+
 </body>
+
 </html>
