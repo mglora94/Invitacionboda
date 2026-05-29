@@ -79,7 +79,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
 }
 .inv-inner{position:relative;z-index:1;max-width:480px;margin:0 auto;padding-bottom:80px;}
 
-/* ══ COVER — FULL SCREEN (first element, no sticky above) ══ */
+/* ══ COVER — FULL SCREEN ══ */
 #cover-photo{
   position:relative;width:100%;height:100dvh;
   overflow:hidden;flex-shrink:0;
@@ -90,7 +90,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
   background:linear-gradient(to bottom,transparent 35%,rgba(30,50,25,.55) 75%,rgba(20,38,18,.88) 100%);
   pointer-events:none;
 }
-/* Botanical decorations on cover */
 #cover-photo .cover-botanical{
   position:absolute;top:0;left:0;right:0;z-index:1;pointer-events:none;
 }
@@ -112,8 +111,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
   pointer-events:none;
 }
 .floral-sep svg{width:100%;max-width:420px;}
-
-/* Floating botanical corners on sections */
 .section-wrap{position:relative;}
 .section-wrap .corner-tl,.section-wrap .corner-tr{
   position:absolute;top:0;pointer-events:none;opacity:.18;
@@ -138,10 +135,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
 .orn-divider{display:flex;align-items:center;margin:28px 32px;height:30px;}
 .orn-divider svg{width:100%;height:30px;}
 
-/* ══ INFO CARDS — dark green style ══ */
+/* ══ INFO CARDS ══ */
 .info-section{padding:0 20px 8px;position:relative;}
-
-/* Subtle botanical watermark behind cards */
 .info-section::before{
   content:"";position:absolute;
   top:50%;left:50%;transform:translate(-50%,-50%);
@@ -156,8 +151,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
   transition:opacity .85s ease,transform .85s ease;
 }
 .info-card-wrap.in{opacity:1;transform:translateY(0);}
-
-/* Glow beneath each card */
 .info-card-wrap::after{
   content:"";position:absolute;
   bottom:-8px;left:15%;right:15%;height:18px;
@@ -198,11 +191,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
 
 /* ══ PROGRAM / TIMELINE ══ */
 .program-section{padding:0 20px 28px;position:relative;}
-
 .program-title-wrap{text-align:center;margin-bottom:28px;position:relative;z-index:1;}
 .program-title{font-family:'Great Vibes',cursive;font-size:clamp(38px,10vw,52px);color:#2a3828;display:block;margin-bottom:4px;}
 .program-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(9px,2.5vw,11px);letter-spacing:6px;text-transform:uppercase;color:#5a7a52;}
-
 .program-timeline{position:relative;padding:0 0 8px;z-index:1;}
 .program-timeline::before{
   content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;
@@ -230,7 +221,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
   border-bottom:1px solid rgba(200,168,106,.35);
   text-align:center;position:relative;overflow:hidden;
 }
-/* Floral watermark on bus section */
 .bus-section::before{
   content:"";position:absolute;right:-10px;bottom:-10px;
   width:120px;height:120px;
@@ -262,7 +252,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
   transition:opacity .85s ease,transform .85s ease;
   position:relative;overflow:hidden;
 }
-/* Floral watermark inside countdown */
 .countdown-section::after{
   content:"";position:absolute;bottom:-10px;right:-10px;
   width:100px;height:100px;
@@ -303,7 +292,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
 }
 .rsvp-btn small{font-size:clamp(9px,2.5vw,11px);letter-spacing:3px;opacity:.65;text-transform:uppercase;}
 
-/* ══ CONTACT — dark green like countdown ══ */
+/* ══ CONTACT ══ */
 .contact-section{
   margin:0 20px 28px;
   background:linear-gradient(160deg,#2a3828,#3d5836);
@@ -318,7 +307,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
   content:"";position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(to right,transparent,#c8a86a 30%,#c8a86a 70%,transparent);
 }
-/* Floral watermark contact */
 .contact-section::after{
   content:"";position:absolute;bottom:-15px;left:-15px;
   width:110px;height:110px;
@@ -355,7 +343,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
 
 <canvas id="particles"></canvas>
 
-<!-- ════════ ENVELOPE ════════ -->
 <div id="env-screen" onclick="openEnvelope()">
   <div class="env-body">
     <div class="env-fold-bottom"></div>
@@ -421,15 +408,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
   <p class="tap-hint">✦ Toca para abrir ✦</p>
 </div>
 
-<!-- ════════ INVITATION ════════ -->
 <div id="invitation">
   <div class="inv-inner">
 
-    <!-- COVER — full screen, NO botanical above it -->
     <div id="cover-photo">
-      <!-- Botanical overlay on cover (top corners) -->
       <svg class="cover-botanical" viewBox="0 0 480 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;position:absolute;top:0;left:0;z-index:1;pointer-events:none;">
-        <!-- Left branch -->
         <g stroke="rgba(255,255,255,.35)" stroke-width="1.2" fill="none">
           <path d="M0,80 Q35,55 70,65 Q105,48 140,58"/>
           <path d="M15,80 Q25,58 42,48"/>
@@ -439,7 +422,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
           <ellipse cx="75" cy="36" rx="10" ry="5" transform="rotate(-45,75,36)" fill="rgba(255,255,255,.18)"/>
           <ellipse cx="28" cy="58" rx="8" ry="4" transform="rotate(-20,28,58)" fill="rgba(255,255,255,.15)"/>
         </g>
-        <!-- Right branch (mirror) -->
         <g stroke="rgba(255,255,255,.35)" stroke-width="1.2" fill="none" transform="scale(-1,1) translate(-480,0)">
           <path d="M0,80 Q35,55 70,65 Q105,48 140,58"/>
           <path d="M15,80 Q25,58 42,48"/>
@@ -449,7 +431,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
           <ellipse cx="75" cy="36" rx="10" ry="5" transform="rotate(-45,75,36)" fill="rgba(255,255,255,.18)"/>
           <ellipse cx="28" cy="58" rx="8" ry="4" transform="rotate(-20,28,58)" fill="rgba(255,255,255,.15)"/>
         </g>
-        <!-- Center rings -->
         <g stroke="rgba(200,168,106,.55)" stroke-width="1.2" fill="none" transform="translate(240,22)">
           <circle cx="-6" cy="0" r="9"/><circle cx="6" cy="0" r="9"/>
         </g>
@@ -463,10 +444,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
       </div>
     </div>
 
-    <!-- Botanical separator after cover -->
     <div class="floral-sep">
       <svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg">
-        <!-- Left branch -->
         <g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".55">
           <path d="M0,45 Q45,28 90,38 Q135,22 175,32"/>
           <path d="M22,45 Q34,26 54,16"/>
@@ -476,7 +455,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
           <ellipse cx="88" cy="10" rx="12" ry="6" transform="rotate(-48,88,10)" fill="#7a9a72" opacity=".35"/>
           <ellipse cx="36" cy="26" rx="10" ry="5" transform="rotate(-22,36,26)" fill="#7a9a72" opacity=".3"/>
         </g>
-        <!-- Right branch (mirror) -->
         <g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".55" transform="scale(-1,1) translate(-420,0)">
           <path d="M0,45 Q45,28 90,38 Q135,22 175,32"/>
           <path d="M22,45 Q34,26 54,16"/>
@@ -486,7 +464,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
           <ellipse cx="88" cy="10" rx="12" ry="6" transform="rotate(-48,88,10)" fill="#7a9a72" opacity=".35"/>
           <ellipse cx="36" cy="26" rx="10" ry="5" transform="rotate(-22,36,26)" fill="#7a9a72" opacity=".3"/>
         </g>
-        <!-- Center ornament -->
         <g transform="translate(210,30)">
           <path d="M-18,0 Q-9,-8 0,-8 Q9,-8 18,0 Q9,8 0,8 Q-9,8 -18,0Z" fill="none" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
           <circle cx="0" cy="0" r="2.5" fill="#c8a86a" opacity=".8"/>
@@ -494,7 +471,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
       </svg>
     </div>
 
-    <!-- HERO -->
     <div class="hero fade-up">
       <p class="hero-eyebrow">El momento ha llegado...</p>
       <p class="hero-welcome">Después de tanto tiempo juntos, de risas compartidas, de sueños construidos y de una vida que ya no imaginamos el uno sin el otro, ha llegado el momento de celebrarlo con las personas que más queremos.</p>
@@ -511,27 +487,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
       </div>
     </div>
 
-    <!-- Floral separator -->
-    <div class="floral-sep fade-up">
-      <svg viewBox="0 0 420 50" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".45">
-          <path d="M0,35 Q40,20 80,28 Q120,15 160,22"/><path d="M18,35 Q28,18 45,10"/><path d="M48,30 Q54,16 68,8"/>
-          <ellipse cx="48" cy="8" rx="10" ry="5" transform="rotate(-35,48,8)" fill="#7a9a72" opacity=".35"/>
-          <ellipse cx="74" cy="6" rx="10" ry="5" transform="rotate(-48,74,6)" fill="#7a9a72" opacity=".3"/>
-        </g>
-        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".45" transform="scale(-1,1) translate(-420,0)">
-          <path d="M0,35 Q40,20 80,28 Q120,15 160,22"/><path d="M18,35 Q28,18 45,10"/><path d="M48,30 Q54,16 68,8"/>
-          <ellipse cx="48" cy="8" rx="10" ry="5" transform="rotate(-35,48,8)" fill="#7a9a72" opacity=".35"/>
-          <ellipse cx="74" cy="6" rx="10" ry="5" transform="rotate(-48,74,6)" fill="#7a9a72" opacity=".3"/>
-        </g>
-        <g transform="translate(210,25)"><path d="M-14,0 Q-7,-6 0,-6 Q7,-6 14,0 Q7,6 0,6 Q-7,6 -14,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g>
-      </svg>
-    </div>
-
-    <!-- INFO CARDS -->
     <div class="info-section">
-
-      <!-- FECHA -->
       <div class="info-card-wrap">
         <div class="info-card">
           <div class="info-card-inner">
@@ -552,7 +508,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
         </div>
       </div>
 
-      <!-- LUGAR -->
       <div class="info-card-wrap" style="transition-delay:.1s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -575,7 +530,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
         </div>
       </div>
 
-      <!-- HORA -->
       <div class="info-card-wrap" style="transition-delay:.2s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -595,7 +549,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
         </div>
       </div>
 
-      <!-- DRESS CODE -->
       <div class="info-card-wrap" style="transition-delay:.3s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -613,25 +566,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
           </div>
         </div>
       </div>
-
-    </div><!-- /info-section -->
-
-    <!-- Floral separator before program -->
-    <div class="floral-sep fade-up">
-      <svg viewBox="0 0 420 50" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".45">
-          <path d="M0,35 Q40,20 80,28 Q120,15 160,22"/><path d="M18,35 Q28,18 45,10"/><path d="M48,30 Q54,16 68,8"/>
-          <ellipse cx="48" cy="8" rx="10" ry="5" transform="rotate(-35,48,8)" fill="#7a9a72" opacity=".35"/>
-        </g>
-        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".45" transform="scale(-1,1) translate(-420,0)">
-          <path d="M0,35 Q40,20 80,28 Q120,15 160,22"/><path d="M18,35 Q28,18 45,10"/><path d="M48,30 Q54,16 68,8"/>
-          <ellipse cx="48" cy="8" rx="10" ry="5" transform="rotate(-35,48,8)" fill="#7a9a72" opacity=".35"/>
-        </g>
-        <g transform="translate(210,25)"><path d="M-14,0 Q-7,-6 0,-6 Q7,-6 14,0 Q7,6 0,6 Q-7,6 -14,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g>
-      </svg>
     </div>
 
-    <!-- PROGRAM -->
     <div class="program-section">
       <div class="program-title-wrap fade-up">
         <span class="program-title">Programa</span>
@@ -689,7 +625,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
       </div>
     </div>
 
-    <!-- BUS -->
     <div class="bus-section fade-up">
       <div class="bus-header">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a7a52" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0">
@@ -718,22 +653,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
       </div>
     </div>
 
-    <!-- Floral separator -->
-    <div class="floral-sep fade-up">
-      <svg viewBox="0 0 420 50" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".45">
-          <path d="M0,35 Q40,20 80,28 Q120,15 160,22"/><path d="M18,35 Q28,18 45,10"/>
-          <ellipse cx="48" cy="8" rx="10" ry="5" transform="rotate(-35,48,8)" fill="#7a9a72" opacity=".35"/>
-        </g>
-        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".45" transform="scale(-1,1) translate(-420,0)">
-          <path d="M0,35 Q40,20 80,28 Q120,15 160,22"/><path d="M18,35 Q28,18 45,10"/>
-          <ellipse cx="48" cy="8" rx="10" ry="5" transform="rotate(-35,48,8)" fill="#7a9a72" opacity=".35"/>
-        </g>
-        <g transform="translate(210,25)"><path d="M-14,0 Q-7,-6 0,-6 Q7,-6 14,0 Q7,6 0,6 Q-7,6 -14,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g>
-      </svg>
-    </div>
-
-    <!-- COUNTDOWN -->
     <div class="countdown-section">
       <div class="countdown-label">✦ Quedan ✦</div>
       <div class="countdown-grid">
@@ -745,27 +664,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
       <div class="countdown-tagline">¡Te esperamos!</div>
     </div>
 
-    <!-- Floral separator -->
-    <div class="floral-sep fade-up">
-      <svg viewBox="0 0 420 50" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".45">
-          <path d="M0,35 Q40,20 80,28 Q120,15 160,22"/><path d="M18,35 Q28,18 45,10"/>
-          <ellipse cx="48" cy="8" rx="10" ry="5" transform="rotate(-35,48,8)" fill="#7a9a72" opacity=".35"/>
-        </g>
-        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".45" transform="scale(-1,1) translate(-420,0)">
-          <path d="M0,35 Q40,20 80,28 Q120,15 160,22"/><path d="M18,35 Q28,18 45,10"/>
-          <ellipse cx="48" cy="8" rx="10" ry="5" transform="rotate(-35,48,8)" fill="#7a9a72" opacity=".35"/>
-        </g>
-        <g transform="translate(210,25)"><path d="M-14,0 Q-7,-6 0,-6 Q7,-6 14,0 Q7,6 0,6 Q-7,6 -14,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g>
-      </svg>
-    </div>
-
-    <!-- CLOSING -->
     <div class="closing-section fade-up">
       <p class="closing-text">Con cariño,<br>Marina y Manuel</p>
     </div>
 
-    <!-- RSVP -->
     <div class="rsvp-wrap fade-up">
       <p class="rsvp-note">Nos encantaría contar con tu presencia.<br>Confirma antes del 1 de agosto de 2026.</p>
       <a class="rsvp-btn" href="https://bodamarinaymanu.netlify.app/" target="_blank">
@@ -774,22 +676,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
       </a>
     </div>
 
-    <!-- Floral separator -->
-    <div class="floral-sep fade-up">
-      <svg viewBox="0 0 420 50" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".45">
-          <path d="M0,35 Q40,20 80,28 Q120,15 160,22"/><path d="M18,35 Q28,18 45,10"/>
-          <ellipse cx="48" cy="8" rx="10" ry="5" transform="rotate(-35,48,8)" fill="#7a9a72" opacity=".35"/>
-        </g>
-        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".45" transform="scale(-1,1) translate(-420,0)">
-          <path d="M0,35 Q40,20 80,28 Q120,15 160,22"/><path d="M18,35 Q28,18 45,10"/>
-          <ellipse cx="48" cy="8" rx="10" ry="5" transform="rotate(-35,48,8)" fill="#7a9a72" opacity=".35"/>
-        </g>
-        <g transform="translate(210,25)"><path d="M-14,0 Q-7,-6 0,-6 Q7,-6 14,0 Q7,6 0,6 Q-7,6 -14,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g>
-      </svg>
-    </div>
-
-    <!-- CONTACTO — dark green -->
     <div class="contact-section">
       <div class="contact-label">Contacto</div>
       <div class="contact-heading">¿Tienes alguna consulta?</div>
@@ -806,7 +692,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#4a6741;-webkit-font
       </div>
     </div>
 
-    <!-- Bottom botanical border -->
     <svg class="botanical-bot" viewBox="0 0 480 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
       <rect width="480" height="90" fill="#faf7f0"/>
       <g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".5" transform="translate(0,90) scale(1,-1)">
@@ -851,13 +736,28 @@ function openEnvelope(){
   const flap=document.getElementById('envFlap');
   const screen=document.getElementById('env-screen');
   const inv=document.getElementById('invitation');
+  
+  // 1. Efecto del sello rompiéndose/desvaneciéndose
   seal.classList.add('dissolve');
+  
+  // 2. Abrir la solapa con rotación 3D
   setTimeout(()=>{flap.style.transition='transform 1.35s cubic-bezier(.25,.1,.25,1)';flap.style.transform='rotateX(-178deg)';},550);
+  
+  // 3. Ocultar el sobre suavemente
   setTimeout(()=>{screen.style.transition='opacity .75s ease';screen.style.opacity='0';},1750);
+  
+  // 4. Mostrar tu invitación y eliminar el sobre del fondo
   setTimeout(()=>{
     screen.style.display='none';
-    inv.style.display='block';inv.style.opacity='0';inv.style.transition='opacity .65s ease';
-    setTimeout(()=>{inv.style.opacity='1';checkFade();},40);
+    inv.style.display='block';
+    inv.style.opacity='0';
+    inv.style.transition='opacity .65s ease';
+    
+    // El fade in de tu contenido
+    setTimeout(()=>{
+        inv.style.opacity='1';
+        checkFade(); // Activa las animaciones al hacer scroll
+    },40);
   },2520);
 }
 
