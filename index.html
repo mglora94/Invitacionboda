@@ -41,7 +41,7 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
 .env-fold-bottom{position:absolute;bottom:0;left:0;width:100%;height:52%;background:linear-gradient(180deg,#3a5430 0%,#2e4424 100%);clip-path:polygon(0 100%,100% 100%,50% 0%);z-index:2;}
 .env-fold-left{position:absolute;top:0;left:0;width:52%;height:100%;background:linear-gradient(135deg,#4e7044 0%,#3a5832 100%);clip-path:polygon(0 0,0 100%,100% 50%);z-index:3;}
 .env-fold-right{position:absolute;top:0;right:0;width:52%;height:100%;background:linear-gradient(225deg,#4e7044 0%,#3a5832 100%);clip-path:polygon(100% 0,100% 100%,0 50%);z-index:3;}
-/* Añadida magia al interior del sobre: un patrón decorativo botánico sutil */
+
 .env-inner-peek{
     position:absolute;top:0;left:0;width:100%;height:52%;
     background-color: #e8d8b8;
@@ -135,21 +135,30 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
 .orn-divider{display:flex;align-items:center;margin:28px 32px;height:30px;}
 .orn-divider svg{width:100%;height:30px;}
 
-/* ══ COUNTDOWN (DISEÑO CLARO) ══ */
+/* ══ COUNTDOWN (DISEÑO ORIGINAL) ══ */
 .countdown-section{
-  margin: 0 20px 10px; padding:20px 20px 0;
-  text-align:center;
-  position:relative;
+  margin:0 20px 20px;padding:30px 20px;
+  background:linear-gradient(160deg,#2a3828,#3d5836);
+  border-radius:3px;text-align:center;
+  border:1px solid rgba(200,168,106,.2);
+  box-shadow:0 8px 32px rgba(42,56,40,.3);
+  position:relative;overflow:hidden;
   transition:opacity .85s ease,transform .85s ease;
 }
+.countdown-section::after{
+  content:"";position:absolute;bottom:-10px;right:-10px;
+  width:100px;height:100px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg stroke='rgba(200,168,106,.3)' stroke-width='1' fill='none'%3E%3Cpath d='M100,100 Q65,65 50,50'/%3E%3Cpath d='M50,50 Q20,20 5,5'/%3E%3Cellipse cx='18' cy='18' rx='12' ry='6' transform='rotate(-45,18,18)' fill='rgba(200,168,106,.2)'/%3E%3Cellipse cx='80' cy='80' rx='10' ry='5' transform='rotate(45,80,80)' fill='rgba(200,168,106,.15)'/%3E%3C/g%3E%3C/svg%3E") right bottom/contain no-repeat;
+  pointer-events:none;
+}
 .countdown-section.in{opacity:1;transform:translateY(0);}
-.countdown-label{font-family:'Cormorant Garamond',serif;font-size:clamp(10px,2.8vw,11px);letter-spacing:6px;text-transform:uppercase;color:#5a7a52;margin-bottom:20px;position:relative;z-index:1; font-weight: 600;}
-.countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:20px;position:relative;z-index:1;}
+.countdown-label{font-family:'Cormorant Garamond',serif;font-size:clamp(10px,2.8vw,11px);letter-spacing:6px;text-transform:uppercase;color:rgba(200,168,106,.7);margin-bottom:20px;position:relative;z-index:1;}
+.countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:0px;position:relative;z-index:1;}
 .cd-item{text-align:center;}
-.cd-num{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,8.5vw,42px);font-weight:600;color:#2a3828;line-height:1;display:block;}
-.cd-unit{font-family:'Cormorant Garamond',serif;font-size:clamp(9px,2.4vw,10px);letter-spacing:4px;text-transform:uppercase;color:#c8a86a;margin-top:5px;display:block; font-weight:600;}
+.cd-num{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,8.5vw,42px);font-weight:600;color:#f5ede0;line-height:1;display:block;}
+.cd-unit{font-family:'Cormorant Garamond',serif;font-size:clamp(9px,2.4vw,10px);letter-spacing:4px;text-transform:uppercase;color:rgba(200,168,106,.6);margin-top:5px;display:block;}
 
-/* ══ INFO CARDS (MAGIA APLICADA: DISEÑO CLARO, ROMÁNTICO Y GLASSMORPHISM) ══ */
+/* ══ INFO CARDS (OSCUROS Y ELEGANTES) ══ */
 .info-section{padding:0 24px 16px;position:relative;}
 .info-card-wrap{
   position:relative;z-index:1;margin-bottom:20px;
@@ -160,53 +169,50 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
 
 .info-card{
   position:relative;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(200,168,106,.4);
-  border-radius: 8px;
+  background:linear-gradient(160deg,#2a3828,#3d5836);
+  border:1px solid rgba(200,168,106,.22);
+  border-radius:3px;
   overflow:hidden;
-  box-shadow: 0 8px 32px rgba(90, 122, 82, 0.08);
+  box-shadow:0 6px 28px rgba(42,56,40,.3);
   text-align: center;
 }
 .info-card::before{
-  content:"";position:absolute;top:4px;bottom:4px;left:4px;right:4px;
-  border: 1px solid rgba(200,168,106,.2);
-  pointer-events: none; border-radius: 6px;
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,transparent,#c8a86a 30%,#c8a86a 70%,transparent);
 }
 .info-card-inner{padding:30px 20px;display:flex;flex-direction:column;align-items:center;gap:12px; position: relative; z-index: 2;}
 .info-card-icon{
   width:50px;height:50px;border-radius:50%;
-  background:#faf7f0;border:1px solid #c8a86a;
+  background:rgba(255,255,255,.07);border:1px solid rgba(200,168,106,.3);
   display:flex;align-items:center;justify-content:center;
   margin-bottom: 4px;
-  box-shadow: 0 4px 12px rgba(200,168,106, 0.15);
 }
-.info-card-icon svg{width:22px;height:22px;stroke:#5a7a52; fill: none;}
-.info-card-icon svg path.gold-fill { fill: #c8a86a; opacity: .4; stroke: none; }
+.info-card-icon svg{width:22px;height:22px;stroke:#c8a86a; fill: none;}
+.info-card-icon svg path.gold-fill { fill: #c8a86a; opacity: 1; stroke: none; }
+.info-card-icon svg circle.gold-fill { fill: #c8a86a; stroke: none; }
 .info-card-content{flex:1; width: 100%;}
-.info-card-label{font-family:'Cormorant Garamond',serif;font-size:clamp(10px,2.6vw,11px);letter-spacing:5px;text-transform:uppercase;color:#c8a86a;margin-bottom:6px;font-weight:600;}
-.info-card-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,6vw,28px);font-weight:600;color:#2a3828;line-height:1.2;margin-bottom:6px;}
-.info-card-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(14px,3.8vw,16px);color:#7a6545;line-height:1.6;}
+.info-card-label{font-family:'Cormorant Garamond',serif;font-size:clamp(10px,2.6vw,11px);letter-spacing:5px;text-transform:uppercase;color:rgba(200,168,106,.75);margin-bottom:6px;font-weight:600;}
+.info-card-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,6vw,28px);font-weight:600;color:#f5ede0;line-height:1.2;margin-bottom:6px;}
+.info-card-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(14px,3.8vw,16px);color:rgba(245,237,224,.6);line-height:1.6;}
 
 /* Botones y enlaces especiales de las tarjetas */
 .btn-calendar {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   margin-top: 16px; padding: 10px 24px;
-  background: #f5ede0; border: 1px solid rgba(200,168,106,.6);
+  background: rgba(200,168,106,.1); border: 1px solid rgba(200,168,106,.5);
   border-radius: 30px;
   font-family: 'Cormorant Garamond', serif; font-size: clamp(13px,3.5vw,15px);
-  color: #5a7a52; text-decoration: none; font-weight: 600; letter-spacing: 1px;
+  color: #c8a86a; text-decoration: none; font-weight: 600; letter-spacing: 1px;
   transition: all 0.3s ease;
 }
-.btn-calendar svg { width: 16px; height: 16px; stroke: #5a7a52; fill: none; }
+.btn-calendar svg { width: 16px; height: 16px; stroke: #c8a86a; fill: none; }
 .map-embed {
   margin-top: 20px;
   width: 100%; height: 180px;
-  border-radius: 6px;
+  border-radius: 4px;
   border: 1px solid rgba(200,168,106,.4);
   overflow: hidden;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
 }
 .map-embed iframe {
   width: 100%; height: 100%; border: none; display: block;
@@ -276,20 +282,27 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
 .closing-section::after{right:10px;transform:scaleX(-1);}
 .closing-text{font-family:'Great Vibes',cursive;font-size:clamp(34px,9vw,46px);color:#3d5836;line-height:1.35;}
 
-/* ══ RSVP ══ */
+/* ══ RSVP (CON MAGIA PARA DESTACAR) ══ */
 .rsvp-wrap{padding:20px 28px 40px;text-align:center;}
 .rsvp-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(13px,3.6vw,15px);color:#7a6545;margin-bottom:20px;line-height:1.6;}
 .rsvp-btn{
   display:inline-flex;flex-direction:column;align-items:center;gap:5px;
   padding:18px 48px;
   background:linear-gradient(160deg,#2a3828,#3d5836);
-  color:#f5ede0;border-radius:2px;text-decoration:none;
+  color:#f5ede0;border-radius:4px;text-decoration:none;
   font-family:'Cormorant Garamond',serif;font-size:clamp(14px,4vw,18px);
   letter-spacing:4px;text-transform:uppercase;
   box-shadow:0 10px 32px rgba(42,56,40,.3);
-  border:1px solid rgba(200,168,106,.25);
+  border:2px solid #c8a86a;
+  animation: pulse-gold 2s infinite;
 }
-.rsvp-btn small{font-size:clamp(9px,2.5vw,11px);letter-spacing:3px;opacity:.65;text-transform:uppercase;}
+.rsvp-btn small{font-size:clamp(9px,2.5vw,11px);letter-spacing:3px;color:rgba(200,168,106,.8);text-transform:uppercase;}
+
+@keyframes pulse-gold {
+  0% { box-shadow: 0 0 0 0 rgba(200,168,106, 0.45), 0 10px 32px rgba(42,56,40,.3); }
+  70% { box-shadow: 0 0 0 12px rgba(200,168,106, 0), 0 10px 32px rgba(42,56,40,.3); }
+  100% { box-shadow: 0 0 0 0 rgba(200,168,106, 0), 0 10px 32px rgba(42,56,40,.3); }
+}
 
 /* ══ CONTACT ══ */
 .contact-section{
@@ -443,6 +456,7 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
       </div>
     </div>
 
+    <!-- ══ HERO Y FOTO ACUARELA ══ -->
     <div class="hero fade-up">
       <div class="floral-sep" style="padding-top: 10px;">
         <svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg">
@@ -486,7 +500,9 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
       </div>
     </div>
 
+    <!-- ══ COUNTDOWN ══ -->
     <div class="countdown-section fade-up">
+      <div class="countdown-label">✦ Quedan ✦</div>
       <div class="countdown-grid">
         <div class="cd-item"><span class="cd-num" id="cd-d">--</span><span class="cd-unit">Días</span></div>
         <div class="cd-item"><span class="cd-num" id="cd-h">--</span><span class="cd-unit">Horas</span></div>
@@ -495,6 +511,7 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
       </div>
     </div>
 
+    <!-- ══ SEPARADOR FLORAL ══ -->
     <div class="floral-sep fade-up">
       <svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg">
         <g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".55">
@@ -522,8 +539,10 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
       </svg>
     </div>
 
+    <!-- ══ INFO CARDS ══ -->
     <div class="info-section">
       
+      <!-- TARJETA FECHA -->
       <div class="info-card-wrap">
         <div class="info-card">
           <div class="info-card-inner">
@@ -548,6 +567,7 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
         </div>
       </div>
 
+      <!-- TARJETA LUGAR -->
       <div class="info-card-wrap" style="transition-delay:.1s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -569,6 +589,7 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
         </div>
       </div>
 
+      <!-- TARJETA HORA -->
       <div class="info-card-wrap" style="transition-delay:.2s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -588,6 +609,7 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
         </div>
       </div>
 
+      <!-- TARJETA DRESS CODE -->
       <div class="info-card-wrap" style="transition-delay:.3s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -608,6 +630,7 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
 
     </div>
 
+    <!-- ══ PROGRAM / TIMELINE ══ -->
     <div class="program-section">
       <div class="program-title-wrap fade-up">
         <span class="program-title">Programa</span>
@@ -665,6 +688,7 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
       </div>
     </div>
 
+    <!-- ══ BUS ══ -->
     <div class="bus-section fade-up">
       <div class="bus-header">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a7a52" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0">
@@ -693,10 +717,12 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
       </div>
     </div>
 
+    <!-- ══ CLOSING ══ -->
     <div class="closing-section fade-up">
       <p class="closing-text">Con cariño,<br>Marina y Manuel</p>
     </div>
 
+    <!-- ══ RSVP ══ -->
     <div class="rsvp-wrap fade-up">
       <p class="rsvp-note">Nos encantaría contar con tu presencia.<br>Confirma antes del 1 de agosto de 2026.</p>
       <a class="rsvp-btn" href="https://bodamarinaymanu.netlify.app/" target="_blank">
@@ -705,6 +731,7 @@ html,body{width:100%;height:100%;overflow-hidden;background:#4a6741;-webkit-font
       </a>
     </div>
 
+    <!-- ══ CONTACT ══ -->
     <div class="contact-section">
       <div class="contact-label">Contacto</div>
       <div class="contact-heading">¿Tienes alguna consulta?</div>
