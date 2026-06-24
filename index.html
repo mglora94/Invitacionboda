@@ -18,23 +18,27 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 #particles{position:fixed;inset:0;pointer-events:none;z-index:0;}
 
 /* ══════════════════════════════════════
-   SOBRE 3D REALISTA — ESTILO VERTICAL
+   SOBRE — PANTALLA COMPLETA VERDE
 ══════════════════════════════════════ */
 #env-screen{
   position:fixed;inset:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  background:radial-gradient(ellipse at 50% 40%, #3a5230 0%, #243320 50%, #1a2618 100%);
+  background:linear-gradient(160deg,#2a3828 0%,#3d5836 50%,#2a3828 100%);
   z-index:100;cursor:pointer;overflow:hidden;
-  transition:opacity 1s ease;
+  transition:opacity 1.2s ease;
 }
 
-/* Fondo con textura sutil */
 #env-screen::before{
   content:"";position:absolute;inset:0;
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(200,168,106,.04) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(200,168,106,.03) 0%, transparent 50%);
+    radial-gradient(circle at 20% 30%, rgba(200,168,106,.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(200,168,106,.04) 0%, transparent 50%);
   pointer-events:none;
+}
+
+/* Hojas decorativas en el fondo del sobre */
+.env-bg-leaf{
+  position:absolute;pointer-events:none;opacity:.12;
 }
 
 .env-scene{
@@ -48,11 +52,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .env-body{
   position:relative;
   width:100%;
-  padding-bottom:145%; /* ratio vertical ~1:1.45 */
+  padding-bottom:145%;
   transform-style:preserve-3d;
 }
 
-/* Papel base del sobre */
 .env-paper{
   position:absolute;inset:0;
   background:linear-gradient(160deg,#f5ede0 0%,#ede0c8 40%,#e8d8b0 100%);
@@ -66,21 +69,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   overflow:hidden;
 }
 
-/* Textura de papel */
 .env-paper::before{
   content:"";position:absolute;inset:0;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   opacity:.5;pointer-events:none;
 }
 
-/* Líneas decorativas interiores del sobre */
 .env-paper::after{
   content:"";position:absolute;inset:8px;
   border:1px solid rgba(200,168,106,.25);
   border-radius:2px;pointer-events:none;
 }
 
-/* Triángulos laterales (pliegues del sobre) */
 .env-fold-left{
   position:absolute;top:0;left:0;width:52%;height:100%;
   background:linear-gradient(135deg,#e8d8b0 0%,#d4c49a 100%);
@@ -102,8 +102,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   z-index:3;
   box-shadow:inset 0 -4px 12px rgba(0,0,0,.1);
 }
-
-/* Sombra de pliegue central inferior */
 .env-fold-bottom::after{
   content:"";position:absolute;
   bottom:0;left:50%;transform:translateX(-50%);
@@ -111,7 +109,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   background:linear-gradient(to bottom,transparent,rgba(0,0,0,.12));
 }
 
-/* Peek interior (papel de la carta asomando) */
 .env-inner-peek{
   position:absolute;top:0;left:4%;width:92%;height:52%;
   background:linear-gradient(180deg,#faf5ec 0%,#f0e8d4 100%);
@@ -125,7 +122,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   clip-path:polygon(0 0,100% 0,50% 100%);
 }
 
-/* ── SOLAPA SUPERIOR (FLAP) ── */
 .env-flap{
   position:absolute;top:0;left:0;width:100%;height:52%;
   background:linear-gradient(175deg,#f0e4cc 0%,#e4d4b4 40%,#d8c8a0 100%);
@@ -136,16 +132,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   z-index:6;
   box-shadow:0 8px 24px rgba(0,0,0,.2);
 }
-
-/* Brillo en la solapa */
 .env-flap::before{
   content:"";position:absolute;inset:0;
   background:linear-gradient(160deg,rgba(255,255,255,.35) 0%,rgba(255,255,255,.05) 45%,transparent 100%);
   clip-path:polygon(0 0,100% 0,50% 100%);
   pointer-events:none;
 }
-
-/* Sombra de pliegue en la solapa */
 .env-flap::after{
   content:"";position:absolute;inset:0;
   background:
@@ -155,7 +147,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   pointer-events:none;
 }
 
-/* ── SELLO DE LACRE ── */
 .wax-seal{
   position:absolute;top:52%;left:50%;
   transform:translate(-50%,-50%);
@@ -166,7 +157,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 }
 .wax-seal.dissolve{opacity:0;transform:translate(-50%,-50%) scale(0.05) rotate(30deg);}
 
-/* ── SOMBRA PROYECTADA DEL SOBRE ── */
 .env-shadow{
   position:absolute;bottom:-20px;left:50%;
   transform:translateX(-50%);
@@ -176,26 +166,25 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   z-index:1;
 }
 
-/* ── HINT ── */
 .tap-hint{
   margin-top:32px;
-  color:rgba(255,255,255,.45);
+  color:rgba(255,255,255,.5);
   font-family:'Cormorant Garamond',serif;
   font-size:clamp(11px,3vw,13px);letter-spacing:6px;text-transform:uppercase;
   white-space:nowrap;animation:breathe 3s ease-in-out infinite;
   position:relative;z-index:2;
 }
-@keyframes breathe{0%,100%{opacity:.2}50%{opacity:.65}}
+@keyframes breathe{0%,100%{opacity:.2}50%{opacity:.7}}
 
-/* ══ DESTELLO DE TRANSICIÓN ══ */
-#flash-overlay{
+/* ══ TRANSICIÓN SUAVE (sin destello) ══ */
+#fade-overlay{
   position:fixed;inset:0;z-index:200;
-  background:radial-gradient(ellipse at center,#fff8e8 0%,#f5e8c0 30%,rgba(200,168,106,0) 70%);
+  background:#2a3828;
   opacity:0;pointer-events:none;
-  transition:opacity .25s ease;
+  transition:opacity .5s ease;
 }
-#flash-overlay.flash-in{opacity:1;}
-#flash-overlay.flash-out{opacity:0;transition:opacity .8s ease;}
+#fade-overlay.fade-in{opacity:1;pointer-events:all;}
+#fade-overlay.fade-out{opacity:0;transition:opacity .9s ease;}
 
 /* ══════════════════════════════════════
    INVITACIÓN
@@ -208,13 +197,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 }
 .inv-inner{position:relative;z-index:1;max-width:480px;margin:0 auto;padding-bottom:80px;}
 
-/* ══ ELEMENTOS DECORATIVOS FLOTANTES ══ */
-.deco-float{
-  position:absolute;pointer-events:none;z-index:0;
+/* ══ HOJAS DESENFOCADAS PARALLAX ══ */
+.blur-leaf{
+  position:fixed;pointer-events:none;z-index:2;
   opacity:0;
-  transition:opacity 1.2s ease, transform 1.2s ease;
+  filter:blur(7px);
+  transition:opacity 1.4s ease;
+  will-change:transform;
 }
-.deco-float.visible{opacity:1;}
+.blur-leaf.visible{opacity:1;}
+
+@keyframes floatLeafSlow{
+  0%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-14px) rotate(5deg);}
+  100%{transform:translateY(0) rotate(0deg);}
+}
 
 /* Pétalos flotantes animados */
 @keyframes floatPetal{
@@ -223,25 +220,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   66%{transform:translateY(-6px) rotate(-5deg);}
   100%{transform:translateY(0) rotate(0deg);}
 }
-@keyframes floatPetal2{
-  0%{transform:translateY(0) rotate(0deg);}
-  50%{transform:translateY(-18px) rotate(-10deg);}
-  100%{transform:translateY(0) rotate(0deg);}
-}
-@keyframes floatLeaf{
-  0%{transform:translateY(0) rotate(0deg) scale(1);}
-  40%{transform:translateY(-8px) rotate(6deg) scale(1.03);}
-  80%{transform:translateY(-4px) rotate(-3deg) scale(.98);}
-  100%{transform:translateY(0) rotate(0deg) scale(1);}
-}
-@keyframes shimmer{
-  0%,100%{opacity:.3;}
-  50%{opacity:.7;}
-}
-@keyframes rotateSlow{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
-}
+@keyframes shimmer{0%,100%{opacity:.3;}50%{opacity:.7;}}
+@keyframes rotateSlow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 
 /* ══ COVER ══ */
 #cover-photo{
@@ -314,6 +294,54 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .cd-num{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,8.5vw,42px);font-weight:600;color:#f5ede0;line-height:1;display:block;}
 .cd-unit{font-family:'Cormorant Garamond',serif;font-size:clamp(9px,2.4vw,10px);letter-spacing:4px;text-transform:uppercase;color:rgba(200,168,106,.6);margin-top:5px;display:block;}
 
+/* ══ RSVP DESTACADO (tras countdown) ══ */
+.rsvp-highlight{
+  margin:0 20px 20px;padding:32px 24px;
+  background:linear-gradient(160deg,#1e2e1c,#2a3828);
+  border-radius:3px;text-align:center;
+  border:1px solid rgba(200,168,106,.3);
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+  position:relative;overflow:hidden;
+}
+.rsvp-highlight::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,transparent,#c8a86a 30%,#c8a86a 70%,transparent);
+}
+.rsvp-highlight-label{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(9px,2.4vw,10px);letter-spacing:5px;text-transform:uppercase;
+  color:rgba(200,168,106,.75);margin-bottom:8px;font-weight:600;
+}
+.rsvp-highlight-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(32px,8.5vw,44px);color:#f5ede0;margin-bottom:8px;line-height:1.2;
+}
+.rsvp-highlight-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(13px,3.5vw,15px);color:rgba(245,237,224,.6);
+  margin-bottom:24px;line-height:1.6;
+}
+.rsvp-highlight-btn{
+  display:inline-flex;flex-direction:column;align-items:center;gap:5px;
+  padding:18px 48px;
+  background:linear-gradient(160deg,#2a3828,#3d5836);
+  color:#f5ede0;border-radius:4px;text-decoration:none;
+  font-family:'Cormorant Garamond',serif;font-size:clamp(14px,4vw,18px);
+  letter-spacing:4px;text-transform:uppercase;
+  box-shadow:0 10px 32px rgba(42,56,40,.3);
+  border:2px solid #c8a86a;
+  position:relative;overflow:hidden;
+  animation:pulse-gold 2s infinite;
+}
+.rsvp-highlight-btn::after{
+  content:"";position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(200,168,106,.25),transparent);
+  animation:shimmerBtn 6s ease-in-out infinite;
+}
+@keyframes shimmerBtn{0%,100%{left:-100%;}50%{left:150%;}}
+.rsvp-highlight-btn small{font-size:clamp(9px,2.5vw,11px);letter-spacing:3px;color:rgba(200,168,106,.8);text-transform:uppercase;}
+@keyframes pulse-gold{0%{box-shadow:0 0 0 0 rgba(200,168,106,.45),0 10px 32px rgba(42,56,40,.3);}70%{box-shadow:0 0 0 12px rgba(200,168,106,0),0 10px 32px rgba(42,56,40,.3);}100%{box-shadow:0 0 0 0 rgba(200,168,106,0),0 10px 32px rgba(42,56,40,.3);}}
+
 /* ══ INFO CARDS ══ */
 .info-section{padding:0 24px 16px;position:relative;}
 .info-card-wrap{
@@ -343,8 +371,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .info-card-label{font-family:'Cormorant Garamond',serif;font-size:clamp(10px,2.6vw,11px);letter-spacing:5px;text-transform:uppercase;color:rgba(200,168,106,.75);margin-bottom:6px;font-weight:600;}
 .info-card-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,6vw,28px);font-weight:600;color:#f5ede0;line-height:1.2;margin-bottom:6px;}
 .info-card-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(14px,3.8vw,16px);color:rgba(245,237,224,.6);line-height:1.6;}
-.btn-calendar{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;padding:10px 24px;background:rgba(200,168,106,.1);border:1px solid rgba(200,168,106,.5);border-radius:30px;font-family:'Cormorant Garamond',serif;font-size:clamp(13px,3.5vw,15px);color:#c8a86a;text-decoration:none;font-weight:600;letter-spacing:1px;transition:all .3s ease;}
-.btn-calendar svg{width:16px;height:16px;stroke:#c8a86a;fill:none;}
+
+/* Botones de agenda y mapa */
+.btn-action-row{display:flex;flex-direction:column;gap:10px;margin-top:16px;align-items:center;}
+.btn-cal{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;width:100%;max-width:240px;background:rgba(200,168,106,.1);border:1px solid rgba(200,168,106,.5);border-radius:30px;font-family:'Cormorant Garamond',serif;font-size:clamp(13px,3.5vw,14px);color:#c8a86a;text-decoration:none;font-weight:600;letter-spacing:1px;transition:all .3s ease;}
+.btn-cal svg{width:15px;height:15px;stroke:#c8a86a;fill:none;flex-shrink:0;}
+.btn-map{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;width:100%;max-width:240px;background:rgba(200,168,106,.1);border:1px solid rgba(200,168,106,.5);border-radius:30px;font-family:'Cormorant Garamond',serif;font-size:clamp(13px,3.5vw,14px);color:#c8a86a;text-decoration:none;font-weight:600;letter-spacing:1px;transition:all .3s ease;}
+.btn-map svg{width:15px;height:15px;stroke:#c8a86a;fill:none;flex-shrink:0;}
+
 .map-embed{margin-top:20px;width:100%;height:180px;border-radius:4px;border:1px solid rgba(200,168,106,.4);overflow:hidden;box-shadow:inset 0 2px 8px rgba(0,0,0,.2);}
 .map-embed iframe{width:100%;height:100%;border:none;display:block;}
 
@@ -383,23 +417,85 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .bus-vdivider{width:1px;background:linear-gradient(to bottom,transparent,rgba(200,168,106,.5) 20%,rgba(200,168,106,.5) 80%,transparent);align-self:stretch;flex-shrink:0;}
 .bus-route-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(10px,2.6vw,11px);color:#a0896a;letter-spacing:1px;margin-top:8px;}
 
+/* ══ ALOJAMIENTO ══ */
+.hotel-section{
+  margin:8px 20px 28px;
+  background:linear-gradient(160deg,#faf5ec,#f5ede0);
+  border:1px solid rgba(200,168,106,.35);
+  border-radius:3px;overflow:hidden;
+  box-shadow:0 6px 28px rgba(42,56,40,.12);
+  position:relative;
+}
+.hotel-badge{
+  background:linear-gradient(135deg,#2a3828,#3d5836);
+  padding:10px 20px;text-align:center;
+  position:relative;
+}
+.hotel-badge::after{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,transparent,#c8a86a 30%,#c8a86a 70%,transparent);
+}
+.hotel-badge-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(9px,2.4vw,10px);letter-spacing:5px;text-transform:uppercase;
+  color:#c8a86a;font-weight:600;
+}
+.hotel-inner{padding:24px 20px;text-align:center;}
+.hotel-icon{font-size:28px;margin-bottom:10px;display:block;}
+.hotel-name{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(20px,5.5vw,26px);
+  font-weight:600;color:#2a3828;margin-bottom:6px;
+}
+.hotel-desc{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(13px,3.5vw,15px);color:#5a4a30;line-height:1.7;margin-bottom:16px;
+}
+.hotel-note{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(12px,3.2vw,13px);color:#7a6545;
+  background:rgba(200,168,106,.1);border:1px solid rgba(200,168,106,.3);
+  border-radius:2px;padding:10px 14px;margin-bottom:16px;line-height:1.6;
+}
+.hotel-btns{display:flex;flex-direction:column;gap:10px;align-items:center;}
+.hotel-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px 24px;width:100%;max-width:260px;
+  background:linear-gradient(160deg,#2a3828,#3d5836);
+  color:#f5ede0;border-radius:2px;text-decoration:none;
+  font-family:'Cormorant Garamond',serif;font-size:clamp(14px,3.8vw,16px);
+  letter-spacing:1px;box-shadow:0 4px 16px rgba(42,56,40,.2);
+}
+.hotel-btn-phone{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px 24px;width:100%;max-width:260px;
+  background:rgba(200,168,106,.1);border:1px solid rgba(200,168,106,.5);
+  color:#7a6545;border-radius:2px;text-decoration:none;
+  font-family:'Cormorant Garamond',serif;font-size:clamp(14px,3.8vw,16px);
+  letter-spacing:1px;
+}
+
 /* ══ CLOSING ══ */
 .closing-section{text-align:center;padding:16px 32px 8px;position:relative;}
 .closing-text{font-family:'Great Vibes',cursive;font-size:clamp(34px,9vw,46px);color:#3d5836;line-height:1.35;}
 
-/* ══ RSVP ══ */
-.rsvp-wrap{padding:20px 28px 40px;text-align:center;}
-.rsvp-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(13px,3.6vw,15px);color:#7a6545;margin-bottom:20px;line-height:1.6;}
-.rsvp-btn{display:inline-flex;flex-direction:column;align-items:center;gap:5px;padding:18px 48px;background:linear-gradient(160deg,#2a3828,#3d5836);color:#f5ede0;border-radius:4px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:clamp(14px,4vw,18px);letter-spacing:4px;text-transform:uppercase;box-shadow:0 10px 32px rgba(42,56,40,.3);border:2px solid #c8a86a;animation:pulse-gold 2s infinite;}
-.rsvp-btn small{font-size:clamp(9px,2.5vw,11px);letter-spacing:3px;color:rgba(200,168,106,.8);text-transform:uppercase;}
-@keyframes pulse-gold{0%{box-shadow:0 0 0 0 rgba(200,168,106,.45),0 10px 32px rgba(42,56,40,.3);}70%{box-shadow:0 0 0 12px rgba(200,168,106,0),0 10px 32px rgba(42,56,40,.3);}100%{box-shadow:0 0 0 0 rgba(200,168,106,0),0 10px 32px rgba(42,56,40,.3);}}
-
-/* ══ CONTACT ══ */
-.contact-section{margin:0 20px 28px;background:linear-gradient(160deg,#2a3828,#3d5836);border:1px solid rgba(200,168,106,.22);border-radius:3px;padding:28px 24px;text-align:center;box-shadow:0 8px 32px rgba(42,56,40,.3);position:relative;overflow:hidden;transform:translateY(24px);opacity:0;transition:opacity .85s ease,transform .85s ease;}
-.contact-section::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,#c8a86a 30%,#c8a86a 70%,transparent);}
+/* ══ CONTACT (mismo estilo que rsvp-highlight) ══ */
+.contact-section{
+  margin:0 20px 28px;
+  background:linear-gradient(160deg,#1e2e1c,#2a3828);
+  border:1px solid rgba(200,168,106,.3);
+  border-radius:3px;padding:32px 24px;text-align:center;
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+  position:relative;overflow:hidden;
+  transform:translateY(24px);opacity:0;
+  transition:opacity .85s ease,transform .85s ease;
+}
+.contact-section::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,transparent,#c8a86a 30%,#c8a86a 70%,transparent);
+}
 .contact-section.in{opacity:1;transform:translateY(0);}
 .contact-label{font-family:'Cormorant Garamond',serif;font-size:clamp(9px,2.4vw,10px);letter-spacing:5px;text-transform:uppercase;color:rgba(200,168,106,.75);margin-bottom:8px;font-weight:600;position:relative;z-index:1;}
-.contact-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,5.5vw,26px);font-weight:600;color:#f5ede0;margin-bottom:8px;position:relative;z-index:1;}
+.contact-heading{font-family:'Great Vibes',cursive;font-size:clamp(32px,8.5vw,44px);color:#f5ede0;margin-bottom:8px;position:relative;z-index:1;line-height:1.2;}
 .contact-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(13px,3.5vw,15px);color:rgba(245,237,224,.6);margin-bottom:22px;line-height:1.6;position:relative;z-index:1;}
 .contact-btns{display:flex;flex-direction:column;gap:12px;align-items:center;position:relative;z-index:1;}
 .wa-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 28px;width:100%;max-width:260px;justify-content:center;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;border-radius:2px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:clamp(15px,4vw,17px);letter-spacing:1px;box-shadow:0 4px 16px rgba(37,211,102,.2);}
@@ -412,76 +508,75 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .fade-up{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease;}
 .fade-up.in{opacity:1;transform:translateY(0);}
 
-/* ══ DECORACIONES PARALLAX EN SCROLL ══ */
-.parallax-deco{
-  position:absolute;pointer-events:none;z-index:0;
-  will-change:transform;
-}
+/* ══ PARALLAX DECO ══ */
+.parallax-deco{position:absolute;pointer-events:none;z-index:0;will-change:transform;}
 
-/* Pétalos SVG animados que flotan */
-.petal-float{
-  position:fixed;pointer-events:none;z-index:1;
-  animation:petalFall linear infinite;
-  opacity:0;
-}
+/* Pétalos SVG animados */
+.petal-float{position:fixed;pointer-events:none;z-index:1;animation:petalFall linear infinite;opacity:0;}
 @keyframes petalFall{
   0%{transform:translateY(-60px) rotate(0deg) translateX(0);opacity:0;}
-  5%{opacity:.6;}
-  90%{opacity:.4;}
+  5%{opacity:.6;}90%{opacity:.4;}
   100%{transform:translateY(110vh) rotate(720deg) translateX(40px);opacity:0;}
 }
 
-/* Partículas doradas en la invitación */
-.inv-particle{
-  position:fixed;pointer-events:none;z-index:1;
-  border-radius:50%;
-  animation:invParticle linear infinite;
-  opacity:0;
-}
-@keyframes invParticle{
-  0%{transform:translateY(0) scale(1);opacity:0;}
-  10%{opacity:.5;}
-  90%{opacity:.3;}
-  100%{transform:translateY(-80px) scale(.5);opacity:0;}
-}
-
-/* Líneas decorativas que aparecen al scroll */
-.scroll-deco-line{
-  position:absolute;left:0;right:0;
-  height:1px;
-  background:linear-gradient(to right,transparent,rgba(200,168,106,.3) 30%,rgba(200,168,106,.3) 70%,transparent);
-  opacity:0;transform:scaleX(0);
-  transition:opacity .8s ease,transform .8s ease;
-}
-.scroll-deco-line.in{opacity:1;transform:scaleX(1);}
-
-/* Ornamentos de esquina animados */
-.corner-deco{
-  position:absolute;width:40px;height:40px;
-  opacity:0;transition:opacity .8s ease,transform .8s ease;
-  transform:scale(.5);
-}
+/* Ornamentos de esquina */
+.corner-deco{position:absolute;width:40px;height:40px;opacity:0;transition:opacity .8s ease,transform .8s ease;transform:scale(.5);}
 .corner-deco.in{opacity:.4;transform:scale(1);}
 .corner-deco.tl{top:12px;left:12px;}
 .corner-deco.tr{top:12px;right:12px;transform-origin:right top;}
 .corner-deco.bl{bottom:12px;left:12px;transform-origin:left bottom;}
 .corner-deco.br{bottom:12px;right:12px;transform-origin:right bottom;}
 
-/* Sección con fondo decorativo animado */
-.section-bg-deco{
-  position:relative;overflow:hidden;
-}
+.section-bg-deco{position:relative;overflow:hidden;}
 .section-bg-deco::before{
   content:"";position:absolute;inset:0;
-  background:
-    radial-gradient(circle at 10% 50%, rgba(122,154,114,.06) 0%, transparent 50%),
+  background:radial-gradient(circle at 10% 50%, rgba(122,154,114,.06) 0%, transparent 50%),
     radial-gradient(circle at 90% 50%, rgba(200,168,106,.04) 0%, transparent 50%);
-  pointer-events:none;
-  animation:bgPulse 6s ease-in-out infinite;
+  pointer-events:none;animation:bgPulse 6s ease-in-out infinite;
 }
-@keyframes bgPulse{
-  0%,100%{opacity:.5;}
-  50%{opacity:1;}
+@keyframes bgPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+
+/* ══ MODAL SELECTOR ══ */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.6);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-sheet{
+  background:#faf7f0;
+  border-radius:12px 12px 0 0;
+  padding:24px 20px 40px;
+  width:100%;max-width:480px;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(.25,.1,.2,1);
+}
+.modal-overlay.open .modal-sheet{transform:translateY(0);}
+.modal-title{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(16px,4.5vw,20px);
+  font-weight:600;color:#2a3828;text-align:center;margin-bottom:6px;
+}
+.modal-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(12px,3.2vw,14px);color:#7a6545;text-align:center;margin-bottom:20px;
+}
+.modal-btn{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 20px;margin-bottom:10px;
+  background:linear-gradient(160deg,#2a3828,#3d5836);
+  border-radius:4px;text-decoration:none;
+  font-family:'Cormorant Garamond',serif;font-size:clamp(15px,4vw,17px);
+  color:#f5ede0;letter-spacing:1px;
+  box-shadow:0 4px 16px rgba(42,56,40,.2);
+}
+.modal-btn-icon{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;}
+.modal-cancel{
+  display:block;text-align:center;margin-top:14px;
+  font-family:'Cormorant Garamond',serif;font-size:clamp(13px,3.5vw,15px);
+  color:#7a6545;letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+  padding:10px;
 }
 </style>
 </head>
@@ -489,13 +584,77 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 
 <canvas id="particles"></canvas>
 
-<!-- ══ DESTELLO ══ -->
-<div id="flash-overlay"></div>
+<!-- ══ OVERLAY TRANSICIÓN ══ -->
+<div id="fade-overlay"></div>
+
+<!-- ══ MODALES ══ -->
+<div class="modal-overlay" id="modal-cal" onclick="closeModal('modal-cal')">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-title">Añadir a mi agenda</div>
+    <div class="modal-sub">Elige tu aplicación de calendario</div>
+    <a class="modal-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+de+Marina+y+Manuel&dates=20260912T173000Z/20260913T040000Z&details=¡Celebra+con+nosotros+nuestro+gran+día!&location=Molino+Sotomelero,+41409+Écija,+Sevilla" target="_blank" onclick="closeModal('modal-cal')">
+      <div class="modal-btn-icon">📅</div>
+      Google Calendar
+    </a>
+    <a class="modal-btn" href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20260912T173000Z%0ADTEND:20260913T040000Z%0ASUMMARY:Boda%20de%20Marina%20y%20Manuel%0ADESCRIPTION:¡Celebra%20con%20nosotros%20nuestro%20gran%20día!%0ALOCATION:Molino%20Sotomelero%2C%2041409%20Écija%2C%20Sevilla%0AEND:VEVENT%0AEND:VCALENDAR" download="boda-marina-manuel.ics" onclick="closeModal('modal-cal')">
+      <div class="modal-btn-icon">🍎</div>
+      Apple Calendar
+    </a>
+    <span class="modal-cancel" onclick="closeModal('modal-cal')">Cancelar</span>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-map" onclick="closeModal('modal-map')">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-title">Cómo llegar</div>
+    <div class="modal-sub">Elige tu aplicación de mapas</div>
+    <a class="modal-btn" href="https://www.google.com/maps/search/?api=1&query=Molino+Sotomelero+Ecija+Sevilla" target="_blank" onclick="closeModal('modal-map')">
+      <div class="modal-btn-icon">🗺️</div>
+      Google Maps
+    </a>
+    <a class="modal-btn" href="https://maps.apple.com/?q=Molino+Sotomelero+Ecija+Sevilla" target="_blank" onclick="closeModal('modal-map')">
+      <div class="modal-btn-icon">🍎</div>
+      Apple Maps
+    </a>
+    <span class="modal-cancel" onclick="closeModal('modal-map')">Cancelar</span>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════
-     SOBRE 3D REALISTA VERTICAL
+     SOBRE — PANTALLA COMPLETA VERDE
 ══════════════════════════════════════ -->
 <div id="env-screen" onclick="openEnvelope()">
+
+  <!-- Hojas decorativas de fondo -->
+  <svg class="env-bg-leaf" style="top:-5%;left:-8%;width:45vw;max-width:200px;" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6">
+      <path d="M100,280 Q20,200 30,120 Q40,60 100,20 Q160,60 170,120 Q180,200 100,280Z" fill="rgba(200,168,106,.08)"/>
+      <path d="M100,280 Q100,150 100,20"/>
+      <path d="M100,200 Q60,170 40,140"/><path d="M100,160 Q65,135 50,110"/><path d="M100,120 Q70,100 60,80"/>
+      <path d="M100,200 Q140,170 160,140"/><path d="M100,160 Q135,135 150,110"/><path d="M100,120 Q130,100 140,80"/>
+    </g>
+  </svg>
+  <svg class="env-bg-leaf" style="bottom:-5%;right:-8%;width:45vw;max-width:200px;transform:rotate(180deg);" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6">
+      <path d="M100,280 Q20,200 30,120 Q40,60 100,20 Q160,60 170,120 Q180,200 100,280Z" fill="rgba(200,168,106,.08)"/>
+      <path d="M100,280 Q100,150 100,20"/>
+      <path d="M100,200 Q60,170 40,140"/><path d="M100,160 Q65,135 50,110"/><path d="M100,120 Q70,100 60,80"/>
+      <path d="M100,200 Q140,170 160,140"/><path d="M100,160 Q135,135 150,110"/><path d="M100,120 Q130,100 140,80"/>
+    </g>
+  </svg>
+  <svg class="env-bg-leaf" style="top:10%;right:-5%;width:30vw;max-width:130px;transform:rotate(60deg);" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#c8a86a" stroke-width="1" fill="none" opacity=".5">
+      <path d="M100,280 Q20,200 30,120 Q40,60 100,20 Q160,60 170,120 Q180,200 100,280Z" fill="rgba(200,168,106,.06)"/>
+      <path d="M100,280 Q100,150 100,20"/>
+    </g>
+  </svg>
+  <svg class="env-bg-leaf" style="bottom:15%;left:-5%;width:30vw;max-width:130px;transform:rotate(-60deg);" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#c8a86a" stroke-width="1" fill="none" opacity=".5">
+      <path d="M100,280 Q20,200 30,120 Q40,60 100,20 Q160,60 170,120 Q180,200 100,280Z" fill="rgba(200,168,106,.06)"/>
+      <path d="M100,280 Q100,150 100,20"/>
+    </g>
+  </svg>
+
   <div class="env-scene">
     <div class="env-body">
       <div class="env-paper">
@@ -566,6 +725,55 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   <p class="tap-hint">✦ Toca para abrir ✦</p>
 </div>
 
+<!-- ══ HOJAS DESENFOCADAS PARALLAX ══ -->
+<svg class="blur-leaf" id="bl1" style="top:5%;left:-3%;width:min(28vw,120px);" viewBox="0 0 120 200">
+  <g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.18)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,150 Q35,130 22,110"/><path d="M60,120 Q38,105 28,85"/><path d="M60,90 Q42,75 35,58"/>
+    <path d="M60,150 Q85,130 98,110"/><path d="M60,120 Q82,105 92,85"/><path d="M60,90 Q78,75 85,58"/>
+  </g>
+</svg>
+<svg class="blur-leaf" id="bl2" style="top:12%;right:-4%;width:min(22vw,95px);transform:rotate(25deg);" viewBox="0 0 120 200">
+  <g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.15)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,140 Q35,120 22,100"/><path d="M60,100 Q38,85 28,68"/>
+    <path d="M60,140 Q85,120 98,100"/><path d="M60,100 Q82,85 92,68"/>
+  </g>
+</svg>
+<svg class="blur-leaf" id="bl3" style="top:40%;left:-5%;width:min(20vw,85px);transform:rotate(-30deg);" viewBox="0 0 120 200">
+  <g stroke="#7a9a72" stroke-width="1.2" fill="rgba(122,154,114,.15)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,130 Q38,112 28,92"/><path d="M60,130 Q82,112 92,92"/>
+  </g>
+</svg>
+<svg class="blur-leaf" id="bl4" style="top:45%;right:-4%;width:min(24vw,100px);transform:rotate(15deg);" viewBox="0 0 120 200">
+  <g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.12)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,150 Q35,130 22,110"/><path d="M60,110 Q38,95 28,75"/>
+    <path d="M60,150 Q85,130 98,110"/><path d="M60,110 Q82,95 92,75"/>
+  </g>
+</svg>
+<svg class="blur-leaf" id="bl5" style="bottom:8%;left:-3%;width:min(26vw,110px);transform:rotate(10deg);" viewBox="0 0 120 200">
+  <g stroke="#7a9a72" stroke-width="1.2" fill="rgba(122,154,114,.18)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,155 Q35,135 22,115"/><path d="M60,120 Q38,105 28,85"/><path d="M60,85 Q42,70 35,52"/>
+    <path d="M60,155 Q85,135 98,115"/><path d="M60,120 Q82,105 92,85"/><path d="M60,85 Q78,70 85,52"/>
+  </g>
+</svg>
+<svg class="blur-leaf" id="bl6" style="bottom:5%;right:-3%;width:min(22vw,95px);transform:rotate(-20deg);" viewBox="0 0 120 200">
+  <g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.14)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,145 Q35,125 22,105"/><path d="M60,105 Q38,90 28,70"/>
+    <path d="M60,145 Q85,125 98,105"/><path d="M60,105 Q82,90 92,70"/>
+  </g>
+</svg>
+
 <!-- ══════════════════════════════════════
      INVITACIÓN
 ══════════════════════════════════════ -->
@@ -603,7 +811,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 
     <!-- HERO -->
     <div class="hero fade-up section-bg-deco" style="position:relative;">
-      <!-- Ornamentos de esquina -->
       <svg class="corner-deco tl" viewBox="0 0 40 40"><path d="M2,38 L2,2 L38,2" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="2" cy="2" r="2" fill="#c8a86a" opacity=".6"/></svg>
       <svg class="corner-deco tr" viewBox="0 0 40 40"><path d="M38,38 L38,2 L2,2" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="38" cy="2" r="2" fill="#c8a86a" opacity=".6"/></svg>
       <svg class="corner-deco bl" viewBox="0 0 40 40"><path d="M2,2 L2,38 L38,38" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="2" cy="38" r="2" fill="#c8a86a" opacity=".6"/></svg>
@@ -657,32 +864,46 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </div>
     </div>
 
+    <!-- RSVP DESTACADO -->
+    <div class="rsvp-highlight fade-up">
+      <div class="rsvp-highlight-label">✦ Confirma tu asistencia ✦</div>
+      <div class="rsvp-highlight-title">¿Nos acompañas?</div>
+      <div class="rsvp-highlight-sub">Nos haría mucha ilusión contar contigo en nuestro día más especial.
+<br>Confirmar asistencia antes del 1 de agosto de 2026.</div>
+      <a class="rsvp-highlight-btn" href="https://bodamarinaymanu.netlify.app/" target="_blank">
+        Confirmar Asistencia
+        <small>Menú · Alérgenos · Transporte</small>
+      </a>
+    </div>
+
     <!-- SEPARADOR FLORAL -->
     <div class="floral-sep fade-up">
+      <!-- Eucalipto con diamante -->
       <svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".55">
-          <path d="M0,45 Q45,28 90,38 Q135,22 175,32"/>
-          <path d="M22,45 Q34,26 54,16"/><path d="M55,40 Q62,24 78,14"/><path d="M92,38 Q99,22 112,12"/>
-          <ellipse cx="57" cy="14" rx="11" ry="6" transform="rotate(-35,57,14)" fill="#7a9a72" opacity=".4"/>
-          <ellipse cx="88" cy="10" rx="12" ry="6" transform="rotate(-48,88,10)" fill="#7a9a72" opacity=".35"/>
-          <ellipse cx="36" cy="26" rx="10" ry="5" transform="rotate(-22,36,26)" fill="#7a9a72" opacity=".3"/>
+        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5">
+          <path d="M0,40 Q30,30 60,35 Q90,25 120,30 Q150,20 175,28"/>
+          <ellipse cx="30" cy="32" rx="12" ry="7" transform="rotate(-20,30,32)" fill="#7a9a72" opacity=".25"/>
+          <ellipse cx="65" cy="28" rx="13" ry="7" transform="rotate(-30,65,28)" fill="#7a9a72" opacity=".22"/>
+          <ellipse cx="100" cy="24" rx="12" ry="6" transform="rotate(-25,100,24)" fill="#7a9a72" opacity=".2"/>
+          <ellipse cx="135" cy="22" rx="11" ry="6" transform="rotate(-20,135,22)" fill="#7a9a72" opacity=".18"/>
         </g>
-        <g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".55" transform="scale(-1,1) translate(-420,0)">
-          <path d="M0,45 Q45,28 90,38 Q135,22 175,32"/>
-          <path d="M22,45 Q34,26 54,16"/><path d="M55,40 Q62,24 78,14"/><path d="M92,38 Q99,22 112,12"/>
-          <ellipse cx="57" cy="14" rx="11" ry="6" transform="rotate(-35,57,14)" fill="#7a9a72" opacity=".4"/>
-          <ellipse cx="88" cy="10" rx="12" ry="6" transform="rotate(-48,88,10)" fill="#7a9a72" opacity=".35"/>
-          <ellipse cx="36" cy="26" rx="10" ry="5" transform="rotate(-22,36,26)" fill="#7a9a72" opacity=".3"/>
+        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5" transform="scale(-1,1) translate(-420,0)">
+          <path d="M0,40 Q30,30 60,35 Q90,25 120,30 Q150,20 175,28"/>
+          <ellipse cx="30" cy="32" rx="12" ry="7" transform="rotate(-20,30,32)" fill="#7a9a72" opacity=".25"/>
+          <ellipse cx="65" cy="28" rx="13" ry="7" transform="rotate(-30,65,28)" fill="#7a9a72" opacity=".22"/>
+          <ellipse cx="100" cy="24" rx="12" ry="6" transform="rotate(-25,100,24)" fill="#7a9a72" opacity=".2"/>
+          <ellipse cx="135" cy="22" rx="11" ry="6" transform="rotate(-20,135,22)" fill="#7a9a72" opacity=".18"/>
         </g>
         <g transform="translate(210,30)">
-          <path d="M-18,0 Q-9,-8 0,-8 Q9,-8 18,0 Q9,8 0,8 Q-9,8 -18,0Z" fill="none" stroke="#c8a86a" stroke-width=".9" opacity=".7"/>
-          <circle cx="0" cy="0" r="2.5" fill="#c8a86a" opacity=".8"/>
+          <path d="M0,-10 L8,0 L0,10 L-8,0Z" fill="none" stroke="#c8a86a" stroke-width="1" opacity=".8"/>
+          <circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".9"/>
         </g>
       </svg>
     </div>
 
     <!-- INFO CARDS -->
     <div class="info-section">
+      <!-- CUÁNDO -->
       <div class="info-card-wrap">
         <div class="info-card">
           <div class="info-card-inner">
@@ -698,14 +919,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
               <div class="info-card-label">Cuándo</div>
               <div class="info-card-title">Sáb. 12 de Septiembre 2026</div>
               <div class="info-card-sub">¡Guárdate la fecha!</div>
-              <a class="btn-calendar" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+de+Marina+y+Manuel&dates=20260912T173000Z/20260913T040000Z&details=¡Celebra+con+nosotros+nuestro+gran+día!&location=Molino+Sotomelero,+41409+Écija,+Sevilla" target="_blank">
-                <svg viewBox="0 0 24 24"><path d="M12 2v20m10-10H2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Añadir a mi agenda
-              </a>
+              <div class="btn-action-row">
+                <button class="btn-cal" onclick="openModal('modal-cal')">
+                  <svg viewBox="0 0 24 24"><path d="M12 2v20m10-10H2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Añadir a mi agenda
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- DÓNDE -->
       <div class="info-card-wrap" style="transition-delay:.1s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -719,6 +944,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
               <div class="info-card-label">Dónde</div>
               <div class="info-card-title">Molino Sotomelero</div>
               <div class="info-card-sub">CP-246 s/n · 41409 Écija, Sevilla</div>
+              <div class="btn-action-row" style="margin-top:16px;">
+                <button class="btn-map" onclick="openModal('modal-map')">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Cómo llegar
+                </button>
+              </div>
               <div class="map-embed">
                 <iframe src="https://maps.google.com/maps?q=Molino%20Sotomelero,%20Ecija&t=&z=14&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
               </div>
@@ -726,6 +957,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
           </div>
         </div>
       </div>
+
+      <!-- HORA -->
       <div class="info-card-wrap" style="transition-delay:.2s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -744,6 +977,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
           </div>
         </div>
       </div>
+
+      <!-- DRESS CODE -->
       <div class="info-card-wrap" style="transition-delay:.3s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -808,7 +1043,26 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
     </div>
 
     <div class="orn-divider fade-up">
-      <svg viewBox="0 0 400 30"><line x1="0" y1="15" x2="155" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/><g transform="translate(200,15)"><path d="M-16,0 Q-8,-7 0,-7 Q8,-7 16,0 Q8,7 0,7 Q-8,7 -16,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g><line x1="245" y1="15" x2="400" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/></svg>
+      <!-- Flores silvestres -->
+      <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="20" x2="130" y2="20" stroke="#c8a86a" stroke-width=".6" opacity=".4"/>
+        <g transform="translate(160,20)" stroke="#7a9a72" stroke-width="1" fill="none" opacity=".6">
+          <line x1="0" y1="10" x2="0" y2="-10"/>
+          <ellipse cx="-4" cy="-12" rx="4" ry="6" transform="rotate(-20,-4,-12)" fill="#7a9a72" opacity=".3"/>
+          <ellipse cx="4" cy="-12" rx="4" ry="6" transform="rotate(20,4,-12)" fill="#7a9a72" opacity=".3"/>
+        </g>
+        <g transform="translate(200,20)" stroke="#c8a86a" stroke-width="1" fill="none">
+          <circle cx="0" cy="-8" r="5" fill="rgba(200,168,106,.15)" stroke-opacity=".7"/>
+          <circle cx="0" cy="-8" r="2" fill="#c8a86a" opacity=".8"/>
+          <line x1="0" y1="0" x2="0" y2="-3"/>
+        </g>
+        <g transform="translate(240,20)" stroke="#7a9a72" stroke-width="1" fill="none" opacity=".6">
+          <line x1="0" y1="10" x2="0" y2="-10"/>
+          <ellipse cx="-4" cy="-12" rx="4" ry="6" transform="rotate(-20,-4,-12)" fill="#7a9a72" opacity=".3"/>
+          <ellipse cx="4" cy="-12" rx="4" ry="6" transform="rotate(20,4,-12)" fill="#7a9a72" opacity=".3"/>
+        </g>
+        <line x1="270" y1="20" x2="400" y2="20" stroke="#c8a86a" stroke-width=".6" opacity=".4"/>
+      </svg>
     </div>
 
     <!-- BUS -->
@@ -841,7 +1095,105 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
     </div>
 
     <div class="orn-divider fade-up">
-      <svg viewBox="0 0 400 30"><line x1="0" y1="15" x2="155" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/><g transform="translate(200,15)"><path d="M-16,0 Q-8,-7 0,-7 Q8,-7 16,0 Q8,7 0,7 Q-8,7 -16,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g><line x1="245" y1="15" x2="400" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/></svg>
+      <!-- Corona de laurel -->
+      <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5">
+          <path d="M60,20 Q80,10 100,15 Q120,8 140,12 Q160,6 175,10"/>
+          <ellipse cx="80" cy="13" rx="9" ry="5" transform="rotate(-15,80,13)" fill="#7a9a72" opacity=".25"/>
+          <ellipse cx="105" cy="10" rx="9" ry="5" transform="rotate(-20,105,10)" fill="#7a9a72" opacity=".22"/>
+          <ellipse cx="130" cy="9" rx="8" ry="4" transform="rotate(-15,130,9)" fill="#7a9a72" opacity=".2"/>
+          <path d="M60,20 Q80,30 100,25 Q120,32 140,28 Q160,34 175,30"/>
+          <ellipse cx="80" cy="27" rx="9" ry="5" transform="rotate(15,80,27)" fill="#7a9a72" opacity=".2"/>
+          <ellipse cx="105" cy="30" rx="9" ry="5" transform="rotate(20,105,30)" fill="#7a9a72" opacity=".18"/>
+          <ellipse cx="130" cy="31" rx="8" ry="4" transform="rotate(15,130,31)" fill="#7a9a72" opacity=".16"/>
+        </g>
+        <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5" transform="scale(-1,1) translate(-400,0)">
+          <path d="M60,20 Q80,10 100,15 Q120,8 140,12 Q160,6 175,10"/>
+          <ellipse cx="80" cy="13" rx="9" ry="5" transform="rotate(-15,80,13)" fill="#7a9a72" opacity=".25"/>
+          <ellipse cx="105" cy="10" rx="9" ry="5" transform="rotate(-20,105,10)" fill="#7a9a72" opacity=".22"/>
+          <ellipse cx="130" cy="9" rx="8" ry="4" transform="rotate(-15,130,9)" fill="#7a9a72" opacity=".2"/>
+          <path d="M60,20 Q80,30 100,25 Q120,32 140,28 Q160,34 175,30"/>
+          <ellipse cx="80" cy="27" rx="9" ry="5" transform="rotate(15,80,27)" fill="#7a9a72" opacity=".2"/>
+          <ellipse cx="105" cy="30" rx="9" ry="5" transform="rotate(20,105,30)" fill="#7a9a72" opacity=".18"/>
+          <ellipse cx="130" cy="31" rx="8" ry="4" transform="rotate(15,130,31)" fill="#7a9a72" opacity=".16"/>
+        </g>
+        <g transform="translate(200,20)">
+          <path d="M-6,-6 Q0,-10 6,-6 Q10,0 6,6 Q0,10 -6,6 Q-10,0 -6,-6Z" fill="rgba(200,168,106,.2)" stroke="#c8a86a" stroke-width=".8" opacity=".8"/>
+          <circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".9"/>
+        </g>
+      </svg>
+    </div>
+    <!-- FOTOS POLAROID -->
+    <div class="photos-section">
+      <div class="photo-polaroid fade-up">
+        <div class="photo-placeholder">
+          <svg class="photo-placeholder-icon" width="52" height="52" viewBox="0 0 52 52" fill="none">
+            <rect x="4" y="8" width="44" height="36" rx="3" stroke="#a07820" stroke-width="1.5"/>
+            <circle cx="26" cy="24" r="8" stroke="#a07820" stroke-width="1.5"/>
+            <path d="M4,36 L15,24 L24,33 L33,24 L48,40" stroke="#a07820" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span class="photo-placeholder-text">Vuestra foto aquí</span>
+        </div>
+        <div class="photo-caption">El principio de todo</div>
+      </div>
+      <div class="photo-polaroid fade-up" style="transition-delay:.15s">
+        <div class="photo-placeholder">
+          <svg class="photo-placeholder-icon" width="52" height="52" viewBox="0 0 52 52" fill="none">
+            <rect x="4" y="8" width="44" height="36" rx="3" stroke="#a07820" stroke-width="1.5"/>
+            <circle cx="26" cy="24" r="8" stroke="#a07820" stroke-width="1.5"/>
+            <path d="M4,36 L15,24 L24,33 L33,24 L48,40" stroke="#a07820" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span class="photo-placeholder-text">Vuestra foto aquí</span>
+        </div>
+        <div class="photo-caption">Y el resto de la historia</div>
+      </div>
+    </div>
+
+    <!-- ALOJAMIENTO -->
+    <div class="hotel-section fade-up">
+      <div class="hotel-badge">
+        <div class="hotel-badge-text">✦ Contamos con un alojamiento con descuento ✦</div>
+      </div>
+      <div class="hotel-inner">
+        <span class="hotel-icon">🏨</span>
+        <div class="hotel-name">B&B Hotel Écija</div>
+        <div class="hotel-desc">
+          A pocos minutos de la parada de autobús.<br>
+          Menciona la boda de Marina y Manuel al reservar para obtener tu descuento especial.
+        </div>
+        <div class="hotel-note">
+          📞 Llama y menciona la boda para el descuento
+        </div>
+        <div class="hotel-btns">
+          <a class="hotel-btn" href="https://www.hotel-bb.com/es/hotel/ecija?utm_source=googlemaps&utm_medium=fichehotel&utm_campaign=ecija" target="_blank">
+            🌐 Ver hotel
+          </a>
+          <a class="hotel-btn-phone" href="tel:+34854619596">
+            📞 854 61 95 96
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="orn-divider fade-up">
+      <!-- Ramas que se unen con corazón -->
+      <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".5">
+          <path d="M0,30 Q50,20 100,25 Q140,18 175,22"/>
+          <path d="M20,30 Q30,18 48,10"/><path d="M55,27 Q62,16 76,8"/><path d="M90,25 Q97,14 108,8"/>
+          <ellipse cx="50" cy="8" rx="9" ry="5" transform="rotate(-35,50,8)" fill="#7a9a72" opacity=".3"/>
+          <ellipse cx="78" cy="6" rx="10" ry="5" transform="rotate(-40,78,6)" fill="#7a9a72" opacity=".28"/>
+        </g>
+        <g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".5" transform="scale(-1,1) translate(-400,0)">
+          <path d="M0,30 Q50,20 100,25 Q140,18 175,22"/>
+          <path d="M20,30 Q30,18 48,10"/><path d="M55,27 Q62,16 76,8"/><path d="M90,25 Q97,14 108,8"/>
+          <ellipse cx="50" cy="8" rx="9" ry="5" transform="rotate(-35,50,8)" fill="#7a9a72" opacity=".3"/>
+          <ellipse cx="78" cy="6" rx="10" ry="5" transform="rotate(-40,78,6)" fill="#7a9a72" opacity=".28"/>
+        </g>
+        <g transform="translate(200,18)">
+          <path d="M0,8 Q-10,-2 -6,-8 Q-2,-14 0,-8 Q2,-14 6,-8 Q10,-2 0,8Z" fill="rgba(200,168,106,.35)" stroke="#c8a86a" stroke-width=".8" opacity=".9"/>
+        </g>
+      </svg>
     </div>
 
     <!-- CLOSING -->
@@ -849,20 +1201,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       <p class="closing-text">Con cariño,<br>Marina y Manuel</p>
     </div>
 
-    <!-- RSVP -->
-    <div class="rsvp-wrap fade-up">
-      <p class="rsvp-note">Nos encantaría contar con tu presencia.<br>Confirma antes del 1 de agosto de 2026.</p>
-      <a class="rsvp-btn" href="https://bodamarinaymanu.netlify.app/" target="_blank">
-        Confirmar Asistencia
-        <small>Menú · Alergias · Autobús</small>
-      </a>
-    </div>
-
-    <!-- CONTACT -->
+    <!-- CONTACT (mismo estilo que rsvp-highlight) -->
     <div class="contact-section">
       <div class="contact-label">Contacto</div>
       <div class="contact-heading">¿Tienes alguna consulta?</div>
-      <div class="contact-sub">Para confirmar asistencia, dudas<br>o cualquier consulta escríbenos</div>
+      <div class="contact-sub">Para dudas o cualquier consulta,<br>escríbenos por WhatsApp</div>
       <div class="contact-btns">
         <a class="wa-btn" href="https://wa.me/34667661578?text=Hola%20Manuel!" target="_blank">
           <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -896,9 +1239,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 </div>
 
 <script>
-/* ══════════════════════════════════════
-   PARTÍCULAS DE FONDO (SOBRE)
-══════════════════════════════════════ */
+/* ══ PARTÍCULAS DE FONDO ══ */
 const cvs=document.getElementById('particles');
 const ctx=cvs.getContext('2d');
 function resize(){cvs.width=innerWidth;cvs.height=innerHeight;}
@@ -909,61 +1250,35 @@ function drawPt(p){ctx.save();ctx.globalAlpha=p.op;ctx.fillStyle=p.col;ctx.begin
 function animPts(){ctx.clearRect(0,0,cvs.width,cvs.height);pts.forEach((p,i)=>{p.x+=p.vx;p.y+=p.vy;if(p.y<-10)pts[i]=mkPt(false);drawPt(p);});requestAnimationFrame(animPts);}
 animPts();
 
-/* ══════════════════════════════════════
-   PÉTALOS FLOTANTES EN LA INVITACIÓN
-══════════════════════════════════════ */
-const petalSVGs = [
-  // Pétalo 1 - oval
+/* ══ PÉTALOS FLOTANTES ══ */
+const petalSVGs=[
   `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 30'><ellipse cx='10' cy='15' rx='7' ry='13' fill='rgba(200,168,106,0.35)' transform='rotate(-15,10,15)'/></svg>`,
-  // Pétalo 2 - hoja
   `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2 Q20 8 18 16 Q14 22 12 22 Q10 22 6 16 Q4 8 12 2Z' fill='rgba(122,154,114,0.3)'/></svg>`,
-  // Pétalo 3 - pequeño círculo
   `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><circle cx='6' cy='6' r='5' fill='rgba(200,168,106,0.25)'/></svg>`,
-  // Pétalo 4 - rombo
-  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 20'><path d='M8 0 L16 10 L8 20 L0 10Z' fill='rgba(200,168,106,0.2)'/></svg>`,
 ];
-
-let petalsActive = false;
-const activePetals = [];
-
+let petalsActive=false;
+const activePetals=[];
 function createPetal(){
-  const el = document.createElement('div');
-  el.className = 'petal-float';
-  const svgIdx = Math.floor(Math.random() * petalSVGs.length);
-  const size = 10 + Math.random() * 18;
-  el.style.cssText = `
-    left:${Math.random()*100}vw;
-    top:-60px;
-    width:${size}px;
-    height:${size}px;
-    animation-duration:${6+Math.random()*8}s;
-    animation-delay:${Math.random()*4}s;
-  `;
-  el.innerHTML = petalSVGs[svgIdx];
+  const el=document.createElement('div');
+  el.className='petal-float';
+  const size=10+Math.random()*18;
+  el.style.cssText=`left:${Math.random()*100}vw;top:-60px;width:${size}px;height:${size}px;animation-duration:${6+Math.random()*8}s;animation-delay:${Math.random()*4}s;`;
+  el.innerHTML=petalSVGs[Math.floor(Math.random()*petalSVGs.length)];
   document.body.appendChild(el);
   activePetals.push(el);
-  el.addEventListener('animationend', ()=>{
-    el.remove();
-    const idx = activePetals.indexOf(el);
-    if(idx>-1) activePetals.splice(idx,1);
-    if(petalsActive) createPetal();
-  });
+  el.addEventListener('animationend',()=>{el.remove();const i=activePetals.indexOf(el);if(i>-1)activePetals.splice(i,1);if(petalsActive)createPetal();});
 }
-
 function startPetals(){
-  petalsActive = true;
-  for(let i=0;i<8;i++){
-    setTimeout(()=>createPetal(), i*400);
-  }
-  // Mantener flujo continuo
-  setInterval(()=>{
-    if(petalsActive && activePetals.length < 12) createPetal();
-  }, 1200);
+  petalsActive=true;
+  for(let i=0;i<8;i++) setTimeout(()=>createPetal(),i*400);
+  setInterval(()=>{if(petalsActive&&activePetals.length<12)createPetal();},1200);
 }
 
-/* ══════════════════════════════════════
-   APERTURA DEL SOBRE CON DESTELLO
-══════════════════════════════════════ */
+/* ══ MODALES ══ */
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+/* ══ APERTURA DEL SOBRE — TRANSICIÓN SUAVE ══ */
 let opened=false;
 function openEnvelope(){
   if(opened)return;opened=true;
@@ -971,90 +1286,90 @@ function openEnvelope(){
   const flap=document.getElementById('envFlap');
   const screen=document.getElementById('env-screen');
   const inv=document.getElementById('invitation');
-  const flash=document.getElementById('flash-overlay');
+  const overlay=document.getElementById('fade-overlay');
 
   // 1. Sello se rompe
   seal.classList.add('dissolve');
 
-  // 2. Solapa se abre con perspectiva 3D
+  // 2. Solapa se abre
   setTimeout(()=>{
     flap.style.transition='transform 1.5s cubic-bezier(.25,.1,.2,1)';
     flap.style.transform='rotateX(-178deg)';
-  }, 500);
+  },500);
 
-  // 3. Sobre se desvanece
+  // 3. Sobre se desvanece suavemente
   setTimeout(()=>{
-    screen.style.transition='opacity .8s ease';
+    screen.style.transition='opacity 1s ease';
     screen.style.opacity='0';
-  }, 1700);
+  },1700);
 
-  // 4. DESTELLO DORADO
+  // 4. Overlay verde se funde (mismo color que el sobre)
   setTimeout(()=>{
-    flash.classList.add('flash-in');
-  }, 2300);
+    overlay.classList.add('fade-in');
+  },2400);
 
-  // 5. Mostrar invitación bajo el destello
+  // 5. Mostrar invitación bajo el overlay
   setTimeout(()=>{
     screen.style.display='none';
     inv.style.display='block';
-    inv.style.opacity='0';
-    inv.style.transition='opacity .5s ease';
-    setTimeout(()=>{ inv.style.opacity='1'; },30);
-  }, 2450);
+    inv.style.opacity='1';
+  },2700);
 
-  // 6. Destello se desvanece revelando la invitación
+  // 6. Overlay se desvanece revelando la invitación
   setTimeout(()=>{
-    flash.classList.remove('flash-in');
-    flash.classList.add('flash-out');
+    overlay.classList.remove('fade-in');
+    overlay.classList.add('fade-out');
+    // Activar hojas desenfocadas
+    document.querySelectorAll('.blur-leaf').forEach((el,i)=>{
+      setTimeout(()=>el.classList.add('visible'),i*150);
+    });
     checkFade();
     startPetals();
-  }, 2700);
+  },3000);
 
-  // 7. Limpiar flash
-  setTimeout(()=>{
-    flash.style.display='none';
-  }, 3600);
+  setTimeout(()=>{overlay.style.display='none';},4200);
 }
 
-/* ══════════════════════════════════════
-   SCROLL ANIMATIONS
-══════════════════════════════════════ */
+/* ══ SCROLL ANIMATIONS + PARALLAX HOJAS ══ */
+const blurLeafSpeeds=[0.08,0.12,0.06,0.1,0.09,0.07];
+
 function checkFade(){
   const vh=window.innerHeight;
   const inv=document.getElementById('invitation');
-  const scrollTop = inv.scrollTop;
+  const scrollTop=inv.scrollTop;
 
-  document.querySelectorAll('.fade-up,.info-card-wrap,.contact-section,.countdown-section,.prog-item').forEach(el=>{
+  document.querySelectorAll('.fade-up,.info-card-wrap,.contact-section,.countdown-section,.prog-item,.rsvp-highlight,.hotel-section').forEach(el=>{
     const r=el.getBoundingClientRect();
     if(r.top<vh-40) el.classList.add('in');
   });
-
-  // Ornamentos de esquina
   document.querySelectorAll('.corner-deco').forEach(el=>{
     const r=el.getBoundingClientRect();
     if(r.top<vh-20) el.classList.add('in');
   });
 
-  // Líneas decorativas
-  document.querySelectorAll('.scroll-deco-line').forEach(el=>{
-    const r=el.getBoundingClientRect();
-    if(r.top<vh-20) el.classList.add('in');
-  });
-
-  // Efecto parallax suave en elementos decorativos
-  document.querySelectorAll('.parallax-deco').forEach(el=>{
-    const r=el.getBoundingClientRect();
-    const speed = parseFloat(el.dataset.speed)||0.3;
-    const offset = (r.top - vh/2) * speed;
-    el.style.transform = `translateY(${offset}px)`;
+  // Parallax hojas desenfocadas
+  document.querySelectorAll('.blur-leaf').forEach((el,i)=>{
+    const speed=blurLeafSpeeds[i]||0.08;
+    const offset=scrollTop*speed;
+    el.style.transform=el.style.transform.replace(/translateY\([^)]*\)/,'')+` translateY(${offset}px)`;
   });
 }
 
-document.getElementById('invitation').addEventListener('scroll', checkFade, {passive:true});
+document.getElementById('invitation').addEventListener('scroll',checkFade,{passive:true});
 
-/* ══════════════════════════════════════
-   COUNTDOWN
-══════════════════════════════════════ */
+// Shimmer en nombres al scroll
+document.getElementById('invitation').addEventListener('scroll',function(){
+  checkFade();
+  document.querySelectorAll('.hero-names,.cover-names').forEach(n=>{
+    const r=n.getBoundingClientRect();
+    if(r.top<window.innerHeight*.7&&r.top>0){
+      const p=1-(r.top/(window.innerHeight*.7));
+      n.style.textShadow=`0 2px ${20+p*20}px rgba(200,168,106,${0.1+p*0.3})`;
+    }
+  });
+},{passive:true});
+
+/* ══ COUNTDOWN ══ */
 function updateCD(){
   const diff=new Date('2026-09-12T19:30:00')-new Date();
   if(diff<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='0');return;}
@@ -1065,30 +1380,6 @@ function updateCD(){
   document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
 }
 updateCD();setInterval(updateCD,1000);
-
-/* ══════════════════════════════════════
-   MICRO-ANIMACIÓN: SHIMMER EN NOMBRES
-══════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', ()=>{
-  // Añadir efecto de brillo sutil a los nombres al hacer scroll
-  const heroNames = document.querySelector('.hero-names');
-  if(heroNames){
-    heroNames.style.transition = 'text-shadow .5s ease';
-  }
-});
-
-// Efecto hover/scroll en los nombres
-document.getElementById('invitation').addEventListener('scroll', function(){
-  checkFade();
-  const names = document.querySelectorAll('.hero-names, .cover-names');
-  names.forEach(n=>{
-    const r = n.getBoundingClientRect();
-    if(r.top < window.innerHeight * 0.7 && r.top > 0){
-      const progress = 1 - (r.top / (window.innerHeight * 0.7));
-      n.style.textShadow = `0 2px ${20 + progress*20}px rgba(200,168,106,${0.1 + progress*0.3})`;
-    }
-  });
-}, {passive:true});
 </script>
 </body>
 </html>
