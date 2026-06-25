@@ -78,7 +78,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .blur-leaf{position:fixed;pointer-events:none;z-index:2;opacity:0;filter:blur(7px);transition:opacity 1.4s ease;will-change:transform;}
 .blur-leaf.visible{opacity:1;}
 
-/* ══ COVER (NUEVO SISTEMA FINCA DÍA/NOCHE) ══ */
+/* ══ COVER (SISTEMA FINCA DÍA/NOCHE) ══ */
 #cover-photo{
   position:relative;width:100%;height:100dvh;
   overflow:hidden;flex-shrink:0;
@@ -113,7 +113,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .scroll-arrow{width:22px;height:22px;border-right:1.5px solid rgba(245,237,224,.45);border-bottom:1.5px solid rgba(245,237,224,.45);transform:rotate(45deg);margin-top:-4px;}
 @keyframes bounce{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(6px);opacity:1}}
 
-/* Píldora doble emoji Sol / Luna */
 .cover-time-toggle {
   position: absolute; top: 20px; right: 20px; z-index: 10;
   display: inline-flex; align-items: center; gap: 8px;
@@ -131,11 +130,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .toggle-icon {
   transition: opacity .4s ease, filter .4s ease, transform .4s ease;
 }
-/* Al estar de día, el sol brilla y la luna está apagada */
 #cover-photo:not(.is-night) .t-sun { opacity: 1; filter: grayscale(0); transform: scale(1.15); }
 #cover-photo:not(.is-night) .t-moon { opacity: 0.35; filter: grayscale(1); transform: scale(0.9); }
-
-/* Al estar de noche, el sol se apaga y la luna brilla */
 #cover-photo.is-night .t-sun { opacity: 0.35; filter: grayscale(1); transform: scale(0.9); }
 #cover-photo.is-night .t-moon { opacity: 1; filter: grayscale(0); transform: scale(1.15); }
 
@@ -204,20 +200,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .program-title-wrap{text-align:center;margin-bottom:28px;position:relative;z-index:1;}
 .program-title{font-family:'Great Vibes',cursive;font-size:clamp(38px,10vw,52px);color:#2a3828;display:block;margin-bottom:4px;}
 .program-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(9px,2.5vw,11px);letter-spacing:6px;text-transform:uppercase;color:#5a7a52;}
-.program-timeline{position:relative;padding:0 0 8px;z-index:1;}
-.program-timeline::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,#c8a86a 8%,#c8a86a 92%,transparent);transform:translateX(-50%);}
-.prog-item{display:flex;align-items:center;margin-bottom:28px;position:relative;opacity:0;transition:opacity .8s ease,transform .8s ease;}
-.prog-item.left{flex-direction:row;transform:translateX(-20px);}
-.prog-item.right{flex-direction:row-reverse;transform:translateX(20px);}
-.prog-item.in{opacity:1;transform:none!important;}
-.prog-dot{flex-shrink:0;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#f5f0e8,#ede4d0);border:1.5px solid rgba(200,168,106,.5);display:flex;align-items:center;justify-content:center;position:relative;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.1);}
-.prog-dot svg{width:24px;height:24px;}
-.prog-text{flex:1;padding:0 14px;}
-.prog-text.align-right{text-align:right;}
-.prog-text.align-left{text-align:left;}
-.prog-time{font-family:'Cormorant Garamond',serif;font-size:clamp(11px,3vw,13px);letter-spacing:3px;color:#c8a86a;text-transform:uppercase;margin-bottom:3px;font-weight:600;}
-.prog-name{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,4.8vw,22px);font-weight:600;color:#1e2e1c;line-height:1.2;}
-.prog-desc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(12px,3.2vw,13px);color:#7a6545;margin-top:2px;line-height:1.5;}
 
 /* ══ BUS ══ */
 .bus-section{margin:8px 20px 28px;padding:32px 24px 28px;background:linear-gradient(160deg,rgba(245,241,232,.95),rgba(240,234,218,.98));border-top:1px solid rgba(200,168,106,.35);border-bottom:1px solid rgba(200,168,106,.35);text-align:center;position:relative;overflow:hidden;}
@@ -360,31 +342,26 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 <div id="invitation">
   <div class="inv-inner">
 
-    <!-- ══ COVER PRINCIPAL CON FINCA DÍA/NOCHE ══ -->
+    <!-- COVER PRINCIPAL -->
     <div id="cover-photo">
-      <!-- Decoración floral original -->
       <svg class="cover-botanical" viewBox="0 0 480 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;position:absolute;top:0;left:0;"><g stroke="rgba(255,255,255,.35)" stroke-width="1.2" fill="none"><path d="M0,80 Q35,55 70,65 Q105,48 140,58"/><path d="M15,80 Q25,58 42,48"/><path d="M45,72 Q50,54 64,42"/><path d="M72,65 Q77,48 90,38"/><ellipse cx="46" cy="46" rx="9" ry="5" transform="rotate(-30,46,46)" fill="rgba(255,255,255,.2)"/><ellipse cx="75" cy="36" rx="10" ry="5" transform="rotate(-45,75,36)" fill="rgba(255,255,255,.18)"/><ellipse cx="28" cy="58" rx="8" ry="4" transform="rotate(-20,28,58)" fill="rgba(255,255,255,.15)"/></g><g stroke="rgba(255,255,255,.35)" stroke-width="1.2" fill="none" transform="scale(-1,1) translate(-480,0)"><path d="M0,80 Q35,55 70,65 Q105,48 140,58"/><path d="M15,80 Q25,58 42,48"/><path d="M45,72 Q50,54 64,42"/><path d="M72,65 Q77,48 90,38"/><ellipse cx="46" cy="46" rx="9" ry="5" transform="rotate(-30,46,46)" fill="rgba(255,255,255,.2)"/><ellipse cx="75" cy="36" rx="10" ry="5" transform="rotate(-45,75,36)" fill="rgba(255,255,255,.18)"/><ellipse cx="28" cy="58" rx="8" ry="4" transform="rotate(-20,28,58)" fill="rgba(255,255,255,.15)"/></g><g stroke="rgba(200,168,106,.55)" stroke-width="1.2" fill="none" transform="translate(240,22)"><circle cx="-6" cy="0" r="9"/><circle cx="6" cy="0" r="9"/></g></svg>
       
-      <!-- Doble imagen Finca (Día Atardecer abajo, Noche arriba opaca temporalmente) -->
       <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/89ee9f0d-31ef-448a-8e49-266618c80e66.png" alt="Molino Sotomelero Atardecer" class="finca-day"/>
       <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/b4941804-d509-47a2-afa2-6f0ea55d7ef4.png" alt="Molino Sotomelero Noche" class="finca-night"/>
       
-      <!-- Interruptor en píldora con los dos emojis -->
       <div class="cover-time-toggle" onclick="toggleCoverTime()" title="Cambiar luz de la finca">
         <span class="toggle-icon t-sun">☀️</span>
         <span class="toggle-icon t-moon">🌙</span>
       </div>
 
-      <!-- Textos originales solicitados -->
       <div class="cover-overlay">
         <p class="cover-names">Marina & Manuel</p>
         <p class="cover-date">12 · 09 · 2026</p>
         <div class="scroll-hint"><span>Desliza</span><div class="scroll-arrow"></div></div>
       </div>
     </div>
-    <!-- ═════════════════════════════════════════════ -->
 
-    <!-- HERO (Restaurada vuestra foto de pareja original) -->
+    <!-- HERO -->
     <div class="hero fade-up section-bg-deco" style="position:relative;">
       <svg class="corner-deco tl" viewBox="0 0 40 40"><path d="M2,38 L2,2 L38,2" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="2" cy="2" r="2" fill="#c8a86a" opacity=".6"/></svg>
       <svg class="corner-deco tr" viewBox="0 0 40 40"><path d="M38,38 L38,2 L2,2" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="38" cy="2" r="2" fill="#c8a86a" opacity=".6"/></svg>
@@ -394,6 +371,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       <div class="floral-sep" style="padding-top:10px;">
         <svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg"><g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".55"><path d="M0,45 Q45,28 90,38 Q135,22 175,32"/><path d="M22,45 Q34,26 54,16"/><path d="M55,40 Q62,24 78,14"/><path d="M92,38 Q99,22 112,12"/><ellipse cx="57" cy="14" rx="11" ry="6" transform="rotate(-35,57,14)" fill="#7a9a72" opacity=".4"/><ellipse cx="88" cy="10" rx="12" ry="6" transform="rotate(-48,88,10)" fill="#7a9a72" opacity=".35"/><ellipse cx="36" cy="26" rx="10" ry="5" transform="rotate(-22,36,26)" fill="#7a9a72" opacity=".3"/></g><g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".55" transform="scale(-1,1) translate(-420,0)"><path d="M0,45 Q45,28 90,38 Q135,22 175,32"/><path d="M22,45 Q34,26 54,16"/><path d="M55,40 Q62,24 78,14"/><path d="M92,38 Q99,22 112,12"/><ellipse cx="57" cy="14" rx="11" ry="6" transform="rotate(-35,57,14)" fill="#7a9a72" opacity=".4"/><ellipse cx="88" cy="10" rx="12" ry="6" transform="rotate(-48,88,10)" fill="#7a9a72" opacity=".35"/><ellipse cx="36" cy="26" rx="10" ry="5" transform="rotate(-22,36,26)" fill="#7a9a72" opacity=".3"/></g><g transform="translate(210,30)"><path d="M-18,0 Q-9,-8 0,-8 Q9,-8 18,0 Q9,8 0,8 Q-9,8 -18,0Z" fill="none" stroke="#c8a86a" stroke-width=".9" opacity=".7"/><circle cx="0" cy="0" r="2.5" fill="#c8a86a" opacity=".8"/></g></svg>
       </div>
+
+      <!-- ══ NUEVA IMAGEN 1 (Arriba de 'El momento ha llegado') ══ -->
+      <div style="margin: 8px auto 18px; width: min(85%, 320px);">
+        <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/682f3f9f-b4f5-4bfb-b02a-bfa82cc23685.png" alt="Ilustración" style="width: 100%; height: auto; display: block; border-radius: 4px;"/>
+      </div>
+      <!-- ═══════════════════════════════════════════════════════════ -->
+
       <p class="hero-eyebrow">El momento ha llegado...</p>
       <p class="hero-welcome">Después de tanto tiempo juntos, de risas compartidas, de sueños construidos y de una vida que ya no imaginamos el uno sin el otro, ha llegado el momento de celebrarlo con las personas que más queremos.</p>
       <div class="orn-divider"><svg viewBox="0 0 400 30"><line x1="0" y1="15" x2="155" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/><g transform="translate(200,15)"><path d="M-16,0 Q-8,-7 0,-7 Q8,-7 16,0 Q8,7 0,7 Q-8,7 -16,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g><line x1="245" y1="15" x2="400" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/></svg></div>
@@ -495,18 +479,26 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 
     <!-- PROGRAMA -->
     <div class="program-section">
-      <div class="program-title-wrap fade-up"><span class="program-title">Programa</span><span class="program-subtitle">El Gran Día · 12 Septiembre 2026</span></div>
-      <div class="program-timeline">
-        <div class="prog-item left"><div class="prog-text align-right"><div class="prog-time">19:30 h</div><div class="prog-name">Ceremonia Civil</div><div class="prog-desc">El momento más esperado</div></div><div class="prog-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6545" stroke-width="1.4"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg></div><div style="flex:1"></div></div>
-        <div class="prog-item right" style="transition-delay:.1s"><div class="prog-text align-left"><div class="prog-time">Tras la ceremonia</div><div class="prog-name">Bienvenida</div><div class="prog-desc">Cócteles y primeros abrazos</div></div><div class="prog-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6545" stroke-width="1.4" stroke-linecap="round"><path d="M5 3h14l-7 9-7-9z"/><line x1="12" y1="12" x2="12" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg></div><div style="flex:1"></div></div>
-        <div class="prog-item left" style="transition-delay:.2s"><div class="prog-text align-right"><div class="prog-time">Tras la bienvenida</div><div class="prog-name">Banquete</div><div class="prog-desc">Catering Herrera</div></div><div class="prog-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6545" stroke-width="1.4" stroke-linecap="round"><path d="M8 3v5c0 1.1.9 2 2 2v11"/><path d="M16 3v18"/><path d="M12 10V3"/></svg></div><div style="flex:1"></div></div>
-        <div class="prog-item right" style="transition-delay:.3s"><div class="prog-text align-left"><div class="prog-time">Después del banquete</div><div class="prog-name">Barra Libre</div><div class="prog-desc">¡Que empiece la fiesta!</div></div><div class="prog-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6545" stroke-width="1.4" stroke-linecap="round"><path d="M9 3h6l1 8a4 4 0 01-8 0L9 3z"/><line x1="12" y1="11" x2="12" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg></div><div style="flex:1"></div></div>
-        <div class="prog-item left" style="transition-delay:.4s"><div class="prog-text align-right"><div class="prog-time">A media noche</div><div class="prog-name">Grupo de Música</div><div class="prog-desc">En directo para hacer vibrar la noche</div></div><div class="prog-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6545" stroke-width="1.4" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><div style="flex:1"></div></div>
-        <div class="prog-item right" style="transition-delay:.5s"><div class="prog-text align-left"><div class="prog-time">De madrugada</div><div class="prog-name">DJ</div><div class="prog-desc">¡La pista no para hasta el amanecer!</div></div><div class="prog-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6545" stroke-width="1.4" stroke-linecap="round"><path d="M3 18v-6a9 9 0 0118 0v6"/><rect x="2" y="16" width="4" height="6" rx="2"/><rect x="18" y="16" width="4" height="6" rx="2"/></svg></div><div style="flex:1"></div></div>
+      <div class="program-title-wrap fade-up">
+        <span class="program-title">Programa</span>
+        <span class="program-subtitle">El Gran Día · 12 Septiembre 2026</span>
       </div>
+
+      <!-- ══ NUEVA IMAGEN 2 (Sustituye a todo el timeline del programa) ══ -->
+      <div class="fade-up" style="text-align: center; margin-top: 8px;">
+        <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/773fa739-682a-442b-a134-46c629f2bc86.png" alt="Programa del Gran Día" style="width: 100%; max-width: 440px; height: auto; display: inline-block;"/>
+      </div>
+      <!-- ═════════════════════════════════════════════════════════════════════ -->
+
     </div>
 
     <div class="orn-divider fade-up"><svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="20" x2="130" y2="20" stroke="#c8a86a" stroke-width=".6" opacity=".4"/><g transform="translate(160,20)" stroke="#7a9a72" stroke-width="1" fill="none" opacity=".6"><line x1="0" y1="10" x2="0" y2="-10"/><ellipse cx="-4" cy="-12" rx="4" ry="6" transform="rotate(-20,-4,-12)" fill="#7a9a72" opacity=".3"/><ellipse cx="4" cy="-12" rx="4" ry="6" transform="rotate(20,4,-12)" fill="#7a9a72" opacity=".3"/></g><g transform="translate(200,20)" stroke="#c8a86a" stroke-width="1" fill="none"><circle cx="0" cy="-8" r="5" fill="rgba(200,168,106,.15)" stroke-opacity=".7"/><circle cx="0" cy="-8" r="2" fill="#c8a86a" opacity=".8"/><line x1="0" y1="0" x2="0" y2="-3"/></g><g transform="translate(240,20)" stroke="#7a9a72" stroke-width="1" fill="none" opacity=".6"><line x1="0" y1="10" x2="0" y2="-10"/><ellipse cx="-4" cy="-12" rx="4" ry="6" transform="rotate(-20,-4,-12)" fill="#7a9a72" opacity=".3"/><ellipse cx="4" cy="-12" rx="4" ry="6" transform="rotate(20,4,-12)" fill="#7a9a72" opacity=".3"/></g><line x1="270" y1="20" x2="400" y2="20" stroke="#c8a86a" stroke-width=".6" opacity=".4"/></svg></div>
+
+    <!-- ══ NUEVA IMAGEN 3 (Justo arriba del cuadro de autobús) ══ -->
+    <div class="fade-up" style="padding: 0 20px 12px; text-align: center;">
+      <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/be482f8c-d94d-412d-b48d-e21e346a99f7.png" alt="Autobús" style="width: 100%; max-width: 440px; height: auto; display: inline-block;"/>
+    </div>
+    <!-- ═══════════════════════════════════════════════════════════════ -->
 
     <!-- BUS -->
     <div class="bus-section fade-up">
