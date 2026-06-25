@@ -24,7 +24,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   position:fixed;inset:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   background:#000;
-  z-index:100;cursor:pointer;overflow:hidden;
+  z-index:100;overflow:hidden;
   transition:opacity 1.2s ease;
 }
 
@@ -176,7 +176,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 }
 @keyframes breathe{0%,100%{opacity:.2}50%{opacity:.7}}
 
-/* ══ TRANSICIÓN SUAVE (sin destello) ══ */
+/* ══ TRANSICIÓN SUAVE ══ */
 #fade-overlay{
   position:fixed;inset:0;z-index:200;
   background:#ffffff;
@@ -228,8 +228,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   position:relative;width:100%;height:100dvh;
   overflow:hidden;flex-shrink:0;
 }
-#cover-photo .cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;opacity:0;transition:opacity 1.2s ease;}
-#cover-photo .cover-img.active{opacity:1;}
+#cover-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;}
 #cover-photo::after{
   content:"";position:absolute;inset:0;
   background:linear-gradient(to bottom,transparent 35%,rgba(30,50,25,.55) 75%,rgba(20,38,18,.88) 100%);
@@ -295,7 +294,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .cd-num{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,8.5vw,42px);font-weight:600;color:#f5ede0;line-height:1;display:block;}
 .cd-unit{font-family:'Cormorant Garamond',serif;font-size:clamp(9px,2.4vw,10px);letter-spacing:4px;text-transform:uppercase;color:rgba(200,168,106,.6);margin-top:5px;display:block;}
 
-/* ══ RSVP DESTACADO (tras countdown) ══ */
+/* ══ RSVP DESTACADO ══ */
 .rsvp-highlight{
   margin:0 20px 20px;padding:32px 24px;
   background:linear-gradient(160deg,#1e2e1c,#2a3828);
@@ -479,7 +478,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .closing-section{text-align:center;padding:16px 32px 8px;position:relative;}
 .closing-text{font-family:'Great Vibes',cursive;font-size:clamp(34px,9vw,46px);color:#3d5836;line-height:1.35;}
 
-/* ══ CONTACT (mismo estilo que rsvp-highlight) ══ */
+/* ══ CONTACT ══ */
 .contact-section{
   margin:0 20px 28px;
   background:linear-gradient(160deg,#1e2e1c,#2a3828);
@@ -579,56 +578,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   color:#7a6545;letter-spacing:2px;text-transform:uppercase;cursor:pointer;
   padding:10px;
 }
-
-/* ══ DAY/NIGHT TOGGLE ══ */
-.day-night-toggle{
-  position:absolute;top:18px;right:16px;z-index:3;
-  display:flex;align-items:center;gap:0;
-  background:rgba(0,0,0,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.25);
-  border-radius:30px;overflow:hidden;cursor:pointer;
-  font-family:'Cormorant Garamond',serif;
-  user-select:none;box-shadow:0 2px 12px rgba(0,0,0,.3);
-}
-.day-night-btn{
-  padding:9px 15px;
-  font-size:clamp(11px,2.8vw,13px);letter-spacing:2px;
-  color:rgba(255,255,255,.5);
-  transition:color .4s,background .4s;
-  display:flex;align-items:center;gap:5px;
-  white-space:nowrap;
-}
-.day-night-btn.active{
-  background:rgba(255,255,255,.18);
-  color:#fff;
-}
-
-/* ══ DAY/NIGHT TOGGLE ══ */
-.day-night-toggle{
-  position:absolute;top:18px;right:16px;z-index:3;
-  display:flex;align-items:center;
-  background:rgba(0,0,0,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.25);
-  border-radius:30px;overflow:hidden;cursor:pointer;
-  font-family:'Cormorant Garamond',serif;
-  user-select:none;box-shadow:0 2px 12px rgba(0,0,0,.3);
-}
-.day-night-btn{
-  padding:9px 15px;font-size:clamp(11px,2.8vw,13px);letter-spacing:2px;
-  color:rgba(255,255,255,.5);transition:color .4s,background .4s;
-  display:flex;align-items:center;gap:5px;white-space:nowrap;
-}
-.day-night-btn.active{background:rgba(255,255,255,.18);color:#fff;}
 </style>
 </head>
 <body>
 
 <canvas id="particles"></canvas>
 
-<!-- ══ OVERLAY TRANSICIÓN ══ -->
 <div id="fade-overlay"></div>
 
-<!-- ══ MODALES ══ -->
 <div class="modal-overlay" id="modal-cal" onclick="closeModal('modal-cal')">
   <div class="modal-sheet" onclick="event.stopPropagation()">
     <div class="modal-title">Añadir a mi agenda</div>
@@ -661,26 +618,74 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     SOBRE — PANTALLA COMPLETA VERDE
-══════════════════════════════════════ -->
-<div id="env-screen" onclick="startTransition()">
-  <video id="wedding-video"
+<div id="env-screen">
+  <video
+    id="wedding-video"
     src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/video_202606252040.mp4"
-    autoplay muted playsinline preload="auto"
-    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
-  </video>
-  <div style="position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:center;padding-bottom:60px;pointer-events:none;">
-    <p class="tap-hint" style="text-shadow:0 1px 10px rgba(0,0,0,.7);">✦ Pulsa para abrir ✦</p>
+    playsinline
+    preload="metadata"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"
+  ></video>
+
+  <div id="video-overlay" style="position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;" onclick="playVideo()">
+    <div id="play-btn" style="width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);margin-bottom:20px;transition:transform .2s ease,background .2s ease;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+    <p class="tap-hint">✦ Toca para reproducir ✦</p>
   </div>
 </div>
-<!-- ══════════════════════════════════════
-     INVITACIÓN
-══════════════════════════════════════ -->
+
+<svg class="blur-leaf" id="bl1" style="top:5%;left:-3%;width:min(28vw,120px);" viewBox="0 0 120 200">
+  <g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.18)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,150 Q35,130 22,110"/><path d="M60,120 Q38,105 28,85"/><path d="M60,90 Q42,75 35,58"/>
+    <path d="M60,150 Q85,130 98,110"/><path d="M60,120 Q82,105 92,85"/><path d="M60,90 Q78,75 85,58"/>
+  </g>
+</svg>
+<svg class="blur-leaf" id="bl2" style="top:12%;right:-4%;width:min(22vw,95px);transform:rotate(25deg);" viewBox="0 0 120 200">
+  <g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.15)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,140 Q35,120 22,100"/><path d="M60,100 Q38,85 28,68"/>
+    <path d="M60,140 Q85,120 98,100"/><path d="M60,100 Q82,85 92,68"/>
+  </g>
+</svg>
+<svg class="blur-leaf" id="bl3" style="top:40%;left:-5%;width:min(20vw,85px);transform:rotate(-30deg);" viewBox="0 0 120 200">
+  <g stroke="#7a9a72" stroke-width="1.2" fill="rgba(122,154,114,.15)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,130 Q38,112 28,92"/><path d="M60,130 Q82,112 92,92"/>
+  </g>
+</svg>
+<svg class="blur-leaf" id="bl4" style="top:45%;right:-4%;width:min(24vw,100px);transform:rotate(15deg);" viewBox="0 0 120 200">
+  <g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.12)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,150 Q35,130 22,110"/><path d="M60,110 Q38,95 28,75"/>
+    <path d="M60,150 Q85,130 98,110"/><path d="M60,110 Q82,95 92,75"/>
+  </g>
+</svg>
+<svg class="blur-leaf" id="bl5" style="bottom:8%;left:-3%;width:min(26vw,110px);transform:rotate(10deg);" viewBox="0 0 120 200">
+  <g stroke="#7a9a72" stroke-width="1.2" fill="rgba(122,154,114,.18)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,155 Q35,135 22,115"/><path d="M60,120 Q38,105 28,85"/><path d="M60,85 Q42,70 35,52"/>
+    <path d="M60,155 Q85,135 98,115"/><path d="M60,120 Q82,105 92,85"/><path d="M60,85 Q78,70 85,52"/>
+  </g>
+</svg>
+<svg class="blur-leaf" id="bl6" style="bottom:5%;right:-3%;width:min(22vw,95px);transform:rotate(-20deg);" viewBox="0 0 120 200">
+  <g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.14)">
+    <path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/>
+    <path d="M60,190 Q60,100 60,10"/>
+    <path d="M60,145 Q35,125 22,105"/><path d="M60,105 Q38,90 28,70"/>
+    <path d="M60,145 Q85,125 98,105"/><path d="M60,105 Q82,90 92,70"/>
+  </g>
+</svg>
+
 <div id="invitation">
   <div class="inv-inner">
 
-    <!-- COVER -->
     <div id="cover-photo">
       <svg class="cover-botanical" viewBox="0 0 480 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;position:absolute;top:0;left:0;z-index:1;pointer-events:none;">
         <g stroke="rgba(255,255,255,.35)" stroke-width="1.2" fill="none">
@@ -701,12 +706,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
           <circle cx="-6" cy="0" r="9"/><circle cx="6" cy="0" r="9"/>
         </g>
       </svg>
-      <img id="cover-day" class="cover-img active" src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/89ee9f0d-31ef-448a-8e49-266618c80e66.png" alt="Finca - Día"/>
-      <img id="cover-night" class="cover-img" src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/b4941804-d509-47a2-afa2-6f0ea55d7ef4.png" alt="Finca - Noche"/>
-      <div class="day-night-toggle" id="dayNightToggle">
-        <div class="day-night-btn active" onclick="setDayNight(true)">☀ Día</div>
-        <div class="day-night-btn" onclick="setDayNight(false)">🌙 Noche</div>
-      </div>
+      <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/Gemini_Generated_Image_vwpllmvwpllmvwpl.png" alt="Marina y Manuel"/>
       <div class="cover-overlay">
         <p class="cover-names">Marina & Manuel</p>
         <p class="cover-date">12 · 09 · 2026</p>
@@ -714,7 +714,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </div>
     </div>
 
-    <!-- HERO -->
     <div class="hero fade-up section-bg-deco" style="position:relative;">
       <svg class="corner-deco tl" viewBox="0 0 40 40"><path d="M2,38 L2,2 L38,2" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="2" cy="2" r="2" fill="#c8a86a" opacity=".6"/></svg>
       <svg class="corner-deco tr" viewBox="0 0 40 40"><path d="M38,38 L38,2 L2,2" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="38" cy="2" r="2" fill="#c8a86a" opacity=".6"/></svg>
@@ -758,7 +757,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </div>
     </div>
 
-    <!-- COUNTDOWN -->
     <div class="countdown-section fade-up">
       <div class="countdown-label">✦ Quedan ✦</div>
       <div class="countdown-grid">
@@ -769,7 +767,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </div>
     </div>
 
-    <!-- RSVP DESTACADO -->
     <div class="rsvp-highlight fade-up">
       <div class="rsvp-highlight-label">✦ Confirma tu asistencia ✦</div>
       <div class="rsvp-highlight-title">¿Nos acompañas?</div>
@@ -781,9 +778,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </a>
     </div>
 
-    <!-- SEPARADOR FLORAL -->
     <div class="floral-sep fade-up">
-      <!-- Eucalipto con diamante -->
       <svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg">
         <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5">
           <path d="M0,40 Q30,30 60,35 Q90,25 120,30 Q150,20 175,28"/>
@@ -806,9 +801,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </svg>
     </div>
 
-    <!-- INFO CARDS -->
     <div class="info-section">
-      <!-- CUÁNDO -->
       <div class="info-card-wrap">
         <div class="info-card">
           <div class="info-card-inner">
@@ -835,7 +828,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
         </div>
       </div>
 
-      <!-- DÓNDE -->
       <div class="info-card-wrap" style="transition-delay:.1s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -863,7 +855,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
         </div>
       </div>
 
-      <!-- HORA -->
       <div class="info-card-wrap" style="transition-delay:.2s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -883,7 +874,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
         </div>
       </div>
 
-      <!-- DRESS CODE -->
       <div class="info-card-wrap" style="transition-delay:.3s">
         <div class="info-card">
           <div class="info-card-inner">
@@ -907,7 +897,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       <svg viewBox="0 0 400 30"><line x1="0" y1="15" x2="155" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/><g transform="translate(200,15)"><path d="M-16,0 Q-8,-7 0,-7 Q8,-7 16,0 Q8,7 0,7 Q-8,7 -16,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g><line x1="245" y1="15" x2="400" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/></svg>
     </div>
 
-    <!-- PROGRAMA -->
     <div class="program-section">
       <div class="program-title-wrap fade-up">
         <span class="program-title">Programa</span>
@@ -948,7 +937,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
     </div>
 
     <div class="orn-divider fade-up">
-      <!-- Flores silvestres -->
       <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
         <line x1="0" y1="20" x2="130" y2="20" stroke="#c8a86a" stroke-width=".6" opacity=".4"/>
         <g transform="translate(160,20)" stroke="#7a9a72" stroke-width="1" fill="none" opacity=".6">
@@ -970,7 +958,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </svg>
     </div>
 
-    <!-- BUS -->
     <div class="bus-section fade-up">
       <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a7a52" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0">
@@ -1000,7 +987,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
     </div>
 
     <div class="orn-divider fade-up">
-      <!-- Corona de laurel -->
       <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
         <g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5">
           <path d="M60,20 Q80,10 100,15 Q120,8 140,12 Q160,6 175,10"/>
@@ -1028,33 +1014,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
         </g>
       </svg>
     </div>
-    <!-- FOTOS POLAROID -->
-    <div class="photos-section">
-      <div class="photo-polaroid fade-up">
-        <div class="photo-placeholder">
-          <svg class="photo-placeholder-icon" width="52" height="52" viewBox="0 0 52 52" fill="none">
-            <rect x="4" y="8" width="44" height="36" rx="3" stroke="#a07820" stroke-width="1.5"/>
-            <circle cx="26" cy="24" r="8" stroke="#a07820" stroke-width="1.5"/>
-            <path d="M4,36 L15,24 L24,33 L33,24 L48,40" stroke="#a07820" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          <span class="photo-placeholder-text">Vuestra foto aquí</span>
-        </div>
-        <div class="photo-caption">El principio de todo</div>
-      </div>
-      <div class="photo-polaroid fade-up" style="transition-delay:.15s">
-        <div class="photo-placeholder">
-          <svg class="photo-placeholder-icon" width="52" height="52" viewBox="0 0 52 52" fill="none">
-            <rect x="4" y="8" width="44" height="36" rx="3" stroke="#a07820" stroke-width="1.5"/>
-            <circle cx="26" cy="24" r="8" stroke="#a07820" stroke-width="1.5"/>
-            <path d="M4,36 L15,24 L24,33 L33,24 L48,40" stroke="#a07820" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          <span class="photo-placeholder-text">Vuestra foto aquí</span>
-        </div>
-        <div class="photo-caption">Y el resto de la historia</div>
-      </div>
-    </div>
 
-    <!-- ALOJAMIENTO -->
     <div class="hotel-section fade-up">
       <div class="hotel-badge">
         <div class="hotel-badge-text">✦ Contamos con un alojamiento con descuento ✦</div>
@@ -1081,7 +1041,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
     </div>
 
     <div class="orn-divider fade-up">
-      <!-- Ramas que se unen con corazón -->
       <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
         <g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".5">
           <path d="M0,30 Q50,20 100,25 Q140,18 175,22"/>
@@ -1101,12 +1060,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </svg>
     </div>
 
-    <!-- CLOSING -->
     <div class="closing-section fade-up">
       <p class="closing-text">Con cariño,<br>Marina y Manuel</p>
     </div>
 
-    <!-- CONTACT (mismo estilo que rsvp-highlight) -->
     <div class="contact-section">
       <div class="contact-label">Contacto</div>
       <div class="contact-heading">¿Tienes alguna consulta?</div>
@@ -1183,46 +1140,136 @@ function startPetals(){
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-/* ══ APERTURA DEL SOBRE — TRANSICIÓN SUAVE ══ */
-let opened=false;
-function startTransition(){
-  // Si ya se lanzó la transición, no repetir
-  if(document.getElementById('env-screen').style.display==='none') return;
-  const overlay=document.getElementById('fade-overlay');
-  const screen=document.getElementById('env-screen');
-  const inv=document.getElementById('invitation');
-  // Fade a blanco
-  overlay.classList.add('fade-in');
-  setTimeout(()=>{
-    screen.style.display='none';
-    inv.style.display='block';
-    setTimeout(()=>{ overlay.classList.remove('fade-in'); overlay.classList.add('fade-out'); },80);
-  },700);
+/* ══ VÍDEO DE APERTURA — ZOOM-IN + DESTELLO BLANCO ══ */
+let videoStarted = false;
+let transitionTriggered = false;
+
+// AJUSTE DE PRECISIÓN: Segundos antes de que acabe el vídeo donde empieza el zoom
+const SEGUNDOS_ANTES_FINAL = 0.80; 
+
+function playVideo(){
+  if(videoStarted) return;
+  const video = document.getElementById('wedding-video');
+  const videoOverlay = document.getElementById('video-overlay');
+  const screen = document.getElementById('env-screen');
+  const inv = document.getElementById('invitation');
+  const overlay = document.getElementById('fade-overlay');
+
+  videoStarted = true;
+  
+  videoOverlay.style.transition = 'opacity .4s ease';
+  videoOverlay.style.opacity = '0';
+  setTimeout(()=>{ videoOverlay.style.display = 'none'; }, 400);
+
+  video.play();
+
+  function dispararSecuencia() {
+    if (transitionTriggered) return;
+    transitionTriggered = true;
+
+    // 1. ZOOM IN: Acelera hacia el centro del sobre (0.8s)
+    video.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+    video.style.transform = 'scale(1.48)';
+
+    // 2. FLASH: A los 250ms del zoom, entra una luz blanca fugaz
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 0.35s ease-in';
+      overlay.classList.add('fade-in');
+    }, 250);
+
+    // 3. GAZAPO: En el pico de blanco puro (600ms), damos el cambiazo de pantalla
+    setTimeout(() => {
+      screen.style.display = 'none';
+      inv.style.display = 'block';
+      inv.style.opacity = '1';
+    }, 600);
+
+    // 4. TELÓN: Disipamos el blanco elegantemente para revelar los nombres (720ms)
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 1.25s cubic-bezier(0.16, 1, 0.3, 1)';
+      overlay.classList.remove('fade-in');
+      overlay.classList.add('fade-out');
+
+      document.querySelectorAll('.blur-leaf').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), i * 150);
+      });
+      checkFade();
+      startPetals();
+    }, 720);
+
+    // Limpieza de memoria
+    setTimeout(() => { 
+      overlay.style.display = 'none'; 
+      video.pause();
+    }, 2100);
+  }
+
+  // Bucle de vigilancia del reproductor
+  function rastrearTiempo() {
+    if (!videoStarted) return;
+    const restante = video.duration - video.currentTime;
+
+    if (video.duration > 0 && restante <= SEGUNDOS_ANTES_FINAL) {
+      dispararSecuencia();
+    } else if (!transitionTriggered) {
+      requestAnimationFrame(rastrearTiempo);
+    }
+  }
+
+  requestAnimationFrame(rastrearTiempo);
+
+  // Red de seguridad por si el usuario cambia de pestaña y el explorador congela el canvas
+  video.addEventListener('ended', dispararSecuencia);
 }
 
+/* ══ SCROLL ANIMATIONS + PARALLAX HOJAS ══ */
+const blurLeafSpeeds=[0.08,0.12,0.06,0.1,0.09,0.07];
 
-/* ══ VÍDEO: transición 2s antes del final ══ */
-document.addEventListener('DOMContentLoaded', function(){
-  const vid = document.getElementById('wedding-video');
-  if(!vid) return;
-  let triggered = false;
-  vid.addEventListener('timeupdate', function(){
-    if(!triggered && vid.duration && (vid.duration - vid.currentTime) <= 2){
-      triggered = true;
-      startTransition();
+function checkFade(){
+  const vh=window.innerHeight;
+  const inv=document.getElementById('invitation');
+  const scrollTop=inv.scrollTop;
+
+  document.querySelectorAll('.fade-up,.info-card-wrap,.contact-section,.countdown-section,.prog-item,.rsvp-highlight,.hotel-section').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<vh-40) el.classList.add('in');
+  });
+  document.querySelectorAll('.corner-deco').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<vh-20) el.classList.add('in');
+  });
+
+  document.querySelectorAll('.blur-leaf').forEach((el,i)=>{
+    const speed=blurLeafSpeeds[i]||0.08;
+    const offset=scrollTop*speed;
+    el.style.transform=el.style.transform.replace(/translateY\([^)]*\)/,'')+` translateY(${offset}px)`;
+  });
+}
+
+document.getElementById('invitation').addEventListener('scroll',checkFade,{passive:true});
+
+document.getElementById('invitation').addEventListener('scroll',function(){
+  checkFade();
+  document.querySelectorAll('.hero-names,.cover-names').forEach(n=>{
+    const r=n.getBoundingClientRect();
+    if(r.top<window.innerHeight*.7&&r.top>0){
+      const p=1-(r.top/(window.innerHeight*.7));
+      n.style.textShadow=`0 2px ${20+p*20}px rgba(200,168,106,${0.1+p*0.3})`;
     }
   });
-});
-
-/* ══ DAY/NIGHT TOGGLE ══ */
-let isDay=true;
-function setDayNight(day){
-  if(isDay===day) return;
-  isDay=day;
-  document.getElementById('cover-day').classList.toggle('active',day);
-  document.getElementById('cover-night').classList.toggle('active',!day);
-  document.querySelectorAll('.day-night-btn').forEach((btn,i)=>{
-    btn.classList.toggle('active', day ? i===0 : i===1);
-  });
+},{passive:true});
+ 
+/* ══ COUNTDOWN ══ */
+function updateCD(){
+  const diff=new Date('2026-09-12T19:30:00')-new Date();
+  if(diff<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='0');return;}
+  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
 }
->
+updateCD();setInterval(updateCD,1000);
+</script>
+</body>
+</html>
