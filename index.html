@@ -509,7 +509,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 
     <div class="closing-section fade-up"><p class="closing-text">Con cariño,<br>Marina y Manuel</p></div>
 
-    <div class="fade-up" style="padding: 20px 20px 0; text-align: center;">
+    <div class="fade-up" style="padding: 20px 20px 20px; text-align: center;">
       <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/pipagina.png" alt="Cierre" style="width: 100%; max-width: 300px; height: auto;"/>
     </div>
 
@@ -528,7 +528,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 </div>
 
 <script>
-/* ══ PARTÍCULAS ══ */
+/* ══ SCRIPT MANTENIDO ══ */
 const cvs=document.getElementById('particles');
 const ctx=cvs.getContext('2d');
 function resize(){cvs.width=innerWidth;cvs.height=innerHeight;}
@@ -539,7 +539,6 @@ function drawPt(p){ctx.save();ctx.globalAlpha=p.op;ctx.fillStyle=p.col;ctx.begin
 function animPts(){ctx.clearRect(0,0,cvs.width,cvs.height);pts.forEach((p,i)=>{p.x+=p.vx;p.y+=p.vy;if(p.y<-10)pts[i]=mkPt(false);drawPt(p);});requestAnimationFrame(animPts);}
 animPts();
 
-/* ══ PÉTALOS ══ */
 const petalSVGs=[`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 30'><ellipse cx='10' cy='15' rx='7' ry='13' fill='rgba(200,168,106,0.35)' transform='rotate(-15,10,15)'/></svg>`, `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2 Q20 8 18 16 Q14 22 12 22 Q10 22 6 16 Q4 8 12 2Z' fill='rgba(122,154,114,0.3)'/></svg>`, `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><circle cx='6' cy='6' r='5' fill='rgba(200,168,106,0.25)'/></svg>`];
 let petalsActive=false;
 const activePetals=[];
@@ -555,11 +554,9 @@ function createPetal(){
 }
 function startPetals(){petalsActive=true;for(let i=0;i<8;i++) setTimeout(()=>createPetal(),i*400);setInterval(()=>{if(petalsActive&&activePetals.length<12)createPetal();},1200);}
 
-/* ══ MODALES ══ */
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-/* ══ VÍDEO APERTURA ══ */
 let videoStarted = false;
 let transitionTriggered = false;
 const SEGUNDO_DISPARO = 3.0; 
@@ -628,14 +625,11 @@ function playVideo(){
   video.addEventListener('ended', dispararSecuencia);
 }
 
-/* ══ FUNCIÓN TOGGLE PORTADA FINCA DÍA/NOCHE ══ */
 function toggleCoverTime() {
   const cover = document.getElementById('cover-photo');
   cover.classList.toggle('is-night');
 }
-/* ─────────────────────────────────────────── */
 
-/* ══ SCROLL ══ */
 const blurLeafSpeeds=[0.08,0.12,0.06,0.1,0.09,0.07];
 
 function checkFade(){
@@ -672,7 +666,6 @@ document.getElementById('invitation').addEventListener('scroll',function(){
   });
 },{passive:true});
  
-/* ══ COUNTDOWN ══ */
 function updateCD(){
   const diff=new Date('2026-09-12T19:30:00')-new Date();
   if(diff<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='0');return;}
