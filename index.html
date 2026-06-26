@@ -172,10 +172,28 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .rsvp-highlight-btn small{font-size:clamp(9px,2.5vw,11px);letter-spacing:3px;color:rgba(200,168,106,.8);text-transform:uppercase;}
 @keyframes pulse-gold{0%{box-shadow:0 0 0 0 rgba(200,168,106,.45),0 10px 32px rgba(42,56,40,.3);}70%{box-shadow:0 0 0 12px rgba(200,168,106,0),0 10px 32px rgba(42,56,40,.3);}100%{box-shadow:0 0 0 0 rgba(200,168,106,0),0 10px 32px rgba(42,56,40,.3);}}
 
-/* ══ NUEVA IMAGEN SOTOMELERO ══ */
-.sotomelero-img-wrap{padding: 0 20px 24px; text-align: center; opacity: 0; transform: translateY(28px); transition: opacity .85s ease, transform .85s ease;}
-.sotomelero-img-wrap.in{opacity: 1; transform: translateY(0);}
-.sotomelero-img{width: 100%; max-width: 400px; height: auto; border-radius: 4px; box-shadow: 0 6px 28px rgba(42,56,40,.2); display: inline-block;}
+/* ══ INFO CARDS ══ */
+.info-section{padding:0 24px 16px;position:relative;}
+.info-card-wrap{position:relative;z-index:1;margin-bottom:20px;opacity:0;transform:translateY(28px);transition:opacity .85s ease,transform .85s ease;}
+.info-card-wrap.in{opacity:1;transform:translateY(0);}
+.info-card{position:relative;background:linear-gradient(160deg,#2a3828,#3d5836);border:1px solid rgba(200,168,106,.22);border-radius:3px;overflow:hidden;box-shadow:0 6px 28px rgba(42,56,40,.3);text-align:center;}
+.info-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,#c8a86a 30%,#c8a86a 70%,transparent);}
+.info-card-inner{padding:30px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;z-index:2;}
+.info-card-icon{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(200,168,106,.3);display:flex;align-items:center;justify-content:center;margin-bottom:4px;}
+.info-card-icon svg{width:22px;height:22px;stroke:#c8a86a;fill:none;}
+.info-card-icon svg path.gold-fill{fill:#c8a86a;opacity:1;stroke:none;}
+.info-card-icon svg circle.gold-fill{fill:#c8a86a;stroke:none;}
+.info-card-content{flex:1;width:100%;}
+.info-card-label{font-family:'Cormorant Garamond',serif;font-size:clamp(10px,2.6vw,11px);letter-spacing:5px;text-transform:uppercase;color:rgba(200,168,106,.75);margin-bottom:6px;font-weight:600;}
+.info-card-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,6vw,28px);font-weight:600;color:#f5ede0;line-height:1.2;margin-bottom:6px;}
+.info-card-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(14px,3.8vw,16px);color:rgba(245,237,224,.6);line-height:1.6;}
+
+.btn-action-row{display:flex;flex-direction:column;gap:10px;margin-top:16px;align-items:center;}
+.btn-cal,.btn-map{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;width:100%;max-width:240px;background:rgba(200,168,106,.1);border:1px solid rgba(200,168,106,.5);border-radius:30px;font-family:'Cormorant Garamond',serif;font-size:clamp(13px,3.5vw,14px);color:#c8a86a;text-decoration:none;font-weight:600;letter-spacing:1px;transition:all .3s ease;}
+.btn-cal svg,.btn-map svg{width:15px;height:15px;stroke:#c8a86a;fill:none;flex-shrink:0;}
+
+.map-embed{margin-top:20px;width:100%;height:180px;border-radius:4px;border:1px solid rgba(200,168,106,.4);overflow:hidden;box-shadow:inset 0 2px 8px rgba(0,0,0,.2);}
+.map-embed iframe{width:100%;height:100%;border:none;display:block;}
 
 /* ══ PROGRAM ══ */
 .program-section{padding:12px 20px 28px;position:relative;}
@@ -257,6 +275,42 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 <canvas id="particles"></canvas>
 <div id="fade-overlay"></div>
 
+<!-- ══ MODALES ══ -->
+<div class="modal-overlay" id="modal-cal" onclick="closeModal('modal-cal')">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-title">Añadir a mi agenda</div>
+    <div class="modal-sub">Elige tu aplicación de calendario</div>
+    <a class="modal-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+de+Marina+y+Manuel&dates=20260912T173000Z/20260913T040000Z&details=¡Celebra+con+nosotros+nuestro+gran+día!&location=Molino+Sotomelero,+41409+Écija,+Sevilla" target="_blank" onclick="closeModal('modal-cal')">
+      <div class="modal-btn-icon">📅</div>
+      Google Calendar
+    </a>
+    <a class="modal-btn" href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20260912T173000Z%0ADTEND:20260913T040000Z%0ASUMMARY:Boda%20de%20Marina%20y%20Manuel%0ADESCRIPTION:¡Celebra%20con%20nosotros%20nuestro%20gran%20día!%0ALOCATION:Molino%20Sotomelero%2C%2041409%20Écija%2C%20Sevilla%0AEND:VEVENT%0AEND:VCALENDAR" download="boda-marina-manuel.ics" onclick="closeModal('modal-cal')">
+      <div class="modal-btn-icon">🍎</div>
+      Apple Calendar
+    </a>
+    <span class="modal-cancel" onclick="closeModal('modal-cal')">Cancelar</span>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-map" onclick="closeModal('modal-map')">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-title">Cómo llegar</div>
+    <div class="modal-sub">Elige tu aplicación de mapas</div>
+    <a class="modal-btn" href="https://www.google.com/maps/search/?api=1&query=Molino+Sotomelero+Ecija+Sevilla" target="_blank" onclick="closeModal('modal-map')">
+      <div class="modal-btn-icon">🗺️</div>
+      Google Maps
+    </a>
+    <a class="modal-btn" href="https://maps.apple.com/?q=Molino+Sotomelero+Ecija+Sevilla" target="_blank" onclick="closeModal('modal-map')">
+      <div class="modal-btn-icon">🍎</div>
+      Apple Maps
+    </a>
+    <span class="modal-cancel" onclick="closeModal('modal-map')">Cancelar</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SOBRE — PANTALLA COMPLETA VERDE
+══════════════════════════════════════ -->
 <div id="env-screen">
   <video
     id="wedding-video"
@@ -274,16 +328,32 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
   </div>
 </div>
 
+<!-- ══ HOJAS PARALLAX ══ -->
+<svg class="blur-leaf" id="bl1" style="top:5%;left:-3%;width:min(28vw,120px);" viewBox="0 0 120 200"><g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.18)"><path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/><path d="M60,190 Q60,100 60,10"/><path d="M60,150 Q35,130 22,110"/><path d="M60,120 Q38,105 28,85"/><path d="M60,90 Q42,75 35,58"/><path d="M60,150 Q85,130 98,110"/><path d="M60,120 Q82,105 92,85"/><path d="M60,90 Q78,75 85,58"/></g></svg>
+<svg class="blur-leaf" id="bl2" style="top:12%;right:-4%;width:min(22vw,95px);transform:rotate(25deg);" viewBox="0 0 120 200"><g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.15)"><path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/><path d="M60,190 Q60,100 60,10"/><path d="M60,140 Q35,120 22,100"/><path d="M60,100 Q38,85 28,68"/><path d="M60,140 Q85,120 98,100"/><path d="M60,100 Q82,85 92,68"/></g></svg>
+<svg class="blur-leaf" id="bl3" style="top:40%;left:-5%;width:min(20vw,85px);transform:rotate(-30deg);" viewBox="0 0 120 200"><g stroke="#7a9a72" stroke-width="1.2" fill="rgba(122,154,114,.15)"><path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/><path d="M60,190 Q60,100 60,10"/><path d="M60,130 Q38,112 28,92"/><path d="M60,130 Q82,112 92,92"/></g></svg>
+<svg class="blur-leaf" id="bl4" style="top:45%;right:-4%;width:min(24vw,100px);transform:rotate(15deg);" viewBox="0 0 120 200"><g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.12)"><path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/><path d="M60,190 Q60,100 60,10"/><path d="M60,150 Q35,130 22,110"/><path d="M60,110 Q38,95 28,75"/><path d="M60,150 Q85,130 98,110"/><path d="M60,110 Q82,95 92,75"/></g></svg>
+<svg class="blur-leaf" id="bl5" style="bottom:8%;left:-3%;width:min(26vw,110px);transform:rotate(10deg);" viewBox="0 0 120 200"><g stroke="#7a9a72" stroke-width="1.2" fill="rgba(122,154,114,.18)"><path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/><path d="M60,190 Q60,100 60,10"/><path d="M60,155 Q35,135 22,115"/><path d="M60,120 Q38,105 28,85"/><path d="M60,85 Q42,70 35,52"/><path d="M60,155 Q85,135 98,115"/><path d="M60,120 Q82,105 92,85"/><path d="M60,85 Q78,70 85,52"/></g></svg>
+<svg class="blur-leaf" id="bl6" style="bottom:5%;right:-3%;width:min(22vw,95px);transform:rotate(-20deg);" viewBox="0 0 120 200"><g stroke="#5a7a52" stroke-width="1.2" fill="rgba(90,122,82,.14)"><path d="M60,190 Q10,140 15,90 Q20,40 60,10 Q100,40 105,90 Q110,140 60,190Z"/><path d="M60,190 Q60,100 60,10"/><path d="M60,145 Q35,125 22,105"/><path d="M60,105 Q38,90 28,70"/><path d="M60,145 Q85,125 98,105"/><path d="M60,105 Q82,90 92,70"/></g></svg>
+
+<!-- ══════════════════════════════════════
+     INVITACIÓN
+══════════════════════════════════════ -->
 <div id="invitation">
   <div class="inv-inner">
 
+    <!-- COVER PRINCIPAL -->
     <div id="cover-photo">
+      <svg class="cover-botanical" viewBox="0 0 480 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;position:absolute;top:0;left:0;"><g stroke="rgba(255,255,255,.35)" stroke-width="1.2" fill="none"><path d="M0,80 Q35,55 70,65 Q105,48 140,58"/><path d="M15,80 Q25,58 42,48"/><path d="M45,72 Q50,54 64,42"/><path d="M72,65 Q77,48 90,38"/><ellipse cx="46" cy="46" rx="9" ry="5" transform="rotate(-30,46,46)" fill="rgba(255,255,255,.2)"/><ellipse cx="75" cy="36" rx="10" ry="5" transform="rotate(-45,75,36)" fill="rgba(255,255,255,.18)"/><ellipse cx="28" cy="58" rx="8" ry="4" transform="rotate(-20,28,58)" fill="rgba(255,255,255,.15)"/></g><g stroke="rgba(255,255,255,.35)" stroke-width="1.2" fill="none" transform="scale(-1,1) translate(-480,0)"><path d="M0,80 Q35,55 70,65 Q105,48 140,58"/><path d="M15,80 Q25,58 42,48"/><path d="M45,72 Q50,54 64,42"/><path d="M72,65 Q77,48 90,38"/><ellipse cx="46" cy="46" rx="9" ry="5" transform="rotate(-30,46,46)" fill="rgba(255,255,255,.2)"/><ellipse cx="75" cy="36" rx="10" ry="5" transform="rotate(-45,75,36)" fill="rgba(255,255,255,.18)"/><ellipse cx="28" cy="58" rx="8" ry="4" transform="rotate(-20,28,58)" fill="rgba(255,255,255,.15)"/></g><g stroke="rgba(200,168,106,.55)" stroke-width="1.2" fill="none" transform="translate(240,22)"><circle cx="-6" cy="0" r="9"/><circle cx="6" cy="0" r="9"/></g></svg>
+      
       <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/89ee9f0d-31ef-448a-8e49-266618c80e66.png" alt="Molino Sotomelero Atardecer" class="finca-day"/>
       <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/b4941804-d509-47a2-afa2-6f0ea55d7ef4.png" alt="Molino Sotomelero Noche" class="finca-night"/>
+      
       <div class="cover-time-toggle" onclick="toggleCoverTime()" title="Cambiar luz de la finca">
         <span class="toggle-icon t-sun">☀️</span>
         <span class="toggle-icon t-moon">🌙</span>
       </div>
+
       <div class="cover-overlay">
         <p class="cover-names">Marina & Manuel</p>
         <p class="cover-date">12 · 09 · 2026</p>
@@ -291,11 +361,30 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </div>
     </div>
 
+    <!-- HERO -->
     <div class="hero fade-up section-bg-deco" style="position:relative;">
+      <svg class="corner-deco tl" viewBox="0 0 40 40"><path d="M2,38 L2,2 L38,2" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="2" cy="2" r="2" fill="#c8a86a" opacity=".6"/></svg>
+      <svg class="corner-deco tr" viewBox="0 0 40 40"><path d="M38,38 L38,2 L2,2" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="38" cy="2" r="2" fill="#c8a86a" opacity=".6"/></svg>
+      <svg class="corner-deco bl" viewBox="0 0 40 40"><path d="M2,2 L2,38 L38,38" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="2" cy="38" r="2" fill="#c8a86a" opacity=".6"/></svg>
+      <svg class="corner-deco br" viewBox="0 0 40 40"><path d="M38,2 L38,38 L2,38" stroke="#c8a86a" stroke-width="1" fill="none" opacity=".6"/><circle cx="38" cy="38" r="2" fill="#c8a86a" opacity=".6"/></svg>
+
+      <div class="floral-sep" style="padding-top:10px;">
+        <svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg"><g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".55"><path d="M0,45 Q45,28 90,38 Q135,22 175,32"/><path d="M22,45 Q34,26 54,16"/><path d="M55,40 Q62,24 78,14"/><path d="M92,38 Q99,22 112,12"/><ellipse cx="57" cy="14" rx="11" ry="6" transform="rotate(-35,57,14)" fill="#7a9a72" opacity=".4"/><ellipse cx="88" cy="10" rx="12" ry="6" transform="rotate(-48,88,10)" fill="#7a9a72" opacity=".35"/><ellipse cx="36" cy="26" rx="10" ry="5" transform="rotate(-22,36,26)" fill="#7a9a72" opacity=".3"/></g><g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".55" transform="scale(-1,1) translate(-420,0)"><path d="M0,45 Q45,28 90,38 Q135,22 175,32"/><path d="M22,45 Q34,26 54,16"/><path d="M55,40 Q62,24 78,14"/><path d="M92,38 Q99,22 112,12"/><ellipse cx="57" cy="14" rx="11" ry="6" transform="rotate(-35,57,14)" fill="#7a9a72" opacity=".4"/><ellipse cx="88" cy="10" rx="12" ry="6" transform="rotate(-48,88,10)" fill="#7a9a72" opacity=".35"/><ellipse cx="36" cy="26" rx="10" ry="5" transform="rotate(-22,36,26)" fill="#7a9a72" opacity=".3"/></g><g transform="translate(210,30)"><path d="M-18,0 Q-9,-8 0,-8 Q9,-8 18,0 Q9,8 0,8 Q-9,8 -18,0Z" fill="none" stroke="#c8a86a" stroke-width=".9" opacity=".7"/><circle cx="0" cy="0" r="2.5" fill="#c8a86a" opacity=".8"/></g></svg>
+      </div>
+
+      <!-- ══ NUEVA IMAGEN 1 (Arriba de 'El momento ha llegado') ══ -->
+      <div style="margin: 8px auto 18px; width: min(85%, 320px);">
+        <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/682f3f9f-b4f5-4bfb-b02a-bfa82cc23685.png" alt="Ilustración" style="width: 100%; height: auto; display: block; border-radius: 4px;"/>
+      </div>
+      <!-- ═══════════════════════════════════════════════════════════ -->
+
       <p class="hero-eyebrow">El momento ha llegado...</p>
       <p class="hero-welcome">Después de tanto tiempo juntos, de risas compartidas, de sueños construidos y de una vida que ya no imaginamos el uno sin el otro, ha llegado el momento de celebrarlo con las personas que más queremos.</p>
+      <div class="orn-divider"><svg viewBox="0 0 400 30"><line x1="0" y1="15" x2="155" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/><g transform="translate(200,15)"><path d="M-16,0 Q-8,-7 0,-7 Q8,-7 16,0 Q8,7 0,7 Q-8,7 -16,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g><line x1="245" y1="15" x2="400" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/></svg></div>
+      <p class="hero-label">¡Nos casamos!</p>
       <h1 class="hero-names">Marina & Manuel</h1>
       <p class="hero-date">12 · 09 · 2026</p>
+      
       <div class="couple-photo-wrap">
         <div class="couple-photo-frame">
           <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/Gemini_Generated_Image_7dacmb7dacmb7dac.png" alt="Marina y Manuel" class="couple-photo-img"/>
@@ -303,10 +392,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </div>
     </div>
 
-    <div class="sotomelero-img-wrap fade-up">
-      <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/sotomelero.png" alt="Sotomelero" class="sotomelero-img"/>
-    </div>
-
+    <!-- COUNTDOWN -->
     <div class="countdown-section fade-up">
       <div class="countdown-label">✦ Quedan ✦</div>
       <div class="countdown-grid">
@@ -317,21 +403,307 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </div>
     </div>
 
+    <!-- RSVP DESTACADO -->
     <div class="rsvp-highlight fade-up">
       <div class="rsvp-highlight-label">✦ Confirma tu asistencia ✦</div>
       <div class="rsvp-highlight-title">¿Nos acompañas?</div>
       <div class="rsvp-highlight-sub">Nos haría mucha ilusión contar contigo en nuestro día más especial.<br>Confirmar asistencia antes del 1 de agosto de 2026.</div>
       <a class="rsvp-highlight-btn" href="https://bodamarinaymanu.netlify.app/" target="_blank">
         Confirmar Asistencia
-        <small>Menú · Alérgenos · Transporte</small>
+        <small>Menú · Alergias · Transporte</small>
       </a>
     </div>
 
+    <!-- SEPARADOR FLORAL -->
+    <div class="floral-sep fade-up"><svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg"><g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5"><path d="M0,40 Q30,30 60,35 Q90,25 120,30 Q150,20 175,28"/><ellipse cx="30" cy="32" rx="12" ry="7" transform="rotate(-20,30,32)" fill="#7a9a72" opacity=".25"/><ellipse cx="65" cy="28" rx="13" ry="7" transform="rotate(-30,65,28)" fill="#7a9a72" opacity=".22"/><ellipse cx="100" cy="24" rx="12" ry="6" transform="rotate(-25,100,24)" fill="#7a9a72" opacity=".2"/><ellipse cx="135" cy="22" rx="11" ry="6" transform="rotate(-20,135,22)" fill="#7a9a72" opacity=".18"/></g><g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5" transform="scale(-1,1) translate(-420,0)"><path d="M0,40 Q30,30 60,35 Q90,25 120,30 Q150,20 175,28"/><ellipse cx="30" cy="32" rx="12" ry="7" transform="rotate(-20,30,32)" fill="#7a9a72" opacity=".25"/><ellipse cx="65" cy="28" rx="13" ry="7" transform="rotate(-30,65,28)" fill="#7a9a72" opacity=".22"/><ellipse cx="100" cy="24" rx="12" ry="6" transform="rotate(-25,100,24)" fill="#7a9a72" opacity=".2"/><ellipse cx="135" cy="22" rx="11" ry="6" transform="rotate(-20,135,22)" fill="#7a9a72" opacity=".18"/></g><g transform="translate(210,30)"><path d="M0,-10 L8,0 L0,10 L-8,0Z" fill="none" stroke="#c8a86a" stroke-width="1" opacity=".8"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".9"/></g></svg></div>
+
+    <!-- INFO CARDS -->
+    <div class="info-section">
+      <div class="info-card-wrap">
+        <div class="info-card">
+          <div class="info-card-inner">
+            <div class="info-card-icon"><svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><rect class="gold-fill" x="7" y="13" width="3" height="3" rx=".5"/><rect class="gold-fill" x="11" y="13" width="3" height="3" rx=".5"/></svg></div>
+            <div class="info-card-content">
+              <div class="info-card-label">Cuándo</div>
+              <div class="info-card-title">Sáb. 12 de Septiembre 2026</div>
+              <div class="info-card-sub">¡Guárdate la fecha!</div>
+              <div class="btn-action-row"><button class="btn-cal" onclick="openModal('modal-cal')"><svg viewBox="0 0 24 24"><path d="M12 2v20m10-10H2" stroke-linecap="round" stroke-linejoin="round"/></svg>Añadir a mi agenda</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card-wrap" style="transition-delay:.1s">
+        <div class="info-card">
+          <div class="info-card-inner">
+            <div class="info-card-icon"><svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle class="gold-fill" cx="12" cy="9" r="2.5"/></svg></div>
+            <div class="info-card-content">
+              <div class="info-card-label">Dónde</div>
+              <div class="info-card-title">Molino Sotomelero</div>
+              <div class="info-card-sub">CP-246 s/n · 41409 Écija, Sevilla</div>
+              <div class="btn-action-row" style="margin-top:16px;"><button class="btn-map" onclick="openModal('modal-map')"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>Cómo llegar</button></div>
+              <div class="map-embed"><iframe src="https://maps.google.com/maps?q=Molino%20Sotomelero,%20Ecija&t=&z=14&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card-wrap" style="transition-delay:.2s">
+        <div class="info-card">
+          <div class="info-card-inner">
+            <div class="info-card-icon"><svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="12" x2="12" y2="7"/><line x1="12" y1="12" x2="16" y2="14.5"/><circle class="gold-fill" cx="12" cy="12" r="1.5"/></svg></div>
+            <div class="info-card-content">
+              <div class="info-card-label">Hora de inicio</div>
+              <div class="info-card-title">19:30 h</div>
+              <div class="info-card-sub">Ceremonia Civil</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card-wrap" style="transition-delay:.3s">
+        <div class="info-card">
+          <div class="info-card-inner">
+            <div class="info-card-icon"><svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3C12 3 9 5.5 7 6.5L9 10Q12 8.5 15 10L17 6.5C15 5.5 12 3 12 3Z" class="gold-fill"/><path d="M9 10L7.5 21L16.5 21L15 10"/></svg></div>
+            <div class="info-card-content">
+              <div class="info-card-label">Dress Code</div>
+              <div class="info-card-title">Etiqueta Formal</div>
+              <div class="info-card-sub">¡El blanco está reservado para la novia!</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="orn-divider fade-up"><svg viewBox="0 0 400 30"><line x1="0" y1="15" x2="155" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/><g transform="translate(200,15)"><path d="M-16,0 Q-8,-7 0,-7 Q8,-7 16,0 Q8,7 0,7 Q-8,7 -16,0Z" fill="none" stroke="#c8a86a" stroke-width=".8" opacity=".65"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".75"/></g><line x1="245" y1="15" x2="400" y2="15" stroke="#c8a86a" stroke-width=".7" opacity=".55"/></svg></div>
+
+    <!-- PROGRAMA -->
+    <div class="program-section">
+      <div class="program-title-wrap fade-up">
+        <span class="program-title">Programa</span>
+        <span class="program-subtitle">El Gran Día</span>
+      </div>
+
+      <!-- ══ NUEVA IMAGEN 2 (Sustituye a todo el timeline del programa) ══ -->
+      <div class="fade-up" style="text-align: center; margin-top: 8px;">
+        <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/773fa739-682a-442b-a134-46c629f2bc86.png" alt="Programa del Gran Día" style="width: 100%; max-width: 440px; height: auto; display: inline-block;"/>
+      </div>
+      <!-- ═════════════════════════════════════════════════════════════════════ -->
+
+    </div>
+
+    <div class="orn-divider fade-up"><svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="20" x2="130" y2="20" stroke="#c8a86a" stroke-width=".6" opacity=".4"/><g transform="translate(160,20)" stroke="#7a9a72" stroke-width="1" fill="none" opacity=".6"><line x1="0" y1="10" x2="0" y2="-10"/><ellipse cx="-4" cy="-12" rx="4" ry="6" transform="rotate(-20,-4,-12)" fill="#7a9a72" opacity=".3"/><ellipse cx="4" cy="-12" rx="4" ry="6" transform="rotate(20,4,-12)" fill="#7a9a72" opacity=".3"/></g><g transform="translate(200,20)" stroke="#c8a86a" stroke-width="1" fill="none"><circle cx="0" cy="-8" r="5" fill="rgba(200,168,106,.15)" stroke-opacity=".7"/><circle cx="0" cy="-8" r="2" fill="#c8a86a" opacity=".8"/><line x1="0" y1="0" x2="0" y2="-3"/></g><g transform="translate(240,20)" stroke="#7a9a72" stroke-width="1" fill="none" opacity=".6"><line x1="0" y1="10" x2="0" y2="-10"/><ellipse cx="-4" cy="-12" rx="4" ry="6" transform="rotate(-20,-4,-12)" fill="#7a9a72" opacity=".3"/><ellipse cx="4" cy="-12" rx="4" ry="6" transform="rotate(20,4,-12)" fill="#7a9a72" opacity=".3"/></g><line x1="270" y1="20" x2="400" y2="20" stroke="#c8a86a" stroke-width=".6" opacity=".4"/></svg></div>
+
+    <!-- ══ NUEVA IMAGEN 3 (Justo arriba del cuadro de autobús) ══ -->
+    <div class="fade-up" style="padding: 0 20px 12px; text-align: center;">
+      <img src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/be482f8c-d94d-412d-b48d-e21e346a99f7.png" alt="Autobús" style="width: 100%; max-width: 440px; height: auto; display: inline-block;"/>
+    </div>
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+
+    <!-- BUS -->
+    <div class="bus-section fade-up">
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a7a52" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0"><rect x="2" y="5" width="20" height="13" rx="2"/><line x1="2" y1="11" x2="22" y2="11"/><line x1="7" y1="5" x2="7" y2="11"/><line x1="17" y1="5" x2="17" y2="11"/><circle cx="7" cy="20" r="2" fill="#5a7a52" stroke="none"/><circle cx="17" cy="20" r="2" fill="#5a7a52" stroke="none"/></svg><span class="bus-eyebrow">Servicio de Autobús</span></div>
+      <h3 class="bus-title">Transporte incluido</h3>
+      <div class="bus-cols">
+        <div class="bus-col"><div class="bus-col-label"><span class="bus-arrow">→</span> IDA</div><div class="bus-stop"><span class="bus-time">18:30 h</span><span class="bus-place">La Luisiana</span></div><div class="bus-stop-line"></div><div class="bus-stop"><span class="bus-time">19:00 h</span><span class="bus-place">Écija</span></div></div>
+        <div class="bus-vdivider"></div>
+        <div class="bus-col"><div class="bus-col-label"><span class="bus-arrow">←</span> VUELTA</div><div class="bus-stop"><span class="bus-time">03:00 h</span><span class="bus-place">Sotomelero</span></div><div class="bus-stop-line"></div><div class="bus-stop"><span class="bus-time">06:00 h</span><span class="bus-place">Sotomelero</span></div><div class="bus-route-note">→ Écija → La Luisiana</div></div>
+      </div>
+    </div>
+
+    <div class="orn-divider fade-up"><svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg"><g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5"><path d="M60,20 Q80,10 100,15 Q120,8 140,12 Q160,6 175,10"/><ellipse cx="80" cy="13" rx="9" ry="5" transform="rotate(-15,80,13)" fill="#7a9a72" opacity=".25"/><ellipse cx="105" cy="10" rx="9" ry="5" transform="rotate(-20,105,10)" fill="#7a9a72" opacity=".22"/><ellipse cx="130" cy="9" rx="8" ry="4" transform="rotate(-15,130,9)" fill="#7a9a72" opacity=".2"/><path d="M60,20 Q80,30 100,25 Q120,32 140,28 Q160,34 175,30"/><ellipse cx="80" cy="27" rx="9" ry="5" transform="rotate(15,80,27)" fill="#7a9a72" opacity=".2"/><ellipse cx="105" cy="30" rx="9" ry="5" transform="rotate(20,105,30)" fill="#7a9a72" opacity=".18"/><ellipse cx="130" cy="31" rx="8" ry="4" transform="rotate(15,130,31)" fill="#7a9a72" opacity=".16"/></g><g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5" transform="scale(-1,1) translate(-400,0)"><path d="M60,20 Q80,10 100,15 Q120,8 140,12 Q160,6 175,10"/><ellipse cx="80" cy="13" rx="9" ry="5" transform="rotate(-15,80,13)" fill="#7a9a72" opacity=".25"/><ellipse cx="105" cy="10" rx="9" ry="5" transform="rotate(-20,105,10)" fill="#7a9a72" opacity=".22"/><ellipse cx="130" cy="9" rx="8" ry="4" transform="rotate(-15,130,9)" fill="#7a9a72" opacity=".2"/><path d="M60,20 Q80,30 100,25 Q120,32 140,28 Q160,34 175,30"/><ellipse cx="80" cy="27" rx="9" ry="5" transform="rotate(15,80,27)" fill="#7a9a72" opacity=".2"/><ellipse cx="105" cy="30" rx="9" ry="5" transform="rotate(20,105,30)" fill="#7a9a72" opacity=".18"/><ellipse cx="130" cy="31" rx="8" ry="4" transform="rotate(15,130,31)" fill="#7a9a72" opacity=".16"/></g><g transform="translate(200,20)"><path d="M-6,-6 Q0,-10 6,-6 Q10,0 6,6 Q0,10 -6,6 Q-10,0 -6,-6Z" fill="rgba(200,168,106,.2)" stroke="#c8a86a" stroke-width=".8" opacity=".8"/><circle cx="0" cy="0" r="2" fill="#c8a86a" opacity=".9"/></g></svg></div>
+
+    <!-- ALOJAMIENTO -->
+    <div class="hotel-section fade-up">
+      <div class="hotel-badge"><div class="hotel-badge-text">✦ Contamos con un alojamiento con descuento ✦</div></div>
+      <div class="hotel-inner">
+        <span class="hotel-icon">🏨</span>
+        <div class="hotel-name">B&B Hotel Écija</div>
+        <div class="hotel-desc">A pocos minutos de la parada de autobús.<br>Menciona la boda de Marina y Manuel al reservar para obtener tu descuento especial.</div>
+        <div class="hotel-note">📞 Llama y menciona la boda para el descuento</div>
+        <div class="hotel-btns">
+          <a class="hotel-btn" href="https://www.hotel-bb.com/es/hotel/ecija?utm_source=googlemaps&utm_medium=fichehotel&utm_campaign=ecija" target="_blank">🌐 Ver hotel</a>
+          <a class="hotel-btn-phone" href="tel:+34854619596">📞 854 61 95 96</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="orn-divider fade-up"><svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg"><g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".5"><path d="M0,30 Q50,20 100,25 Q140,18 175,22"/><path d="M20,30 Q30,18 48,10"/><path d="M55,27 Q62,16 76,8"/><path d="M90,25 Q97,14 108,8"/><ellipse cx="50" cy="8" rx="9" ry="5" transform="rotate(-35,50,8)" fill="#7a9a72" opacity=".3"/><ellipse cx="78" cy="6" rx="10" ry="5" transform="rotate(-40,78,6)" fill="#7a9a72" opacity=".28"/></g><g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".5" transform="scale(-1,1) translate(-400,0)"><path d="M0,30 Q50,20 100,25 Q140,18 175,22"/><path d="M20,30 Q30,18 48,10"/><path d="M55,27 Q62,16 76,8"/><path d="M90,25 Q97,14 108,8"/><ellipse cx="50" cy="8" rx="9" ry="5" transform="rotate(-35,50,8)" fill="#7a9a72" opacity=".3"/><ellipse cx="78" cy="6" rx="10" ry="5" transform="rotate(-40,78,6)" fill="#7a9a72" opacity=".28"/></g><g transform="translate(200,18)"><path d="M0,8 Q-10,-2 -6,-8 Q-2,-14 0,-8 Q2,-14 6,-8 Q10,-2 0,8Z" fill="rgba(200,168,106,.35)" stroke="#c8a86a" stroke-width=".8" opacity=".9"/></g></svg></div>
+
+    <!-- CLOSING -->
+    <div class="closing-section fade-up"><p class="closing-text">Con cariño,<br>Marina y Manuel</p></div>
+
+    <!-- CONTACT -->
+    <div class="contact-section">
+      <div class="contact-label">Contacto</div>
+      <div class="contact-heading">¿Tienes alguna consulta?</div>
+      <div class="contact-sub">Para dudas o cualquier consulta,<br>escríbenos por WhatsApp</div>
+      <div class="contact-btns">
+        <a class="wa-btn" href="https://wa.me/34667661578?text=Hola%20Manuel!" target="_blank"><svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Manuel · +34 667 661 578</a>
+        <a class="wa-btn" href="https://wa.me/34619081874?text=Hola%20Marina!" target="_blank"><svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Marina · +34 619 081 874</a>
+      </div>
+    </div>
+
+    <svg class="botanical-bot" viewBox="0 0 480 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice"><rect width="480" height="90" fill="#faf7f0"/><g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".5" transform="translate(0,90) scale(1,-1)"><path d="M0,65 Q45,44 90,55 Q135,38 175,48"/><path d="M22,65 Q34,44 54,34"/><path d="M55,58 Q62,42 78,30"/><path d="M92,55 Q99,38 112,28"/><ellipse cx="57" cy="30" rx="11" ry="6" transform="rotate(-35,57,30)" fill="#7a9a72" opacity=".4"/><ellipse cx="88" cy="26" rx="12" ry="6" transform="rotate(-48,88,26)" fill="#7a9a72" opacity=".35"/><ellipse cx="36" cy="44" rx="10" ry="5" transform="rotate(-22,36,44)" fill="#7a9a72" opacity=".3"/></g><g stroke="#7a9a72" stroke-width="1.1" fill="none" opacity=".5" transform="translate(480,90) scale(-1,-1)"><path d="M0,65 Q45,44 90,55 Q135,38 175,48"/><path d="M22,65 Q34,44 54,34"/><path d="M55,58 Q62,42 78,30"/><path d="M92,55 Q99,38 112,28"/><ellipse cx="57" cy="30" rx="11" ry="6" transform="rotate(-35,57,30)" fill="#7a9a72" opacity=".4"/><ellipse cx="88" cy="26" rx="12" ry="6" transform="rotate(-48,88,26)" fill="#7a9a72" opacity=".35"/><ellipse cx="36" cy="44" rx="10" ry="5" transform="rotate(-22,36,44)" fill="#7a9a72" opacity=".3"/></g></svg>
+  </div>
 </div>
 
 <script>
-/* ... (Todo el script original se mantiene exactamente igual para asegurar que todas las funciones sigan operativas) ... */
+/* ══ PARTÍCULAS ══ */
+const cvs=document.getElementById('particles');
+const ctx=cvs.getContext('2d');
+function resize(){cvs.width=innerWidth;cvs.height=innerHeight;}
+resize();addEventListener('resize',resize);
+const pts=Array.from({length:40},()=>mkPt(true));
+function mkPt(init){return{x:Math.random()*innerWidth,y:init?Math.random()*innerHeight:innerHeight+10,r:Math.random()*2+.5,vy:-(Math.random()*.55+.15),vx:(Math.random()-.5)*.3,op:Math.random()*.35+.08,col:Math.random()>.5?'#c8a86a':'#e8d4a0'};}
+function drawPt(p){ctx.save();ctx.globalAlpha=p.op;ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.restore();}
+function animPts(){ctx.clearRect(0,0,cvs.width,cvs.height);pts.forEach((p,i)=>{p.x+=p.vx;p.y+=p.vy;if(p.y<-10)pts[i]=mkPt(false);drawPt(p);});requestAnimationFrame(animPts);}
+animPts();
+
+/* ══ PÉTALOS ══ */
+const petalSVGs=[`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 30'><ellipse cx='10' cy='15' rx='7' ry='13' fill='rgba(200,168,106,0.35)' transform='rotate(-15,10,15)'/></svg>`, `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2 Q20 8 18 16 Q14 22 12 22 Q10 22 6 16 Q4 8 12 2Z' fill='rgba(122,154,114,0.3)'/></svg>`, `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><circle cx='6' cy='6' r='5' fill='rgba(200,168,106,0.25)'/></svg>`];
+let petalsActive=false;
+const activePetals=[];
+function createPetal(){
+  const el=document.createElement('div');
+  el.className='petal-float';
+  const size=10+Math.random()*18;
+  el.style.cssText=`left:${Math.random()*100}vw;top:-60px;width:${size}px;height:${size}px;animation-duration:${6+Math.random()*8}s;animation-delay:${Math.random()*4}s;`;
+  el.innerHTML=petalSVGs[Math.floor(Math.random()*petalSVGs.length)];
+  document.body.appendChild(el);
+  activePetals.push(el);
+  el.addEventListener('animationend',()=>{el.remove();const i=activePetals.indexOf(el);if(i>-1)activePetals.splice(i,1);if(petalsActive)createPetal();});
+}
+function startPetals(){petalsActive=true;for(let i=0;i<8;i++) setTimeout(()=>createPetal(),i*400);setInterval(()=>{if(petalsActive&&activePetals.length<12)createPetal();},1200);}
+
+/* ══ MODALES ══ */
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+/* ══ VÍDEO APERTURA ══ */
+let videoStarted = false;
+let transitionTriggered = false;
+const SEGUNDO_DISPARO = 3.0; 
+
+function playVideo(){
+  if(videoStarted) return;
+  const video = document.getElementById('wedding-video');
+  const videoOverlay = document.getElementById('video-overlay');
+  const screen = document.getElementById('env-screen');
+  const inv = document.getElementById('invitation');
+  const overlay = document.getElementById('fade-overlay');
+
+  videoStarted = true;
+  videoOverlay.style.transition = 'opacity .4s ease';
+  videoOverlay.style.opacity = '0';
+  setTimeout(()=>{ videoOverlay.style.display = 'none'; }, 400);
+
+  video.play();
+
+  function dispararSecuencia() {
+    if (transitionTriggered) return;
+    transitionTriggered = true;
+
+    video.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+    video.style.transform = 'scale(1.48)';
+
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 0.35s ease-in';
+      overlay.classList.add('fade-in');
+    }, 250);
+
+    setTimeout(() => {
+      screen.style.display = 'none';
+      inv.style.display = 'block';
+      inv.style.opacity = '1';
+    }, 600);
+
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 1.25s cubic-bezier(0.16, 1, 0.3, 1)';
+      overlay.classList.remove('fade-in');
+      overlay.classList.add('fade-out');
+
+      document.querySelectorAll('.blur-leaf').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), i * 150);
+      });
+      checkFade();
+      startPetals();
+    }, 720);
+
+    setTimeout(() => { 
+      overlay.style.display = 'none'; 
+      video.pause(); 
+    }, 2100);
+  }
+
+  function rastrearTiempo() {
+    if (!videoStarted) return;
+    if (video.currentTime >= SEGUNDO_DISPARO) {
+      dispararSecuencia();
+    } else if (!transitionTriggered) {
+      requestAnimationFrame(rastrearTiempo);
+    }
+  }
+
+  requestAnimationFrame(rastrearTiempo);
+  video.addEventListener('ended', dispararSecuencia);
+}
+
+/* ══ FUNCIÓN TOGGLE PORTADA FINCA DÍA/NOCHE ══ */
+function toggleCoverTime() {
+  const cover = document.getElementById('cover-photo');
+  cover.classList.toggle('is-night');
+}
+/* ─────────────────────────────────────────── */
+
+/* ══ SCROLL ══ */
+const blurLeafSpeeds=[0.08,0.12,0.06,0.1,0.09,0.07];
+
+function checkFade(){
+  const vh=window.innerHeight;
+  const inv=document.getElementById('invitation');
+  const scrollTop=inv.scrollTop;
+
+  document.querySelectorAll('.fade-up,.info-card-wrap,.contact-section,.countdown-section,.prog-item,.rsvp-highlight,.hotel-section').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<vh-40) el.classList.add('in');
+  });
+  document.querySelectorAll('.corner-deco').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<vh-20) el.classList.add('in');
+  });
+
+  document.querySelectorAll('.blur-leaf').forEach((el,i)=>{
+    const speed=blurLeafSpeeds[i]||0.08;
+    const offset=scrollTop*speed;
+    el.style.transform=el.style.transform.replace(/translateY\([^)]*\)/,'')+` translateY(${offset}px)`;
+  });
+}
+
+document.getElementById('invitation').addEventListener('scroll',checkFade,{passive:true});
+
+document.getElementById('invitation').addEventListener('scroll',function(){
+  checkFade();
+  document.querySelectorAll('.hero-names,.cover-names').forEach(n=>{
+    const r=n.getBoundingClientRect();
+    if(r.top<window.innerHeight*.7&&r.top>0){
+      const p=1-(r.top/(window.innerHeight*.7));
+      n.style.textShadow=`0 2px ${20+p*20}px rgba(200,168,106,${0.1+p*0.3})`;
+    }
+  });
+},{passive:true});
+ 
+/* ══ COUNTDOWN ══ */
+function updateCD(){
+  const diff=new Date('2026-09-12T19:30:00')-new Date();
+  if(diff<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='0');return;}
+  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+}
+updateCD();setInterval(updateCD,1000);
 </script>
 </body>
 </html>
