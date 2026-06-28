@@ -53,33 +53,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .blur-leaf{position:fixed;pointer-events:none;z-index:0;opacity:0;filter:blur(7px);transition:opacity 1.4s ease;will-change:transform;}
 .blur-leaf.visible{opacity:1;}
 
-/* ══ COVER (SISTEMA FINCA DÍA/NOCHE) ══ */
-#cover-photo{
-  position:relative;width:100%;height:100dvh;
-  overflow:hidden;flex-shrink:0;
-}
-.finca-day {
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:center 20%;display:block;
-  z-index:0;
-}
-.finca-night {
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:center 20%;display:block;
-  opacity:0;z-index:1;
-  transition:opacity 1.1s cubic-bezier(0.4, 0, 0.2, 1);
-}
-#cover-photo.is-night .finca-night {
-  opacity:1;
-}
-
-#cover-photo::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(to bottom,transparent 35%,rgba(30,50,25,.55) 75%,rgba(20,38,18,.88) 100%);
-  pointer-events:none;z-index:2;
-}
+/* ══ COVER ══ */
+#cover-photo{position:relative;width:100%;height:100dvh;overflow:hidden;flex-shrink:0;}
+.finca-day {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;z-index:0;}
+.finca-night {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;opacity:0;z-index:1;transition:opacity 1.1s cubic-bezier(0.4, 0, 0.2, 1);}
+#cover-photo.is-night .finca-night {opacity:1;}
+#cover-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,rgba(30,50,25,.55) 75%,rgba(20,38,18,.88) 100%);pointer-events:none;z-index:2;}
 #cover-photo .cover-botanical{position:absolute;top:0;left:0;right:0;z-index:3;pointer-events:none;}
-
 .cover-overlay{position:absolute;bottom:0;left:0;right:0;text-align:center;padding:0 24px 48px;z-index:4;}
 .cover-names{font-family:'Great Vibes',cursive;font-size:clamp(50px,13vw,74px);color:#f5ede0;line-height:1.1;text-shadow:0 2px 20px rgba(0,0,0,.5);margin-bottom:6px;}
 .cover-date{font-family:'Cormorant Garamond',serif;font-size:clamp(13px,3.5vw,16px);color:rgba(245,237,224,.85);letter-spacing:7px;margin-bottom:24px;}
@@ -87,39 +67,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .scroll-hint span{font-family:'Cormorant Garamond',serif;font-size:clamp(10px,2.8vw,12px);letter-spacing:4px;text-transform:uppercase;color:rgba(245,237,224,.5);}
 .scroll-arrow{width:22px;height:22px;border-right:1.5px solid rgba(245,237,224,.45);border-bottom:1.5px solid rgba(245,237,224,.45);transform:rotate(45deg);margin-top:-4px;}
 @keyframes bounce{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(6px);opacity:1}}
-
-.cover-time-toggle {
-  position: absolute; top: 20px; right: 20px; z-index: 10;
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 6px 14px; border-radius: 30px;
-  background: rgba(20, 38, 18, 0.65);
-  border: 1px solid rgba(200, 168, 106, 0.55);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  cursor: pointer; font-size: 15px;
-  box-shadow: 0 4px 16px rgba(0,0,0,.4);
-  transition: transform .2s ease, background .3s ease;
-  user-select: none; -webkit-tap-highlight-color: transparent;
-}
+.cover-time-toggle {position: absolute; top: 20px; right: 20px; z-index: 10; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 30px; background: rgba(20, 38, 18, 0.65); border: 1px solid rgba(200, 168, 106, 0.55); backdrop-filter: blur(8px); cursor: pointer; font-size: 15px; box-shadow: 0 4px 16px rgba(0,0,0,.4); transition: transform .2s ease, background .3s ease; user-select: none; -webkit-tap-highlight-color: transparent;}
 .cover-time-toggle:active { transform: scale(0.92); }
 
-/* BOTÓN MUTE MÚSICA ABAJO A LA DERECHA */
-.music-toggle {
-  position: fixed; bottom: 20px; right: 20px; z-index: 150;
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 44px; height: 44px; border-radius: 50%;
-  background: rgba(20, 38, 18, 0.75);
-  border: 1px solid rgba(200, 168, 106, 0.55);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  cursor: pointer; font-size: 18px;
-  box-shadow: 0 4px 16px rgba(0,0,0,.3);
-  transition: transform .2s ease, opacity .3s ease;
-  user-select: none; -webkit-tap-highlight-color: transparent;
-}
+/* BOTÓN MUTE */
+.music-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 150; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: rgba(20, 38, 18, 0.75); border: 1px solid rgba(200, 168, 106, 0.55); backdrop-filter: blur(8px); cursor: pointer; font-size: 18px; box-shadow: 0 4px 16px rgba(0,0,0,.3); transition: transform .2s ease, opacity .3s ease; user-select: none; -webkit-tap-highlight-color: transparent;}
 .music-toggle:active { transform: scale(0.9); }
 
-.toggle-icon {
-  transition: opacity .4s ease, filter .4s ease, transform .4s ease;
-}
+.toggle-icon { transition: opacity .4s ease, filter .4s ease, transform .4s ease;}
 #cover-photo:not(.is-night) .t-sun { opacity: 1; filter: grayscale(0); transform: scale(1.15); }
 #cover-photo:not(.is-night) .t-moon { opacity: 0.35; filter: grayscale(1); transform: scale(0.9); }
 #cover-photo.is-night .t-sun { opacity: 0.35; filter: grayscale(1); transform: scale(0.9); }
@@ -152,7 +107,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 .cd-num{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,8.5vw,42px);font-weight:600;color:#f5ede0;line-height:1;display:block;}
 .cd-unit{font-family:'Cormorant Garamond',serif;font-size:clamp(9px,2.4vw,10px);letter-spacing:4px;text-transform:uppercase;color:rgba(200,168,106,.6);margin-top:5px;display:block;}
 
-/* ══ RSVP DESTACADO ══ */
+/* ══ RSVP ══ */
 .rsvp-highlight{margin:0 20px 20px;padding:32px 24px;background:linear-gradient(160deg,#1e2e1c,#2a3828);border-radius:3px;text-align:center;border:1px solid rgba(200,168,106,.3);box-shadow:0 8px 32px rgba(0,0,0,.3);position:relative;overflow:hidden;}
 .rsvp-highlight::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,#c8a86a 30%,#c8a86a 70%,transparent);}
 .rsvp-highlight-label{font-family:'Cormorant Garamond',serif;font-size:clamp(9px,2.4vw,10px);letter-spacing:5px;text-transform:uppercase;color:rgba(200,168,106,.75);margin-bottom:8px;font-weight:600;}
@@ -416,7 +371,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       </div>
     </div>
 
-    <div class="floral-sep fade-up"><svg viewBox="0 0 420 45" xmlns="http://www.w3.org/2000/svg"><g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5"><path d="M40,22 Q95,35 150,22 T260,22 T370,22"/><path d="M125,27 Q130,36 142,32"/><path d="M235,17 Q240,8 252,12"/><path d="M305,27 Q310,36 322,32"/></g></svg></div>
+    <div class="floral-sep fade-up"><svg viewBox="0 0 420 50" xmlns="http://www.w3.org/2000/svg"><g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5"><line x1="30" y1="25" x2="185" y2="25"/><line x1="235" y1="25" x2="390" y2="25"/><path d="M210,14 L221,25 L210,36 L199,25 Z"/><path d="M192,20 Q210,8 228,20"/><path d="M192,30 Q210,42 228,30"/></g></svg></div>
 
     <div class="bus-section fade-up">
       <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a7a52" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0"><rect x="2" y="5" width="20" height="13" rx="2"/><line x1="2" y1="11" x2="22" y2="11"/><line x1="7" y1="5" x2="7" y2="11"/><line x1="17" y1="5" x2="17" y2="11"/><circle cx="7" cy="20" r="2" fill="#5a7a52" stroke="none"/><circle cx="17" cy="20" r="2" fill="#5a7a52" stroke="none"/></svg><span class="bus-eyebrow">Servicio de Autobús</span></div>
@@ -481,7 +436,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 
     <div class="floral-sep fade-up"><svg viewBox="0 0 420 50" xmlns="http://www.w3.org/2000/svg"><g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5"><path d="M50,20 Q210,40 370,20"/><path d="M190,27 Q200,18 210,23 Q220,18 230,27"/><circle cx="210" cy="18" r="1.5" fill="#7a9a72"/><circle cx="170" cy="24" r="1" fill="#7a9a72"/><circle cx="250" cy="24" r="1" fill="#7a9a72"/></g></svg></div>
 
-    <div class="closing-section fade-up"><p class="closing-text">Con cariño,<br>Marina y Manuel</p></div>
+    <div class="closing-section fade-up"><p class="closing-text">Con cariño,<br>Marina & Manuel</p></div>
 
     <div class="contact-section">
       <div class="contact-label">Contacto</div>
