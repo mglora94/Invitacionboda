@@ -102,6 +102,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 }
 .cover-time-toggle:active { transform: scale(0.92); }
 
+/* BOTÓN MUTE MÚSICA ABAJO A LA DERECHA */
+.music-toggle {
+  position: fixed; bottom: 20px; right: 20px; z-index: 150;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(20, 38, 18, 0.75);
+  border: 1px solid rgba(200, 168, 106, 0.55);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  cursor: pointer; font-size: 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.3);
+  transition: transform .2s ease, opacity .3s ease;
+  user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.music-toggle:active { transform: scale(0.9); }
+
 .toggle-icon {
   transition: opacity .4s ease, filter .4s ease, transform .4s ease;
 }
@@ -234,6 +249,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 
 <canvas id="particles"></canvas>
 <div id="fade-overlay"></div>
+
+<audio id="bg-music" src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/clarity.mp3" loop></audio>
+
+<div id="music-toggle" class="music-toggle" onclick="toggleMusic()" style="display: none;">
+  <span id="music-icon">🔊</span>
+</div>
 
 <div class="modal-overlay" id="modal-cal" onclick="closeModal('modal-cal')">
   <div class="modal-sheet" onclick="event.stopPropagation()">
@@ -489,6 +510,19 @@ function startPetals(){petalsActive=true;for(let i=0;i<8;i++) setTimeout(()=>cre
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
+/* ══ CONTROL DE MÚSICA (MUTEAR / DESMUTEAR) ══ */
+function toggleMusic() {
+  const music = document.getElementById('bg-music');
+  const icon = document.getElementById('music-icon');
+  if (music.muted) {
+    music.muted = false;
+    icon.textContent = '🔊';
+  } else {
+    music.muted = true;
+    icon.textContent = '🔈';
+  }
+}
+
 /* ══ VÍDEO APERTURA ══ */
 let videoStarted = false;
 let transitionTriggered = false;
@@ -525,6 +559,16 @@ function playVideo(){
       screen.style.display = 'none';
       inv.style.display = 'block';
       inv.style.opacity = '1';
+      
+      // DISPARAR MÚSICA EN LA REVELACIÓN DE LA INVITACIÓN
+      const music = document.getElementById('bg-music');
+      const musicBtn = document.getElementById('music-toggle');
+      if (music) {
+        music.play().catch(err => console.log("El navegador requería interacción previa:", err));
+      }
+      if (musicBtn) {
+        musicBtn.style.display = 'inline-flex';
+      }
     }, 600);
 
     setTimeout(() => {
