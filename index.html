@@ -23,7 +23,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 #env-screen{
   position:fixed;inset:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  background:#1e2e1c;
+  background:#2c3e28;
   z-index:100;overflow:hidden;
   transition:opacity 1.2s ease;
 }
@@ -35,25 +35,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
     radial-gradient(circle at 80% 70%, rgba(200,168,106,.04) 0%, transparent 50%);
   pointer-events:none;
 }
-
-/* POSTER CSS (Evita pantalla negra en teléfonos móviles) */
-#env-poster-fallback {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: #0d1a0b; z-index: 1; transition: opacity .4s ease;
-}
-.env-scene{perspective:900px;width:min(76vw,310px);position:relative;}
-.env-body{position:relative;width:100%;padding-bottom:140%;}
-.env-paper{
-  position:absolute;inset:0;
-  background:linear-gradient(160deg,#f5ede0 0%,#ede0c8 40%,#e8d8b0 100%);
-  border-radius:3px; box-shadow:0 12px 32px rgba(0,0,0,.5);
-  overflow:hidden;
-}
-.env-fold-left{position:absolute;top:0;left:0;width:51%;height:100%;background:linear-gradient(135deg,#e8d8b0 0%,#d4c49a 100%);clip-path:polygon(0 0,0 100%,100% 50%);}
-.env-fold-right{position:absolute;top:0;right:0;width:51%;height:100%;background:linear-gradient(225deg,#e8d8b0 0%,#d4c49a 100%);clip-path:polygon(100% 0,100% 100%,0 50%);}
-.env-fold-bottom{position:absolute;bottom:0;left:0;width:100%;height:52%;background:linear-gradient(180deg,#ddd0b0 0%,#c8b890 100%);clip-path:polygon(0 100%,100% 100%,50% 0%);}
-.env-flap{position:absolute;top:0;left:0;width:100%;height:52%;background:linear-gradient(175deg,#f0e4cc 0%,#e4d4b4 40%,#d8c8a0 100%);clip-path:polygon(0 0,100% 0,50% 100%);box-shadow:0 8px 24px rgba(0,0,0,.15);}
-.wax-seal{position:absolute;top:52%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#d4af37,#aa820a);box-shadow:0 4px 12px rgba(0,0,0,.4);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Great Vibes',cursive;font-size:26px;}
 
 .tap-hint{margin-top:32px;color:rgba(255,255,255,.6);font-family:'Cormorant Garamond',serif;font-size:clamp(11px,3vw,13px);letter-spacing:6px;text-transform:uppercase;white-space:nowrap;animation:breathe 3s ease-in-out infinite;position:relative;z-index:3;}
 @keyframes breathe{0%,100%{opacity:.2}50%{opacity:.8}}
@@ -278,7 +259,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       <div class="modal-btn-icon">🗺️</div>
       Google Maps
     </a>
-    <a class="modal-btn" href="https://maps.apple/p/U7TpVMxJIDfE0R" target="_blank" onclick="closeModal('modal-map')">
+    <a class="modal-btn" href="https://maps.apple.com/?q=Molino+Sotomelero,+41409+Écija,+Sevilla" target="_blank" onclick="closeModal('modal-map')">
       <div class="modal-btn-icon">🍎</div>
       Apple Maps
     </a>
@@ -287,29 +268,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 </div>
 
 <div id="env-screen">
-  <div id="env-poster-fallback">
-    <div class="env-scene">
-      <div class="env-body">
-        <div class="env-paper">
-          <div class="env-fold-left"></div>
-          <div class="env-fold-right"></div>
-          <div class="env-fold-bottom"></div>
-          <div class="env-flap"></div>
-          <div class="wax-seal">M&M</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <video
     id="wedding-video"
-    src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/video_202606252040.mp4"
+    src="https://raw.githubusercontent.com/mglora94/Invitacionboda/main/video_202606252040.mp4#t=0.001"
     playsinline
     preload="auto"
-    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"
   ></video>
 
-  <div id="video-overlay" style="position:absolute;inset:0;z-index:3;background:rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;" onclick="playVideo()">
+  <div id="video-overlay" style="position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;" onclick="playVideo()">
     <div id="play-btn" style="width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);margin-bottom:20px;transition:transform .2s ease,background .2s ease;">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
     </div>
@@ -389,7 +356,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
       <div class="rsvp-highlight-label">✦ Confirma tu asistencia ✦</div>
       <div class="rsvp-highlight-title">¿Nos acompañas?</div>
       <div class="rsvp-highlight-sub">Nos haría mucha ilusión contar contigo en nuestro día más especial.<br>Confirmar asistencia antes del 1 de agosto de 2026.</div>
-      <a class="rsvp-highlight-btn" href="https://bodamarinaymanuel.netlify.app/" target="_blank">
+      <a class="rsvp-highlight-btn" href="https://bodamarinaymanu.netlify.app/" target="_blank">
         Confirmar Asistencia
         <small>Menú · Alergias · Transporte</small>
       </a>
@@ -474,7 +441,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#2c3e28;-webkit-font
 
     <div class="floral-sep fade-up"><svg viewBox="0 0 420 50" xmlns="http://www.w3.org/2000/svg"><g stroke="#7a9a72" stroke-width="1" fill="none" opacity=".5"><path d="M50,20 Q210,40 370,20"/><path d="M190,27 Q200,18 210,23 Q220,18 230,27"/><circle cx="210" cy="18" r="1.5" fill="#7a9a72"/><circle cx="170" cy="24" r="1" fill="#7a9a72"/><circle cx="250" cy="24" r="1" fill="#7a9a72"/></g></svg></div>
 
-    <div class="closing-section fade-up"><p class="closing-text">Con cariño,<br>Marina y Manuel</p></div>
+    <div class="closing-section fade-up"><p class="closing-text">Con cariño,<br>Marina & Manuel</p></div>
 
     <div class="contact-section">
       <div class="contact-label">Contacto</div>
@@ -531,23 +498,14 @@ function playVideo(){
   if(videoStarted) return;
   const video = document.getElementById('wedding-video');
   const videoOverlay = document.getElementById('video-overlay');
-  const posterFallback = document.getElementById('env-poster-fallback');
   const screen = document.getElementById('env-screen');
   const inv = document.getElementById('invitation');
   const overlay = document.getElementById('fade-overlay');
 
   videoStarted = true;
-  videoOverlay.style.transition = 'opacity .3s ease';
+  videoOverlay.style.transition = 'opacity .4s ease';
   videoOverlay.style.opacity = '0';
-  
-  if (posterFallback) {
-    posterFallback.style.opacity = '0';
-  }
-
-  setTimeout(()=>{ 
-    videoOverlay.style.display = 'none'; 
-    if (posterFallback) posterFallback.style.display = 'none';
-  }, 300);
+  setTimeout(()=>{ videoOverlay.style.display = 'none'; }, 400);
 
   video.play();
 
